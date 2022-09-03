@@ -9,15 +9,15 @@ export default function Footer() {
         <footer style={FooterCss}>
             <Button sx={ButtonCss} >
                 <HomeRoundedIcon sx={IconCss} />
-                <lable>홈</lable>
+                <Typography>홈</Typography>
             </Button>
             <Button sx={ButtonCss} >
                 <QuestionAnswerRoundedIcon sx={IconCss} />
-                <lable>채팅</lable>
+                <Typography>채팅</Typography>
             </Button>
             <Button sx={ButtonCss} >
                 <PersonRoundedIcon sx={IconCss} />
-                <lable>마이페이지</lable>
+                <Typography>마이페이지</Typography>
             </Button>
 
 
@@ -54,7 +54,9 @@ const ButtonCss = {
     color: 'white',
     width: '5em',
     height: '5em',
-    fontSize: '0.6em',
+    'Typography': {
+        fontSize: '0.6em',
+    }
 }
 
 const IconCss = {
