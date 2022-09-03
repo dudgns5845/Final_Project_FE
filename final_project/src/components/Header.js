@@ -5,9 +5,13 @@ import TableRowsRoundedIcon from '@mui/icons-material/TableRowsRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
+import CreateRoundedIcon from '@mui/icons-material/CreateRounded';
+import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 export default function Header() {
+
+    const navigate = useNavigate();
 
     const [menuOpen, setMenuOpen] = useState(null);
     const open = Boolean(menuOpen);
@@ -18,10 +22,15 @@ export default function Header() {
         setMenuOpen(null);
     };
 
+
     return (
         <AppBar>
             <Toolbar sx={AppCss}>
-                <Button
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <LocationOnRoundedIcon />
+                    <span>영등포구</span>
+                </div>
+                {/* <Button
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
@@ -31,8 +40,8 @@ export default function Header() {
                 >
                     <LocationOnRoundedIcon />
                     영등포구
-                </Button>
-                <Menu
+                </Button> */}
+                {/* <Menu
                     id="basic-menu"
                     anchorEl={menuOpen}
                     open={open}
@@ -44,19 +53,18 @@ export default function Header() {
                     {guList.map((item, idx) => {
                         return <MenuItem key={idx} onClick={handleClose}>{item}</MenuItem>
                     })}
-                </Menu>
+                </Menu> */}
                 <div>
-                    <IconButton>
+                    <IconButton onClick={() => { navigate('/searchpage') }}>
                         <SearchRoundedIcon />
                     </IconButton>
-                    <IconButton>
-                        <TableRowsRoundedIcon />
+                    <IconButton onClick={() => { navigate('/postpage') }}>
+                        <CreateRoundedIcon />
                     </IconButton>
                     <IconButton>
                         <NotificationsRoundedIcon />
                     </IconButton>
                 </div>
-
             </Toolbar>
         </AppBar >
     )
