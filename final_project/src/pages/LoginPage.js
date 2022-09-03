@@ -2,23 +2,28 @@ import React, { useCallback, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 import Snackbar from "@mui/material/Snackbar";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const ariaLabel = { "aria-label": "description" };
 
-export default function Login(props) {
+export default function Login() {
   // login, register 페이지 스위치
-  const [auth, setAuth] = useState(false);
+  const params = useParams();
+  const [auth, setAuth] = useState(params.id === ":write" ? false : true);
+
+  console.log(params);
 
   // 아이디, 비밀번호 등
   const [userId, setUserId] = useState("");
   const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [age, setAge] = useState('');
+  const [age, setAge] = useState("");
 
   // 조건 오류 메시지
   const [userIdMessege, setUserIdMessege] = useState("");
@@ -41,7 +46,7 @@ export default function Login(props) {
   };
 
   const [snackOpen, setsnackOpen] = useState(false);
-    
+
   const handleClose = () => {
     setsnackOpen(false);
   };
@@ -132,10 +137,10 @@ export default function Login(props) {
   // 값 가져오기
   const onChangeNickName = (e) => {
     setNickName(e.target.value);
-    };
+  };
   const handleChange = (event) => {
     setAge(event.target.value);
-    };
+  };
 
   // 확인용
   const body = {
@@ -188,13 +193,13 @@ export default function Login(props) {
               중복확인
             </Button>
           </>
-              )}
+        )}
         <br />
         {auth && userId.length > 1 && isUserId ? (
           <span>{userIdMessege}</span>
         ) : (
           <span>{userIdMessege}</span>
-              )}
+        )}
         <p>비밀번호</p>
         <Input
           fullWidth
@@ -235,27 +240,32 @@ export default function Login(props) {
               placeholder="닉네임을 입력하세요"
               onChange={onChangeNickName}
             />
-            <FormControl variant="standard" sx={{ width: "100%", paddingBottom: "10px", marginTop: "10px" }}>
-            <InputLabel id="demo-simple-select-standard-label">관심 지역</InputLabel>
-            <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={age}
-            onChange={handleChange}
-            label="Age"
+            <FormControl
+              variant="standard"
+              sx={{ width: "100%", paddingBottom: "10px", marginTop: "10px" }}
             >
-            <MenuItem value="">
-                <em>---지역 선택---</em>
-            </MenuItem>
-            <MenuItem value={10}>서울</MenuItem>
-            <MenuItem value={20}>대구</MenuItem>
-            <MenuItem value={30}>함덕</MenuItem>
-            </Select>
+              <InputLabel id="demo-simple-select-standard-label">
+                관심 지역
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={age}
+                onChange={handleChange}
+                label="Age"
+              >
+                <MenuItem value="">
+                  <em>---지역 선택---</em>
+                </MenuItem>
+                <MenuItem value={10}>서울</MenuItem>
+                <MenuItem value={20}>대구</MenuItem>
+                <MenuItem value={30}>함덕</MenuItem>
+              </Select>
             </FormControl>
-            <br/>
+            <br />
           </>
         )}
-        
+
         <div>
           {buttons}
           <Snackbar

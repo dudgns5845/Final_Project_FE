@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import ScreenSize from "../shared/ScreenSize";
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
-    const navigate = useNavigate()
-    const [register, setRegister] = useState(true)
-    const onRegister = () => {
-        navigate('/login', )
-    }
-    navigate('/login', {})
-    return (
-        <ScreenSize>
-            <h1>메인페이지</h1>
-            <Link to="/login">로그인 및 회원가입</Link>
-        </ScreenSize>)
+  const navigate = useNavigate();
+
+  const write = () => {
+    navigate("/login:write");
+  };
+  const reig = () => {
+    navigate("/login:reig");
+  };
+  //   const onRegister = () => {
+  //     navigate("/login", [false]);
+  //   };
+  //   const onCl = () => {
+  //   };
+  return (
+    <ScreenSize>
+      <h1>메인페이지</h1>
+      <button onClick={write}>로그인</button>
+      <button onClick={reig}>회원가입</button>
+    </ScreenSize>
+  );
 }
