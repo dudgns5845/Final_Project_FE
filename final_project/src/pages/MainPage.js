@@ -1,9 +1,25 @@
 import React from "react";
 import ScreenSize from "../shared/ScreenSize";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 export default function MainPage() {
     return (
-        <ScreenSize>
-            <>메인페이지입ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㄹㅇㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ다</>
-            <button>adfs</button>
-        </ScreenSize>)
+        <>
+            <Header />
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <div>asdfasdfasdfdas</div>
+            <Footer />
+        </>)
 }
