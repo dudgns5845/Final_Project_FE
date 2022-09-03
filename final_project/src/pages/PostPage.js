@@ -10,7 +10,7 @@ export default function PostPage() {
   const [imgState, setImgState] = useState([]);
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
-  const [modalState, setModalState] = useState(false);
+  const [open, setOpen] = useState(false);
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
     const imgUploadList = [...imgState];
@@ -31,8 +31,7 @@ export default function PostPage() {
     console.log(contentState);
   };
   const OpenModal = () => {
-    setModalState(true);
-    console.log(modalState);
+    setOpen(true);
   };
   return (
     <>
@@ -96,6 +95,29 @@ export default function PostPage() {
           placeholder="내용을 입력해주세요."
         />
       </div>
+      <Modal
+        visible={open}
+        closeModal={() => {
+          setOpen(false);
+        }}
+      >
+        <div>디지털기기</div>
+        <div>생활가전</div>
+        <div>생활/주방</div>
+        <div>여성의류/잡화</div>
+        <div>남성의류/잡화</div>
+        <div>뷰티/미용</div>
+        <div>취미/게임</div>
+        <div>도서</div>
+        <div>티켓</div>
+        <button
+          onClick={() => {
+            setOpen(false);
+          }}
+        >
+          돌아가기
+        </button>
+      </Modal>
     </>
   );
 }
