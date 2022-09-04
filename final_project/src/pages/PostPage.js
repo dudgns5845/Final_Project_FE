@@ -11,7 +11,8 @@ export default function PostPage() {
   const [imgState, setImgState] = useState([]);
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
-  const [value, setValue] = useState("0");
+  const [value, setValue] = useState("");
+  const [category, setCategory] = useState("카테고리");
   const [open, setOpen] = useState(false);
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
@@ -42,13 +43,13 @@ export default function PostPage() {
     setOpen(false);
   };
   const onChangeHandler = (e) => {
-    const value = e.target;
-    setValue(value);
-    console.log(value);
+    const category = e.target.innerText;
+    setCategory(category);
+    console.log(category);
     CloseModal();
   };
   const ClickHandler = () => {
-    console.log(titleState, contentState, imgState);
+    console.log(titleState, contentState, imgState, category);
   };
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));
@@ -67,6 +68,7 @@ export default function PostPage() {
               되돌아가기
             </button>
             <h4>게시글쓰기</h4>
+            <button onClick={ClickHandler}>완료</button>
           </Toolbar>
         </AppBar>
       </Box>
@@ -107,7 +109,7 @@ export default function PostPage() {
         }}
         onClick={OpenModal}
       >
-        카테고리
+        <p>{category}</p>
       </div>
       <div style={{ border: "1px solid black", height: "150px" }}>
         <input
@@ -147,7 +149,6 @@ export default function PostPage() {
         </Div>
         <button onClick={CloseModal}>돌아가기</button>
       </Modal>
-      <button onClick={ClickHandler}>완료</button>
     </>
   );
 }

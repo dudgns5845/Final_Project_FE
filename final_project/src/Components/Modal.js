@@ -30,7 +30,7 @@ const ModalBody = styled.div`
   background-color: white;
   border-radius: 10px;
   width: 330px;
-  height: 550px;
+  height: 580px;
   padding-left: 10px;
   z-index: 100;
 `;
