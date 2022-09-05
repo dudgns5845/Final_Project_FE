@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "../Components/Modal";
+import Modal from "../components/Modal";
 import styled from "styled-components";
 
 export default function PostPage() {
