@@ -6,7 +6,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const ariaLabel = { "aria-label": "description" };
@@ -15,8 +14,6 @@ export default function Login() {
   // login, register 페이지 스위치
   const params = useParams();
   const [auth, setAuth] = useState(params.id === ":write" ? false : true);
-
-  console.log(params);
 
   // 아이디, 비밀번호 등
   const [userId, setUserId] = useState("");
@@ -76,6 +73,7 @@ export default function Login() {
   const buttons = (
     <>
       <Button
+        fullWidth
         variant="contained"
         onClick={() => {
           setsnackOpen(true);
@@ -90,7 +88,7 @@ export default function Login() {
   // 이메일 조건 확인
   const onChangeUserId = (e) => {
     const idRegex =
-      /^[0-9a-zA-Z]([+=-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([+=-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,15}$/;
+      /^[0-9a-zA-Z]([+=-_.]?[0-9a-zA-Z])+@+[0-9a-zA-Z]([+=-_.]?[0-9a-zA-Z])+\.+[a-zA-Z]{2,10}$/;
     const idCurrent = e.target.value;
     setUserId(idCurrent);
     if (!idRegex.test(idCurrent)) {
@@ -142,14 +140,6 @@ export default function Login() {
     setAge(event.target.value);
   };
 
-  // 확인용
-  const body = {
-    userid: userId,
-    nickname: nickName,
-    password: password,
-    passwordConfirm: passwordConfirm,
-  };
-
   // api 연결용
 
   // 중복 확인
@@ -159,6 +149,12 @@ export default function Login() {
   };
 
   // login or register 제출
+  const body = {
+    userid: userId,
+    nickname: nickName,
+    password: password,
+    passwordConfirm: passwordConfirm,
+  };
 
   // login register 스위치
   const onChangeHandler = (e) => {
@@ -171,7 +167,7 @@ export default function Login() {
       style={{
         margin: "auto",
         width: "80vw",
-        height: "80%",
+        height: "100%",
         marginTop: "2vh",
         padding: "3vh",
         boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
@@ -179,27 +175,42 @@ export default function Login() {
     >
       <h2>{!auth ? "로그인" : "회원가입"}</h2>
       <form>
-        <p>이메일</p>
-        <Input
-          fullWidth
-          placeholder="이메일을 입력하세요"
-          inputProps={ariaLabel}
-          onChange={onChangeUserId}
-        />
-        {auth && (
+        {!auth ? (
           <>
-            <p style={{ marginTop: "-10px" }} />
-            <Button variant="outlined" onClick={onDoublingHandler}>
+            <p>이메일</p>
+            <Input
+              fullWidth
+              placeholder="이메일을 입력하세요"
+              inputProps={ariaLabel}
+              onChange={onChangeUserId}
+            />
+          </>
+        ) : (
+          <>
+            <p>이메일</p>
+            <Input
+              style={{ width: "68%" }}
+              placeholder="이메일을 입력하세요"
+              inputProps={ariaLabel}
+              onChange={onChangeUserId}
+            />
+
+            <Button
+              style={{ marginLeft: "5%", fontSize: "x-small" }}
+              variant="outlined"
+              onClick={onDoublingHandler}
+            >
               중복확인
             </Button>
+            <br />
+            {auth && userId.length > 1 && isUserId ? (
+              <span>{userIdMessege}</span>
+            ) : (
+              <span>{userIdMessege}</span>
+            )}
           </>
         )}
-        <br />
-        {auth && userId.length > 1 && isUserId ? (
-          <span>{userIdMessege}</span>
-        ) : (
-          <span>{userIdMessege}</span>
-        )}
+
         <p>비밀번호</p>
         <Input
           fullWidth
@@ -281,9 +292,11 @@ export default function Login() {
           ></Snackbar>
         </div>
       </form>
-      <Button variant="text" onClick={onChangeHandler}>
-        {auth ? "뒤로" : "회원가입하러"} 가기
-      </Button>
+      <div style={{ textAlign: "right", marginTop: "10px" }}>
+        <Button variant="text" onClick={onChangeHandler}>
+          {auth ? "뒤로" : "회원가입하러"} 가기
+        </Button>
+      </div>
     </div>
   );
 }
