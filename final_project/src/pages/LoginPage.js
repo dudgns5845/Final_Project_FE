@@ -20,7 +20,7 @@ export default function Login() {
   const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [age, setAge] = useState("");
+  const [region, setRegion] = useState("");
 
   // 조건 오류 메시지
   const [userIdMessege, setUserIdMessege] = useState("");
@@ -66,7 +66,6 @@ export default function Login() {
       return setErrorMessage("비밀번호 확인을 입력해주세요");
     }
 
-    console.log(body);
     return setErrorMessage("회원가입 성공");
   };
 
@@ -136,8 +135,8 @@ export default function Login() {
   const onChangeNickName = (e) => {
     setNickName(e.target.value);
   };
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleChange = (e) => {
+    setRegion(e.target.value);
   };
 
   // api 연결용
@@ -146,14 +145,6 @@ export default function Login() {
   const onDoublingHandler = (e) => {
     e.preventDefault();
     console.log(userId);
-  };
-
-  // login or register 제출
-  const body = {
-    userid: userId,
-    nickname: nickName,
-    password: password,
-    passwordConfirm: passwordConfirm,
   };
 
   // login register 스위치
@@ -219,11 +210,12 @@ export default function Login() {
           onChange={onChangePassword}
         />
         <br />
-        {auth && password.length > 1 && isPassword ? (
-          <span>{passwordMessage}</span>
-        ) : (
-          <span>{passwordMessage}</span>
-        )}
+        {auth &&
+          (isPassword ? (
+            <span>{passwordMessage}</span>
+          ) : (
+            <span>{passwordMessage}</span>
+          ))}
         {auth && (
           <>
             <p>비밀번호 확인</p>
@@ -261,9 +253,9 @@ export default function Login() {
               <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
-                value={age}
+                value={region}
                 onChange={handleChange}
-                label="Age"
+                label="region"
               >
                 <MenuItem value="">
                   <em>---지역 선택---</em>
