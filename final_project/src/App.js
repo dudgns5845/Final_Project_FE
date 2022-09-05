@@ -4,12 +4,14 @@ import PostPage from "./pages/PostPage";
 import { ThemeProvider } from "styled-components";
 import theme from "./style/theme";
 import ErrorPage from "./pages/ErrorPage";
+import SearchPage from "./pages/SearchPage";
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path='/searchpage' element={<SearchPage />} />
           <Route path="*" element={<ErrorPage />} />
           {/* <Route path="/login" element={<Login />} /> */}
 
