@@ -68,8 +68,7 @@ export default function Login() {
       return setErrorMessage("비밀번호 확인을 입력해주세요");
     }
 
-    console.log(body);
-    console.log(e.target.innerText);
+    console.log(region);
 
     if (e.target.innerText === "회원가입") {
       const UserData = {
@@ -77,7 +76,7 @@ export default function Login() {
         password: password,
         passwordConfirm: passwordConfirm,
         nickname: nickName,
-        location: "서울",
+        location: region,
       };
 
       apis
@@ -300,9 +299,9 @@ export default function Login() {
                 <MenuItem value="">
                   <em>---지역 선택---</em>
                 </MenuItem>
-                <MenuItem value={10}>서울</MenuItem>
-                <MenuItem value={20}>대구</MenuItem>
-                <MenuItem value={30}>함덕</MenuItem>
+                <MenuItem value="서울">서울</MenuItem>
+                <MenuItem value="대구">대구</MenuItem>
+                <MenuItem value="함덕">함덕</MenuItem>
               </Select>
             </FormControl>
             <br />
