@@ -1,14 +1,19 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import styled from "styled-components";
 
+import apis from "../apis/Apis";
+
 export default function PostPage() {
   const navigate = useNavigate();
   const [imgState, setImgState] = useState([]);
+
+  const [imgFile, setImgFile] = useState([]);
+
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
   const [value, setValue] = useState("");
@@ -17,7 +22,14 @@ export default function PostPage() {
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
     const imgUploadList = [...imgState];
+
+    console.log(new Array(...imgSelectList));
+
     for (let i = 0; i < imgSelectList.length; i++) {
+      //전송을 위한 이미지 데이터 추가
+      setImgFile(new Array(...imgSelectList));
+
+
       const imgUrl = URL.createObjectURL(imgSelectList[i]);
       imgUploadList.push(imgUrl);
       if (imgUploadList.length > 5) {
@@ -48,8 +60,34 @@ export default function PostPage() {
     console.log(category);
     CloseModal();
   };
+
   const ClickHandler = () => {
-    console.log(titleState, contentState, imgState, category);
+    // console.log(titleState, contentState, imgFile, category);
+
+    const postData = new FormData();
+
+    // console.log(imgFile);
+    const dto = {
+      'title': titleState,
+      'content': contentState,
+      'category': category,
+      'postStatus': 'CREATED'
+    }
+
+    postData.append('requestDto', new Blob([JSON.stringify.apply(dto)], {
+      type: 'multipart/form-data',
+    }));
+    postData.append('imageFileList', imgFile);
+
+    console.log(imgFile);
+    console.log(dto);
+    //통신
+    apis.writePost(postData).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+    })
+
   };
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));

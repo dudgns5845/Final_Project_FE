@@ -29,7 +29,7 @@ export default function Header() {
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <LocationOnRoundedIcon />
                     <span>영등포구</span>
-                </div>
+                    Z       </div>
                 {/* <Button
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
