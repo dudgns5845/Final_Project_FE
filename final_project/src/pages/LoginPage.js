@@ -6,9 +6,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import apis from "../apis/Apis";
+import { setCookie } from "../shared/Cookie";
 
 const ariaLabel = { "aria-label": "description" };
 
@@ -16,6 +17,8 @@ export default function Login() {
   // login, register 페이지 스위치
   const params = useParams();
   const [auth, setAuth] = useState(params.id === ":write" ? false : true);
+
+  const navigate = useNavigate();
 
   // 아이디, 비밀번호 등
   const [userId, setUserId] = useState("");
@@ -52,25 +55,54 @@ export default function Login() {
 
   const onSubmitHandler = (e) => {
     // e.preventDefault();
+    console.log(region);
     if (!isUserId) {
       return setErrorMessage("이메일을 확인해주세요");
-    }
-    if (!isPassword) {
+    } else if (!isPassword) {
       return setErrorMessage("비밀번호를 확인해주세요");
-    }
-    if (!isPasswordConfirm) {
+    } else if (e.target.innerText === "로그인") {
+      const UserData = {
+        email: userId,
+        password: password,
+      };
+
+      apis
+        .loginUser(UserData)
+        .then((response) => {
+          console.log(response);
+          setErrorMessage("로그인 성공");
+          setCookie(
+            "accessToken",
+            response.data.data.token.accessToken,
+            response.data.data.token.accessTokenExpiresIn
+          );
+          setCookie("refreshToken", response.data.data.token.refreshToken);
+          setCookie(
+            "nickname",
+            response.data.data.nickname,
+            response.data.data.token.accessTokenExpiresIn
+          );
+          setCookie(
+            "id",
+            response.data.data.id,
+            response.data.data.token.accessTokenExpiresIn
+          );
+          setInterval(() => {
+            navigate("/");
+          }, 2000);
+          return;
+        })
+        .catch((error) => {
+          console.log(error);
+          return setErrorMessage("다시 시도해주세요");
+        });
+    } else if (!isPasswordConfirm) {
       return setErrorMessage("비밀번호가 일치하지 않습니다");
-    }
-    if (nickName.length === 0) {
+    } else if (nickName.length === 0) {
       return setErrorMessage("닉네임을 입력해주세요");
-    }
-    if (passwordConfirm.length === 0) {
+    } else if (passwordConfirm.length === 0) {
       return setErrorMessage("비밀번호 확인을 입력해주세요");
-    }
-
-    console.log(region);
-
-    if (e.target.innerText === "회원가입") {
+    } else if (e.target.innerText === "회원가입") {
       const UserData = {
         email: userId,
         password: password,
@@ -83,29 +115,14 @@ export default function Login() {
         .registerUser(UserData)
         .then((response) => {
           console.log(response);
+          setErrorMessage("회원가입 성공");
+          return navigate("/login:write");
         })
         .catch((error) => {
           console.log(error);
+          return setErrorMessage("다시 시도해주세요");
         });
     }
-
-    if (e.target.innerText === "로그인") {
-      const UserData = {
-        email: userId,
-        password: password,
-      };
-
-      apis
-        .loginUser(UserData)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-
-    return setErrorMessage("회원가입 성공");
   };
 
   const buttons = (
