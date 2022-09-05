@@ -24,7 +24,7 @@ export const apiForm = axios.create({
     baseURL: deafultURL,
     credentials: true,
     headers: {
-        'Content-Type': 'mutipart/form-data',
+        'Content-Type': 'multipart/form-data',
     },
 });
 
@@ -52,7 +52,7 @@ apiForm.interceptors.request.use(
         // const accessToken = getCookie('accessToken');
         // const refreshToken = getCookie('refreshToken');
 
-        const accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiYXV0aCI6IlJPTEVfTUVNQkVSIiwiZXhwIjoxNjYyMzYyOTgxfQ.IfPpNREjMEE5oUeymLMrIHHPTjbbDltPg2QYXl8sCVM"
+        const accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RmQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX01FTUJFUiIsImV4cCI6MTY2MjM2NzIzOH0.c4aNwjXuchb3BWTODYjKBT6Tno0BbRJthq9fYZg3-uU"
         const refreshToken = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjI5NjQwMDZ9.S_qxp5OMzYkXM9VYwKF4tUKaKxzrol_iTihjQRqyZmQ"
         config.headers['Authorization'] = `Bearer ${accessToken}`;
         config.headers['Refresh-token'] = refreshToken;
