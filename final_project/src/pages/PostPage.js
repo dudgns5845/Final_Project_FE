@@ -1,14 +1,19 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import styled from "styled-components";
 
+import apis from "../apis/Apis";
+
 export default function PostPage() {
   const navigate = useNavigate();
   const [imgState, setImgState] = useState([]);
+
+  const [imgFile, setImgFile] = useState([]);
+
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
   const [value, setValue] = useState("");
@@ -18,6 +23,9 @@ export default function PostPage() {
     const imgSelectList = e.target.files;
     const imgUploadList = [...imgState];
     for (let i = 0; i < imgSelectList.length; i++) {
+      //전송을 위한 이미지 데이터 추가
+      setImgFile([imgSelectList[i], ...imgFile])
+
       const imgUrl = URL.createObjectURL(imgSelectList[i]);
       imgUploadList.push(imgUrl);
       if (imgUploadList.length > 5) {
@@ -49,7 +57,29 @@ export default function PostPage() {
     CloseModal();
   };
   const ClickHandler = () => {
-    console.log(titleState, contentState, imgState, category);
+    console.log(titleState, contentState, imgFile, category);
+
+    const postData = new FormData();
+    console.log(imgFile);
+    postData.append('requestDto',
+      {
+        title: titleState,
+        content: contentState,
+        category: category,
+        postStatus: 'CREATED',
+      }
+    )
+    postData.append('imageFileList', imgFile);
+
+    //통신
+    apis.writePost(postData).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+      console.log('tt', postData.get('imageFileList')[0]);
+      console.log('rr', postData.get('requestDto'));
+    })
+
   };
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));

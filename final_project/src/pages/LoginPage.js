@@ -8,6 +8,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useParams } from "react-router-dom";
 
+import apis from "../apis/Apis";
+
 const ariaLabel = { "aria-label": "description" };
 
 export default function Login() {
@@ -48,7 +50,7 @@ export default function Login() {
     setsnackOpen(false);
   };
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = (e) => {
     // e.preventDefault();
     if (!isUserId) {
       return setErrorMessage("이메일을 확인해주세요");
@@ -67,6 +69,40 @@ export default function Login() {
     }
 
     console.log(body);
+    console.log(e.target.innerText)
+
+    if (e.target.innerText === '회원가입') {
+      const UserData = {
+        email: userId,
+        password: password,
+        passwordConfirm: passwordConfirm,
+        nickname: nickName,
+        location: '서울'
+      }
+
+      apis.registerUser(UserData).then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+
+    if (e.target.innerText === '로그인') {
+      const UserData = {
+        email: userId,
+        password: password
+      }
+
+      apis.loginUser(UserData).then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+
+
+
+
     return setErrorMessage("회원가입 성공");
   };
 
@@ -75,9 +111,9 @@ export default function Login() {
       <Button
         fullWidth
         variant="contained"
-        onClick={() => {
+        onClick={(e) => {
           setsnackOpen(true);
-          onSubmitHandler();
+          onSubmitHandler(e);
         }}
       >
         {auth ? "회원가입" : "로그인"}

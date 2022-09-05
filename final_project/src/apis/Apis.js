@@ -3,7 +3,7 @@ import { getCookie } from '../shared/Cookie';
 
 // 1. Axios instance생성
 
-const deafultURL = 'http://localhost:3000';
+const deafultURL = 'http://13.125.71.197';
 
 const api = axios.create({
     baseURL: deafultURL,
@@ -49,8 +49,11 @@ api.interceptors.request.use(
 
 apiForm.interceptors.request.use(
     (config) => {
-        const accessToken = getCookie('accessToken');
-        const refreshToken = getCookie('refreshToken');
+        // const accessToken = getCookie('accessToken');
+        // const refreshToken = getCookie('refreshToken');
+
+        const accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiYXV0aCI6IlJPTEVfTUVNQkVSIiwiZXhwIjoxNjYyMzYyOTgxfQ.IfPpNREjMEE5oUeymLMrIHHPTjbbDltPg2QYXl8sCVM"
+        const refreshToken = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjI5NjQwMDZ9.S_qxp5OMzYkXM9VYwKF4tUKaKxzrol_iTihjQRqyZmQ"
         config.headers['Authorization'] = `Bearer ${accessToken}`;
         config.headers['Refresh-token'] = refreshToken;
         return config;
@@ -72,6 +75,10 @@ api.interceptors.response.use(
 
 // 4.
 const apis = {
+
+    registerUser: (payload) => api.post('/users/signup', payload),
+    loginUser: (payload) => api.post('/users/login', payload),
+    writePost: (payload) => apiForm.post('/posts', payload),
 
     //이부분을 수정할 것!!
     //user
