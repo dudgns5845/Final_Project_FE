@@ -13,7 +13,7 @@ export default function Header({ children }) {
 }
 const AppCss = {
     backgroundColor: 'red',
-    position: 'fixed',
+    position: 'sticky',
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
