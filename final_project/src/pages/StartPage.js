@@ -1,6 +1,8 @@
 import { Container } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import styled from "styled-components";
 
 export default function Start() {
   const navigate = useNavigate();
@@ -20,7 +22,6 @@ export default function Start() {
   const [current, setCurrent] = useState(0);
   const [style, setStyle] = useState({
     marginLeft: `-${current}00%`,
-    display: "felx",
   });
   const imgSize = useRef(images.current.length);
 
@@ -40,12 +41,13 @@ export default function Start() {
   return (
     <Container
       style={{
-        display: "flex",
+        display: "block",
         alignItems: "center",
         justifyContent: "center",
         width: "100vw",
         height: "100vh",
-        userSelect: "none",
+        marginTop: "30vw",
+        // userSelect: "none",
       }}
     >
       <div style={{ transition: "all 0.3s ease-out" }}>
@@ -63,29 +65,20 @@ export default function Start() {
               alignItems: "center",
             }}
           >
-            <div
+            <BtnLeft
               className="btn"
-              style={{
-                position: "absolute",
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-                fontSize: "3.3rem",
-                color: "gray",
-                padding: "0 10px",
-              }}
               onClick={() => {
                 moveSlide(-1);
               }}
             >
               &lt;
-            </div>
+            </BtnLeft>
             <div
               className="window"
               style={{
-                background: "coral",
-                width: "350px",
-                height: "250px",
+                // background: "coral",
+                width: "90vw",
+                height: "50vh",
 
                 overflow: "hidden",
               }}
@@ -97,8 +90,8 @@ export default function Start() {
                     className="img"
                     style={{
                       backgroundImage: `url(${img.src})`,
-                      width: "350px",
-                      height: "250px",
+                      width: "90vw",
+                      height: "50vh",
                       backgroundPosition: "50% 50%",
                       backgroundSize: "contain",
                       backgroundRepeat: "no-repeat",
@@ -108,24 +101,14 @@ export default function Start() {
                 ))}
               </div>
             </div>
-            <div
+            <BtnRight
               className="btn"
-              style={{
-                position: "absolute",
-                right: "7.5%",
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-                fontSize: "3.3rem",
-                color: "gray",
-                padding: "0 10px",
-              }}
               onClick={() => {
                 moveSlide(1);
               }}
             >
               &gt;
-            </div>
+            </BtnRight>
           </div>
           <div
             className="position"
@@ -136,34 +119,68 @@ export default function Start() {
             }}
           >
             {images.current.map((x, i) => (
-              <div
+              <Dot
                 key={i}
-                className={i === current ? "dot current" : "dot"}
-                style={
-                  i === current
-                    ? { background: "gray", marginLeft: "20px" }
-                    : {
-                        background: "lightgray",
-                        borderRadius: "100%",
-                        height: "10px",
-                        width: "10px",
-                        marginLeft: "20px",
-                      }
-                }
-              ></div>
+                className={i === current ? "dotCurrent" : "dot"}
+                style={{}}
+              />
             ))}
           </div>
         </div>
       </div>
+      <br />
       <p />
-      <div style={{ display: "flex" }}>
-        <button
-          style={{ marginTop: "100px" }}
+      <div style={{ display: "grid" }}>
+        <Button
+          variant="contained"
+          style={{ marginTop: "10vw" }}
           onClick={() => navigate("/login:write")}
         >
-          로그인하러가기
-        </button>
+          로그인
+        </Button>
+        <Button
+          variant="outlined"
+          style={{ marginTop: "3vw" }}
+          onClick={() => navigate("/login:regi")}
+        >
+          회원가입
+        </Button>
       </div>
     </Container>
   );
 }
+
+const BtnLeft = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 2rem;
+  color: #dcdcdc;
+  padding: 0 10px;
+`;
+
+const BtnRight = styled.div`
+  position: absolute;
+  right: 7.5%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 2rem;
+  color: #dcdcdc;
+  padding: 0 10px;
+`;
+
+const Dot = styled.div`
+  .dot {
+    background: gray;
+    margin-left: 20px;
+  }
+  .dotCurrent {
+    background: lightgray;
+    border-radius: 100%;
+    height: 10px;
+    width: 10px;
+    margin-left: 20px;
+  }
+`;
