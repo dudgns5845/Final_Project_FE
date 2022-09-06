@@ -29,7 +29,6 @@ export default function PostPage() {
       //전송을 위한 이미지 데이터 추가
       setImgFile(new Array(...imgSelectList));
 
-
       const imgUrl = URL.createObjectURL(imgSelectList[i]);
       imgUploadList.push(imgUrl);
       if (imgUploadList.length > 5) {
@@ -66,28 +65,33 @@ export default function PostPage() {
 
     const postData = new FormData();
 
-    // console.log(imgFile);
     const dto = {
-      'title': titleState,
-      'content': contentState,
-      'category': category,
-      'postStatus': 'CREATED'
+      title: titleState,
+      content: contentState,
+      category: category,
+      postStatus: "CREATED",
+    };
+
+    postData.append(
+      "requestDto",
+      new Blob([JSON.stringify(dto)], {
+        type: "application/json",
+      })
+    );
+
+    for (let img of imgFile) {
+      postData.append("imageFileList", img);
     }
 
-    postData.append('requestDto', new Blob([JSON.stringify.apply(dto)], {
-      type: 'multipart/form-data',
-    }));
-    postData.append('imageFileList', imgFile);
-
-    console.log(imgFile);
-    console.log(dto);
     //통신
-    apis.writePost(postData).then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    })
-
+    apis
+      .writePost(postData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));

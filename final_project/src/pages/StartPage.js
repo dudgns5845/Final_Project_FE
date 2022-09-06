@@ -65,6 +65,15 @@ export default function Start() {
           >
             <div
               className="btn"
+              style={{
+                position: "absolute",
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                fontSize: "3.3rem",
+                color: "gray",
+                padding: "0 10px",
+              }}
               onClick={() => {
                 moveSlide(-1);
               }}
@@ -101,6 +110,16 @@ export default function Start() {
             </div>
             <div
               className="btn"
+              style={{
+                position: "absolute",
+                right: "7.5%",
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                fontSize: "3.3rem",
+                color: "gray",
+                padding: "0 10px",
+              }}
               onClick={() => {
                 moveSlide(1);
               }}
@@ -108,23 +127,43 @@ export default function Start() {
               &gt;
             </div>
           </div>
-          <div className="position">
+          <div
+            className="position"
+            style={{
+              marginTop: "15px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             {images.current.map((x, i) => (
               <div
                 key={i}
                 className={i === current ? "dot current" : "dot"}
+                style={
+                  i === current
+                    ? { background: "gray", marginLeft: "20px" }
+                    : {
+                        background: "lightgray",
+                        borderRadius: "100%",
+                        height: "10px",
+                        width: "10px",
+                        marginLeft: "20px",
+                      }
+                }
               ></div>
             ))}
           </div>
         </div>
       </div>
       <p />
-      <button
-        style={{ marginTop: "100px" }}
-        onClick={() => navigate("/login:write")}
-      >
-        로그인하러가기
-      </button>
+      <div style={{ display: "flex" }}>
+        <button
+          style={{ marginTop: "100px" }}
+          onClick={() => navigate("/login:write")}
+        >
+          로그인하러가기
+        </button>
+      </div>
     </Container>
   );
 }
