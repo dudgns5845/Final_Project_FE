@@ -1,5 +1,3 @@
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
@@ -8,6 +6,8 @@ import apis from "../apis/Apis";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import Button from "@mui/material/Button";
+import Header from "../components/Header";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function PostPage() {
   const navigate = useNavigate();
@@ -98,103 +98,9 @@ export default function PostPage() {
     setImgState(imgState.filter((_, index) => index !== id));
   };
   return (
-    <div>
-      <Box sx={{ flexGrow: 1 }}>
-        {/* <Header /> */}
-        <button
-          style={{ fontSize: "10px" }}
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          되돌아가기
-        </button>
-        <h4>게시글쓰기</h4>
-        <button onClick={ClickHandler}>완료</button>
-      </Box>
-      <div
-        style={{
-          border: "1px solid gainsboro",
-          height: "100px",
-          borderRight: "0px",
-          borderLeft: "0px",
-
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <label onChange={AddImage}>
-          <AddAPhotoIcon
-            style={{ fontSize: "40px", margin: "30px", marginLeft: "15px" }}
-          />
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            encType="multipart/form-data"
-            hidden
-          />
-        </label>
-        {imgState.map((image, id) => (
-          <img
-            key={id}
-            src={image}
-            alt={`${image}-${id}`}
-            style={{ width: "55px", height: "70px" }}
-            onClick={() => handleDeleteImage(id)}
-          />
-        ))}
-      </div>
-      <div>
-        <Service style={{ marginTop: "15px", marginBottom: "5px" }}>
-          글 제목
-        </Service>
-        <InputSt
-          type="text"
-          fullWidth
-          label="글 제목"
-          id="title"
-          onChange={TitleChange}
-          value={titleState}
-          placeholder="글 제목을 입력해주세요."
-        />
-      </div>
-      <div
-        style={{
-          border: "1px solid gainsboro",
-          height: "50px",
-          textIndent: "10px",
-          borderTop: "0px",
-          borderRight: "0px",
-          borderLeft: "0px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingRight: "5PX",
-        }}
-        onClick={OpenModal}
-      >
-        <Service style={{ textIndent: "10px" }}>{category}</Service>
-
-        <ArrowForwardIosIcon style={{ fontSize: "15px" }} />
-      </div>
-      <div>
-        <Service style={{ marginTop: "15px", marginBottom: "5px" }}>
-          게시글 내용
-        </Service>
-
-        <ContentStyle
-          multiline
-          label="내용"
-          rows={18}
-          placeholder="내용을 입력해주세요."
-          onChange={ContentChange}
-          value={contentState}
-          required
-        />
-      </div>
+    <>
       <Modal visible={open} closeModal={CloseModal}>
-        <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <div style={{ marginTop: "70px" }}>
           <Div data-value="1" onClick={onChangeHandler}>
             디지털기기
           </Div>
@@ -227,18 +133,114 @@ export default function PostPage() {
           </Button>
         </div>
       </Modal>
-    </div>
+      <Header>
+        <ArrowBackIcon
+          style={{ fontSize: "25px" }}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          되돌아가기
+        </ArrowBackIcon>
+        <h5>게시글쓰기</h5>
+        <Button
+          style={{
+            fontSize: "10px",
+            backgroundColor: "#FFBA46",
+            marginRight: "20PX",
+          }}
+          variant="contained"
+          component="label"
+          onClick={ClickHandler}
+        >
+          Upload
+        </Button>
+      </Header>
+      <div style={{ marginTop: "50px" }}>
+        <div
+          style={{
+            border: "1px solid gainsboro",
+            height: "100px",
+            borderRight: "0px",
+            borderLeft: "0px",
+            display: "fixed",
+            alignItems: "center",
+          }}
+        >
+          <label onChange={AddImage}>
+            <AddAPhotoIcon
+              style={{ fontSize: "40px", margin: "30px", marginLeft: "15px" }}
+            />
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              encType="multipart/form-data"
+              hidden
+            />
+          </label>
+          {imgState.map((image, id) => (
+            <img
+              key={id}
+              src={image}
+              alt={`${image}-${id}`}
+              style={{ width: "55px", height: "70px" }}
+              onClick={() => handleDeleteImage(id)}
+            />
+          ))}
+        </div>
+        <div>
+          <InputSt
+            type="text"
+            fullWidth
+            label="글 제목"
+            id="title"
+            onChange={TitleChange}
+            value={titleState}
+            placeholder="글 제목을 입력해주세요."
+          />
+        </div>
+        <div
+          style={{
+            border: "1px solid gainsboro",
+            height: "50px",
+            textIndent: "10px",
+            borderTop: "0px",
+            borderRight: "0px",
+            borderLeft: "0px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingRight: "5PX",
+          }}
+          onClick={OpenModal}
+        >
+          <Service>{category}</Service>
+
+          <ArrowForwardIosIcon style={{ fontSize: "15px" }} />
+        </div>
+        <ContentStyle
+          multiline
+          label="내용"
+          rows={18}
+          placeholder="내용을 입력해주세요."
+          onChange={ContentChange}
+          value={contentState}
+          required
+        />
+      </div>
+    </>
   );
 }
 const Div = styled.div`
   margin-top: 10px;
-  border: 0.5px solid gainsboro;
+  margin-left: 10px;
   height: 40px;
-  border-radius: 10px;
   &:hover {
     text-decoration: underline;
-    border: 0.5px solid gray;
+    border: 0.5px solid gainboro;
     background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     color: rgba(0, 0, 0, 0.3);
   }
 `;
@@ -260,6 +262,7 @@ const Service = styled.div`
   font-size: 14px;
   text-indent: 10px;
   font-weight: bold;
+  text=indent: "10px";
 `;
 
 const ContentStyle = styled.textarea`

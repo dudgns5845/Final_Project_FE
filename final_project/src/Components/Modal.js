@@ -29,8 +29,8 @@ const ModalBody = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   background-color: white;
   border-radius: 10px;
-  width: 340px;
-  height: 630px;
+  width: 330px;
+  height: 600px;
   padding-left: 10px;
   z-index: 100;
 `;
