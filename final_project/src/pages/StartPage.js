@@ -45,7 +45,7 @@ export default function Start() {
         alignItems: "center",
         justifyContent: "center",
         width: "100vw",
-        height: "100vh",
+        height: "80vh",
         marginTop: "30vw",
         // userSelect: "none",
       }}
@@ -96,6 +96,7 @@ export default function Start() {
                       backgroundSize: "contain",
                       backgroundRepeat: "no-repeat",
                       flex: "none",
+                      float: "left",
                     }}
                   ></div>
                 ))}
@@ -119,11 +120,7 @@ export default function Start() {
             }}
           >
             {images.current.map((x, i) => (
-              <Dot
-                key={i}
-                className={i === current ? "dotCurrent" : "dot"}
-                style={{}}
-              />
+              <Dot key={i} className={i === current ? "current" : "dots"} />
             ))}
           </div>
         </div>
@@ -133,7 +130,7 @@ export default function Start() {
       <div style={{ display: "grid" }}>
         <Button
           variant="contained"
-          style={{ marginTop: "10vw" }}
+          style={{ marginTop: "5vw" }}
           onClick={() => navigate("/login:write")}
         >
           로그인
@@ -172,11 +169,14 @@ const BtnRight = styled.div`
 `;
 
 const Dot = styled.div`
-  .dot {
+  &.current {
     background: gray;
+    border-radius: 100%;
+    height: 10px;
+    width: 10px;
     margin-left: 20px;
   }
-  .dotCurrent {
+  &.dots {
     background: lightgray;
     border-radius: 100%;
     height: 10px;
