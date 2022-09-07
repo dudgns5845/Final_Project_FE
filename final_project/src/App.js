@@ -7,6 +7,7 @@ import ErrorPage from "./pages/ErrorPage";
 import SearchPage from "./pages/SearchPage";
 import Login from "./pages/LoginPage";
 import Start from "./pages/StartPage";
+import MyPage from "./pages/MyPage";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Route path="/searchpage" element={<SearchPage />} />
           <Route path="*" element={<ErrorPage />} />
           <Route path="/start" element={<Start />} />
-
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/postpage" element={<PostPage />} />
           <Route path="/login:id" element={<Login />} />
         </Routes>
