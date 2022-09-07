@@ -23,6 +23,7 @@ const theme = {
     margin,
 };
 
+
 export default theme;
 
 // 스타일드컴포넌트에서 사용 예시
