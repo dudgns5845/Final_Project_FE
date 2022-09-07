@@ -10,7 +10,7 @@ import Login from "./pages/LoginPage";
 import Start from "./pages/StartPage";
 import MyPage from "./pages/MyPage";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Detail from "./pages/DetailPage";
 
 import { getCookie } from "./shared/Cookie";
@@ -28,19 +28,19 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (cookie !== undefined) {
+    if (cookie === undefined) {
       setIsLoggedIn(false);
     } else {
       setIsLoggedIn(true);
     }
   }, [cookie]);
-
+  console.log(isLoggedIn);
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/start" element={<Start />} />
-          <Route path="/login:id" element={<Login />} />
+          <Route path="/start" element={!isLoggedIn ? <Start /> : <Navigate replace to='/' />} />
+          <Route path="/login:id" element={!isLoggedIn ? <Login /> : <Navigate replace to='/' />} />
           <Route path="/" element={isLoggedIn ? <MainPage /> : <Navigate replace to='/start' />} />
           <Route path="/searchpage" element={isLoggedIn ? <SearchPage /> : <Navigate replace to='/start' />} />
           <Route path="/detail/:postid" element={isLoggedIn ? <Detail /> : <Navigate replace to='/start' />} />

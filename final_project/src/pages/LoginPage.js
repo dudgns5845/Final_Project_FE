@@ -87,7 +87,7 @@ export default function Login() {
             response.data.data.id,
             response.data.data.token.accessTokenExpiresIn
           );
-          setInterval(() => {
+          setTimeout(() => {
             navigate("/");
           }, 2000);
           return;
