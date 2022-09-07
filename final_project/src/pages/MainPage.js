@@ -41,8 +41,8 @@ export default function MainPage() {
       </Header>
 
       <div style={{ marginTop: "5em" }}>
-        {test.map((t, idx) => {
-          return <Post test={t} key={idx}></Post>;
+        {test.map((postid, idx) => {
+          return <Post postid={postid} key={idx}></Post>;
         })}
       </div>
       <IconButton
