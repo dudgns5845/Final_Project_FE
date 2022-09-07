@@ -87,7 +87,7 @@ export default function Login() {
             response.data.data.id,
             response.data.data.token.accessTokenExpiresIn
           );
-          setInterval(() => {
+          setTimeout(() => {
             navigate("/");
           }, 2000);
           return;
@@ -251,9 +251,9 @@ export default function Login() {
             </Button>
             <br />
             {auth && userId.length > 1 && isUserId ? (
-              <span>{userIdMessege}</span>
+              <span style={{ color: "green" }}>{userIdMessege}</span>
             ) : (
-              <span>{userIdMessege}</span>
+              <span style={{ color: "red" }}>{userIdMessege}</span>
             )}
           </>
         )}
@@ -268,9 +268,9 @@ export default function Login() {
         <br />
         {auth &&
           (isPassword ? (
-            <span>{passwordMessage}</span>
+            <span style={{ color: "green" }}>{passwordMessage}</span>
           ) : (
-            <span>{passwordMessage}</span>
+            <span style={{ color: "red" }}>{passwordMessage}</span>
           ))}
         {auth && (
           <>
@@ -283,9 +283,9 @@ export default function Login() {
             />
             <br />
             {passwordConfirm.length > 1 && !isPasswordConfirm ? (
-              <span>{passwordConfirmMessage}</span>
+              <span style={{ color: "green" }}>{passwordConfirmMessage}</span>
             ) : (
-              <span>{passwordConfirmMessage}</span>
+              <span style={{ color: "red" }}>{passwordConfirmMessage}</span>
             )}
           </>
         )}

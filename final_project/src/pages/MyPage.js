@@ -17,7 +17,9 @@ export default function MyPage() {
           style={{ backgroundImage: `url(${image.current[0].src})` }}
         ></Image>
         <NickName>닉네임</NickName>
-        <Edit>프로필 수정</Edit>
+        <div style={{ gridArea: "edit" }}>
+          <Edit>프로필 수정</Edit>
+        </div>
         <Rank>랭크 정보(거래 횟수 기준)</Rank>
         <MyPost>내가 작성한 게시글</MyPost>
         <Zzim>내가 찜한 게시글</Zzim>
@@ -29,14 +31,16 @@ export default function MyPage() {
 
 const Container = styled.div`
   display: grid;
-  width: 100vw;
-  height: 100vh;
+  margin: auto;
+  width: 95vw;
+  height: 95vh;
   grid-template-areas:
     "img img nick nick"
     "img img nick nick"
     "img img nick nick"
-    "profile profile profile profile"
-    ". . . ."
+    "img img nick nick"
+    "img img nick nick"
+    "edit edit edit edit"
     "rank rank rank rank"
     "rank rank rank rank"
     "rank rank rank rank"
@@ -50,44 +54,61 @@ const Image = styled.img`
   display: grid;
   grid-area: img;
   margin: auto;
-  width: 30vw;
-  height: 18vh;
+  width: 100%;
+  height: 70%;
 
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
 
-  border: 1px solid #ffffff;
+  border: 1px solid black;
+  border-radius: 100%;
   flex: none;
 `;
 
 const NickName = styled.div`
   display: grid;
   grid-area: nick;
-  margin: auto 0;
+  margin: auto auto auto 1.5rem;
 `;
 
 const Edit = styled.button`
   display: grid;
-  grid-area: profile;
+  margin: auto auto;
+  width: 75vw;
+  height: 6vh;
+  border: none;
+  border-radius: 2%;
+  background-color: #d3d3d3;
 `;
 
 const Rank = styled.div`
   display: grid;
   grid-area: rank;
+  margin: 1rem auto auto auto;
+  border-radius: 2%;
+  background-color: #d3d3d3;
+  width: 100%;
+  height: 100%;
 `;
 
 const MyPost = styled.div`
   display: grid;
   grid-area: mypost;
+  margin-left: 1rem;
+  cursor: pointer;
 `;
 
 const Zzim = styled.div`
   display: grid;
   grid-area: zzim;
+  margin-left: 1rem;
+  cursor: pointer;
 `;
 
 const LogOut = styled.div`
   display: grid;
   grid-area: out;
+  margin-left: 1rem;
+  cursor: pointer;
 `;
