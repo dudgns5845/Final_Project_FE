@@ -11,8 +11,8 @@ function Modal({ visible, children }) {
 export default Modal;
 
 const ModalWrap = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
   top: 0;
@@ -23,14 +23,14 @@ const ModalWrap = styled.div`
 const ModalBody = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
-  top: 50%;
+  top: 54%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   background-color: white;
   border-radius: 10px;
-  width: 330px;
-  height: 600px;
+  width: 100vw;
+  height: 90vh;
   padding-left: 10px;
   z-index: 100;
 `;

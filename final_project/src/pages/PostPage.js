@@ -100,7 +100,7 @@ export default function PostPage() {
   return (
     <>
       <Modal visible={open} closeModal={CloseModal}>
-        <div style={{ marginTop: "70px" }}>
+        <div style={{ marginTop: "40px" }}>
           <Div data-value="1" onClick={onChangeHandler}>
             디지털기기
           </Div>
@@ -142,12 +142,13 @@ export default function PostPage() {
         >
           되돌아가기
         </ArrowBackIcon>
-        <h5>게시글쓰기</h5>
+        <h4>게시글쓰기</h4>
         <Button
           style={{
             fontSize: "10px",
             backgroundColor: "#FFBA46",
             marginRight: "20PX",
+            borderRadius: "5px",
           }}
           variant="contained"
           component="label"
