@@ -83,31 +83,33 @@ export default function MyPage() {
           name="nick"
           placeholder={myNick}
         />
-        <Button
-          style={{
-            fontSize: "20px",
-            backgroundColor: "#FFBA46",
-            marginRight: "20PX",
-            borderRadius: "5px",
-          }}
-          variant="contained"
-          component="label"
-          onClick={ClickHandler}
-        >
-          수정하기
-        </Button>
-        <Button
-          style={{
-            fontSize: "20px",
-            backgroundColor: "#FFBA46",
+        <div style={{ textAlign: "center", alignItems: "center" }}>
+          <Button
+            style={{
+              fontSize: "20px",
+              backgroundColor: "#FFBA46",
+              marginRight: "20PX",
+              borderRadius: "5px",
+            }}
+            variant="contained"
+            component="label"
+            onClick={ClickHandler}
+          >
+            수정하기
+          </Button>
+          <Button
+            style={{
+              fontSize: "20px",
+              backgroundColor: "#FFBA46",
 
-            marginRight: "20PX",
-            borderRadius: "5px",
-          }}
-          onClick={close}
-        >
-          닫기
-        </Button>
+              marginRight: "20PX",
+              borderRadius: "5px",
+            }}
+            onClick={close}
+          >
+            닫기
+          </Button>
+        </div>
       </Modal>
     </>
   );
@@ -187,7 +189,6 @@ const Zzim = styled.div`
   display: grid;
   grid-area: zzim;
   margin: auto;
-
   cursor: pointer;
 `;
 
@@ -201,8 +202,10 @@ const LogOut = styled.div`
 
 const Button = styled.button`
   font-size: 15px;
+  display: inline-block;
   border: none;
-  margin-right: 20px;
+  margin-top: 2vh;
+
   background-color: transparent;
   color: white;
   &:hover {
@@ -216,9 +219,10 @@ const InputSt = styled.input`
   align-items: center;
   justify-content: center;
   border: 1px solid gainsboro;
-  margin-top: 5vh;
+  margin-top: 4vh;
+  margin-left: 18vw;
   width: 60%;
-  height: 20px;
+  height: 30px;
   text-indent: 8px;
   &:focus {
     outline: 1px solid gray;
