@@ -4,10 +4,10 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-
+import { useNavigate } from 'react-router-dom';
 export default function Footer() {
     const [value, setValue] = React.useState(0);
-
+    const naviagte = useNavigate();
     return (
         <BottomNavigation
             showLabels
@@ -19,7 +19,7 @@ export default function Footer() {
         >
             <BottomNavigationAction label="홈" icon={<HomeRoundedIcon />} />
             <BottomNavigationAction label="채팅" icon={<QuestionAnswerRoundedIcon />} />
-            <BottomNavigationAction label="마이페이지" icon={<PersonRoundedIcon />} />
+            <BottomNavigationAction label="마이페이지" icon={<PersonRoundedIcon />} onClick={() => naviagte('/mypage')} />
         </BottomNavigation>
     );
 }

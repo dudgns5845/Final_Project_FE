@@ -6,6 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Modal from "../components/Modal";
 
 import { CompressOutlined } from "@mui/icons-material";
+import zIndex from "@mui/material/styles/zIndex";
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ export default function MyPage() {
         <Zzim>내가 찜한 게시글</Zzim>
         <LogOut>로그아웃</LogOut>
       </Container>
-      <Modal visible={editProfile}>
+      <Modal visible={editProfile} style={{ zIndex: 10 }}>
         <label onChange={AddImage}>
           <Image style={{ marginTop: "5vh" }} src={myImage}></Image>
           <input
@@ -148,7 +149,7 @@ const NickName = styled.div`
   grid-area: nick;
   margin: auto;
   width: 5rem;
-  height:5rem
+  height:5rem;
   font-size: 20px;
   text-align: left;
 `;

@@ -75,6 +75,8 @@ const apis = {
   registerUser: (payload) => api.post("/users/signup", payload),
   loginUser: (payload) => api.post("/users/login", payload),
   writePost: (payload) => apiForm.post("posts", payload),
+  getAllPostList: () => api.get('posts?searchValue=&category='),
+  postDetail: (payload) => api.get(`posts/${payload}`),
 
   //이부분을 수정할 것!!
   //user

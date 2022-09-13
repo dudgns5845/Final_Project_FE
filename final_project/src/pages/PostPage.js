@@ -56,8 +56,9 @@ export default function PostPage() {
   };
   const onChangeHandler = (e) => {
     const category = e.target.innerText;
-    setCategory(category);
-    console.log(category);
+    if (category === '도서') { setCategory('BOOK'); }
+    // setCategory(category);
+    // console.log(category);
     CloseModal();
   };
 
@@ -69,8 +70,7 @@ export default function PostPage() {
     const dto = {
       title: titleState,
       content: contentState,
-      category: category,
-      postStatus: "CREATED",
+      category: 'BOOK',
     };
 
     postData.append(

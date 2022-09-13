@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -14,11 +14,23 @@ import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 
 import { useNavigate } from "react-router-dom";
 
+import { useState } from "react";
+import apis from "../apis/Apis";
 
-const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 export default function MainPage() {
 
   const navigate = useNavigate();
+
+  const [postList, setPostList] = useState([]);
+
+  useEffect(() => {
+    apis.getAllPostList(`?searchValue=& category=`).then((response) => {
+      console.log(response);
+      setPostList(response.data.data.content)
+    }).catch((error) => {
+      console.log(error);
+    })
+  }, [])
 
   return (
     <>
@@ -41,8 +53,8 @@ export default function MainPage() {
       </Header>
 
       <div style={{ marginTop: "5em" }}>
-        {test.map((postid, idx) => {
-          return <Post postid={postid} key={idx}></Post>;
+        {postList.map((post, idx) => {
+          return <Post post={post} key={idx}></Post>;
         })}
       </div>
       <IconButton

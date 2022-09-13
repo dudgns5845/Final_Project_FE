@@ -1,16 +1,17 @@
 import React from 'react';
 import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-export default function Post({ postid }) {
+export default function Post({ post }) {
     const naviage = useNavigate();
     return (
-        <CardActionArea onClick={() => naviage(`detail/${postid}`)}>
+        <CardActionArea onClick={() => naviage(`detail/${post.id}`)}>
             <div style={CardCss}>
-                <img style={ImageCss} src='https://picsum.photos/200' />
+                {/* <img style={ImageCss} src='https://picsum.photos/200' /> */}
+                <img style={ImageCss} src={post.postImageUrl} />
                 <div style={TextCss}>
-                    <h3>Post_Title {postid}</h3>
-                    <p>Post_location * Post_Time</p>
-                    <p>Post_Category</p>
+                    <h3>{post.title} {post.id}</h3>
+                    <p>Post_location * {post.createdAt}</p>
+                    <p>{post.category}</p>
                 </div>
             </div>
         </CardActionArea>

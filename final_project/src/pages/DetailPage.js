@@ -7,7 +7,8 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import Header from '../components/Header';
-
+import apis from '../apis/Apis';
+import { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 export default function Detail() {
@@ -16,21 +17,33 @@ export default function Detail() {
 
     const param = useParams();
 
+    const [postData, setPostData] = useState([]);
+    const [imageList, setImageList] = useState(['/default-image.jpg']);
 
+    useEffect(() => {
+        apis.postDetail(param.postid).then((response) => {
+            console.log(response);
+            setPostData(response.data.data)
+            setImageList(preList => [...response.data.data.imageUrl]);
 
+        }).catch((error) => {
+            console.log(error);
+        })
+    }, [])
+    console.log(imageList);
     return (
         <>
             <IconButton style={IconCss} size='large' onClick={() => { navigate(-1) }}>
                 <ChevronLeftRoundedIcon fontSize="large" />
             </IconButton>
 
-            <img style={imgCss} src='https://picsum.photos/200' onClick={() => { alert('클릭!') }} />
+            <img style={imgCss} src={imageList[0]} onClick={() => { alert('클릭!') }} />
 
             <Card sx={{ width: '100vw' }}>
                 <CardHeader
                     avatar={
                         <Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
-                            R
+                            {postData.userImageUrl}
                         </Avatar>
                     }
                     action={
@@ -75,6 +88,9 @@ const IconCss = {
 
 const imgCss = {
     width: '100vw',
+    height: '60vh',
+    backgroundColor: 'gray',
+    objectFit: 'cover',
 }
 
 const ButtonCss = {
