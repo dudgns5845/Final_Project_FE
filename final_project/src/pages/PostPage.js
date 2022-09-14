@@ -12,13 +12,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 export default function PostPage() {
   const navigate = useNavigate();
   const [imgState, setImgState] = useState([]);
-
   const [imgFile, setImgFile] = useState();
-
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
-  const [value, setValue] = useState("");
   const [category, setCategory] = useState("카테고리 선택");
+  const [tmpcategory, setTmpCategory] = useState(category);
   const [open, setOpen] = useState(false);
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
@@ -56,9 +54,26 @@ export default function PostPage() {
   };
   const onChangeHandler = (e) => {
     const category = e.target.innerText;
-    if (category === '도서') { setCategory('BOOK'); }
-    // setCategory(category);
-    // console.log(category);
+    if (category === "디지털기기") {
+      setTmpCategory("DEVICE");
+    } else if (category === "생활가전") {
+      setTmpCategory("APPLANCE");
+    } else if (category === "생활/주방") {
+      setTmpCategory("KITCHEN");
+    } else if (category === "여성의류/잡화") {
+      setTmpCategory("WOMEN");
+    } else if (category === "남성의류/잡화") {
+      setTmpCategory("MEN");
+    } else if (category === "뷰티/미용") {
+      setTmpCategory("BEAUTY");
+    } else if (category === "취미/게임") {
+      setTmpCategory("GAME");
+    } else if (category === "도서") {
+      setTmpCategory("BOOK");
+    } else if (category === "티켓") {
+      setTmpCategory("TICKET");
+    }
+    setCategory(category);
     CloseModal();
   };
 
@@ -70,7 +85,7 @@ export default function PostPage() {
     const dto = {
       title: titleState,
       content: contentState,
-      category: 'BOOK',
+      category: tmpcategory,
     };
 
     postData.append(
@@ -83,13 +98,15 @@ export default function PostPage() {
     for (let img of imgFile) {
       postData.append("imageFileList", img);
     }
-
+    console.log(imgFile);
     //통신
     apis
       .writePost(postData)
       .then((response) => {
         console.log(response);
+        navigate(`/detail/${response.data.data.id}`);
       })
+
       .catch((error) => {
         console.log(error);
       });
@@ -233,6 +250,7 @@ export default function PostPage() {
     </>
   );
 }
+
 const Div = styled.div`
   margin-top: 10px;
   margin-left: 10px;
