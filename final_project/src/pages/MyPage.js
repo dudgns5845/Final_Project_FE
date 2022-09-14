@@ -183,7 +183,7 @@ const NickName = styled.div`
 const Edit = styled.button`
   display: grid;
   grid-area: edit;
-  margin: auto;
+  margin: 0 auto -40px auto;
   text-align: center;
   vertical-align: middle;
   padding: 10px;
