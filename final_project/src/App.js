@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Detail from "./pages/DetailPage";
 
 import { getCookie } from "./shared/Cookie";
+import SubMyPage from "./pages/SubMyPage";
 
 function App() {
   function setScreenSize() {
@@ -24,7 +25,7 @@ function App() {
     setScreenSize();
   });
 
-  const cookie = getCookie('accessToken');
+  const cookie = getCookie("accessToken");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -39,13 +40,41 @@ function App() {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/start" element={!isLoggedIn ? <Start /> : <Navigate replace to='/' />} />
-          <Route path="/login:id" element={!isLoggedIn ? <Login /> : <Navigate replace to='/' />} />
-          <Route path="/" element={isLoggedIn ? <MainPage /> : <Navigate replace to='/start' />} />
-          <Route path="/searchpage" element={isLoggedIn ? <SearchPage /> : <Navigate replace to='/start' />} />
-          <Route path="/detail/:postid" element={isLoggedIn ? <Detail /> : <Navigate replace to='/start' />} />
-          <Route path="/postpage" element={isLoggedIn ? <PostPage /> : <Navigate replace to='/start' />} />
-          <Route path="/mypage" element={isLoggedIn ? <MyPage /> : <Navigate replace to='/start' />} />
+          <Route
+            path="/start"
+            element={!isLoggedIn ? <Start /> : <Navigate replace to="/" />}
+          />
+          <Route
+            path="/login:id"
+            element={!isLoggedIn ? <Login /> : <Navigate replace to="/" />}
+          />
+          <Route
+            path="/"
+            element={
+              isLoggedIn ? <MainPage /> : <Navigate replace to="/start" />
+            }
+          />
+          <Route
+            path="/searchpage"
+            element={
+              isLoggedIn ? <SearchPage /> : <Navigate replace to="/start" />
+            }
+          />
+          <Route
+            path="/detail/:postid"
+            element={isLoggedIn ? <Detail /> : <Navigate replace to="/start" />}
+          />
+          <Route
+            path="/postpage"
+            element={
+              isLoggedIn ? <PostPage /> : <Navigate replace to="/start" />
+            }
+          />
+          <Route
+            path="/mypage"
+            element={isLoggedIn ? <MyPage /> : <Navigate replace to="/start" />}
+          />
+          <Route path="/submypage" element={<SubMyPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
