@@ -13,7 +13,7 @@ import { setCookie } from "../shared/Cookie";
 
 const ariaLabel = { "aria-label": "description" };
 
-export default function Login() {
+export default function Login({ ChangeCookie }) {
   // login, register 페이지 스위치
   const params = useParams();
   const [auth, setAuth] = useState(params.id === ":write" ? false : true);
@@ -76,6 +76,8 @@ export default function Login() {
             response.data.data.token.accessToken,
             response.data.data.token.accessTokenExpiresIn
           );
+          ChangeCookie(response.data.data.token.accessToken);
+
           setCookie("refreshToken", response.data.data.token.refreshToken);
           setCookie(
             "nickname",
@@ -89,7 +91,7 @@ export default function Login() {
           );
           setTimeout(() => {
             navigate("/");
-          }, 2000);
+          }, 1000);
           return;
         })
         .catch((error) => {
