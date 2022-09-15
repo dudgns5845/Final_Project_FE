@@ -240,16 +240,30 @@ export default function Login({ ChangeCookie }) {
 
   const buttonsEmail = (
     <>
-      <Button
-        style={{ marginLeft: "4%", fontSize: "x-small" }}
-        variant="outlined"
-        onClick={(e) => {
-          setsnackOpen(true);
-          onDoublingHandler(e);
-        }}
-      >
-        메일 인증
-      </Button>
+      {isEmail ? (
+        <Button
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          disabled
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onDoublingHandler(e);
+          }}
+        >
+          발송 완료
+        </Button>
+      ) : (
+        <Button
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onDoublingHandler(e);
+          }}
+        >
+          메일 인증
+        </Button>
+      )}
     </>
   );
   const certification = {
@@ -279,16 +293,30 @@ export default function Login({ ChangeCookie }) {
 
   const buttonsAuthNumber = (
     <>
-      <Button
-        style={{ marginLeft: "4%", fontSize: "x-small" }}
-        variant="outlined"
-        onClick={(e) => {
-          setsnackOpen(true);
-          onAuthNumberHandler(e);
-        }}
-      >
-        제출
-      </Button>
+      {isAuth ? (
+        <Button
+          disabled
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onAuthNumberHandler(e);
+          }}
+        >
+          제출 완료
+        </Button>
+      ) : (
+        <Button
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onAuthNumberHandler(e);
+          }}
+        >
+          제출
+        </Button>
+      )}
     </>
   );
 
@@ -318,16 +346,30 @@ export default function Login({ ChangeCookie }) {
 
   const buttonsNickname = (
     <>
-      <Button
-        style={{ marginLeft: "4%", fontSize: "x-small" }}
-        variant="outlined"
-        onClick={(e) => {
-          setsnackOpen(true);
-          onDoublingNickHandler(e);
-        }}
-      >
-        중복 확인
-      </Button>
+      {isNickname ? (
+        <Button
+          disabled
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onDoublingNickHandler(e);
+          }}
+        >
+          중복 확인
+        </Button>
+      ) : (
+        <Button
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onDoublingNickHandler(e);
+          }}
+        >
+          중복 확인
+        </Button>
+      )}
     </>
   );
 
