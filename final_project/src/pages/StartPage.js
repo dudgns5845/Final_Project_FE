@@ -7,10 +7,6 @@ import { getCookie } from "../shared/Cookie";
 
 export default function Start() {
   const navigate = useNavigate();
-  const moveMainPage = () => {
-    navigate("/");
-    console.log(isLoggedIn, "asdf");
-  };
 
   const images = useRef([
     {
@@ -149,7 +145,7 @@ export default function Start() {
           variant="contained"
           style={{ marginTop: "5vw", height: "9vh", fontSize: "x-large" }}
           onClick={() => {
-            isLoggedIn ? moveMainPage() : navigate("/login");
+            isLoggedIn ? navigate("/") : navigate("/login");
           }}
         >
           시작하기

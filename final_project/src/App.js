@@ -12,8 +12,6 @@ import MyPage from "./pages/MyPage";
 
 import { useEffect, useState } from "react";
 import Detail from "./pages/DetailPage";
-
-import { getCookie } from "./shared/Cookie";
 import SubMyPage from "./pages/SubMyPage";
 
 function App() {
@@ -31,7 +29,7 @@ function App() {
   };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  //   const cookie = getCookie("accessToken");
+
   //상태관리 로직 사용 (issue 등록);리듀서 , usecontext
   // useefftect 에서 쿠키 유무를 알 수 있게
   useEffect(() => {
