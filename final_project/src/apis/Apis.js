@@ -74,6 +74,7 @@ api.interceptors.response.use(
 const apis = {
   emailCheck: (payload) => api.post("/users/check/email", payload),
   emailSend: (payload) => api.post("/mail/send", payload),
+  certification: (payload) => api.post("users/certification", payload),
   nicknameCheck: (payload) => api.post("/users/check/nickname", payload),
   registerUser: (payload) => api.post("/users/signup", payload),
   loginUser: (payload) => api.post("/users/login", payload),

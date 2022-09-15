@@ -6,7 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useParams, useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 import apis from "../apis/Apis";
 import { setCookie } from "../shared/Cookie";
@@ -25,12 +25,12 @@ export default function Login({ ChangeCookie }) {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [region, setRegion] = useState("");
+  const [authNumber, setAuthNumber] = useState("");
 
   // 조건 오류 메시지
   const [userIdMessege, setUserIdMessege] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
-
   const [errorMessage, setErrorMessage] = useState("");
 
   // 유효성 검사
@@ -39,6 +39,7 @@ export default function Login({ ChangeCookie }) {
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [isNickname, setIsNickName] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
 
   // MUI snackbar
   const state = {
@@ -74,19 +75,23 @@ export default function Login({ ChangeCookie }) {
             response.data.data.token.accessToken,
             response.data.data.token.accessTokenExpiresIn
           );
+
           ChangeCookie(response.data.data.token.accessToken);
 
           setCookie("refreshToken", response.data.data.token.refreshToken);
+
           setCookie(
             "nickname",
             response.data.data.nickname,
             response.data.data.token.accessTokenExpiresIn
           );
+
           setCookie(
             "id",
             response.data.data.id,
             response.data.data.token.accessTokenExpiresIn
           );
+
           setTimeout(() => {
             navigate("/");
           }, 1000);
@@ -96,6 +101,8 @@ export default function Login({ ChangeCookie }) {
           console.log(error);
           return setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
         });
+    } else if (!isAuth) {
+      return setErrorMessage("이메일 인증을 진행해주세요");
     } else if (!isPasswordConfirm) {
       return setErrorMessage("비밀번호가 일치하지 않습니다");
     } else if (nickName.length === 0) {
@@ -196,6 +203,9 @@ export default function Login({ ChangeCookie }) {
   const handleChange = (e) => {
     setRegion(e.target.value);
   };
+  const onAuthNumber = (e) => {
+    setAuthNumber(e.target.value);
+  };
 
   // 메일 인증
   const idSend = { address: userId };
@@ -212,7 +222,7 @@ export default function Login({ ChangeCookie }) {
           console.log(response);
           setErrorMessage("인증번호를 입력해주세요");
           setIsEmail(true);
-          console.log(isEmail, "abcde");
+          console.log(isEmail);
           apis
             .emailSend(idSend)
             .then((response) => {
@@ -230,16 +240,83 @@ export default function Login({ ChangeCookie }) {
 
   const buttonsEmail = (
     <>
-      <Button
-        style={{ marginLeft: "4%", fontSize: "x-small" }}
-        variant="outlined"
-        onClick={(e) => {
-          setsnackOpen(true);
-          onDoublingHandler(e);
-        }}
-      >
-        메일 인증
-      </Button>
+      {isEmail ? (
+        <Button
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          disabled
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onDoublingHandler(e);
+          }}
+        >
+          발송 완료
+        </Button>
+      ) : (
+        <Button
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onDoublingHandler(e);
+          }}
+        >
+          메일 인증
+        </Button>
+      )}
+    </>
+  );
+  const certification = {
+    email: userId,
+    certificationNum: authNumber,
+  };
+  const onAuthNumberHandler = (e) => {
+    e.preventDefault();
+    if (authNumber.length === 0) {
+      return setErrorMessage("인증번호를 입력해주세요");
+    } else {
+      apis
+        .certification(certification)
+        .then((response) => {
+          console.log(response.data.success);
+          if (!response.data.success) {
+            return setErrorMessage("인증번호를 확인해주세요");
+          }
+          setErrorMessage("인증이 완료되었습니다");
+          setIsAuth(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const buttonsAuthNumber = (
+    <>
+      {isAuth ? (
+        <Button
+          disabled
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onAuthNumberHandler(e);
+          }}
+        >
+          제출 완료
+        </Button>
+      ) : (
+        <Button
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onAuthNumberHandler(e);
+          }}
+        >
+          제출
+        </Button>
+      )}
     </>
   );
 
@@ -269,16 +346,30 @@ export default function Login({ ChangeCookie }) {
 
   const buttonsNickname = (
     <>
-      <Button
-        style={{ marginLeft: "4%", fontSize: "x-small" }}
-        variant="outlined"
-        onClick={(e) => {
-          setsnackOpen(true);
-          onDoublingNickHandler(e);
-        }}
-      >
-        중복 확인
-      </Button>
+      {isNickname ? (
+        <Button
+          disabled
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onDoublingNickHandler(e);
+          }}
+        >
+          중복 확인
+        </Button>
+      ) : (
+        <Button
+          style={{ marginLeft: "4%", fontSize: "x-small" }}
+          variant="outlined"
+          onClick={(e) => {
+            setsnackOpen(true);
+            onDoublingNickHandler(e);
+          }}
+        >
+          중복 확인
+        </Button>
+      )}
     </>
   );
 
@@ -314,13 +405,23 @@ export default function Login({ ChangeCookie }) {
         ) : (
           <>
             <p>이메일</p>
-            <Input
-              style={{ width: "68%" }}
-              placeholder="이메일을 입력하세요"
-              inputProps={ariaLabel}
-              onChange={onChangeUserId}
-            />
-
+            {isEmail ? (
+              <Input
+                disabled
+                defaultValue="Disabled"
+                style={{ width: "68%" }}
+                placeholder="이메일을 입력하세요"
+                inputProps={ariaLabel}
+                onChange={onChangeUserId}
+              />
+            ) : (
+              <Input
+                style={{ width: "68%" }}
+                placeholder="이메일을 입력하세요"
+                inputProps={ariaLabel}
+                onChange={onChangeUserId}
+              />
+            )}
             {buttonsEmail}
             <Snackbar
               anchorOrigin={{
@@ -334,8 +435,50 @@ export default function Login({ ChangeCookie }) {
               key={state.vertical + state.horizontal}
             ></Snackbar>
             <br />
+            {isEmail && (
+              <>
+                {isAuth ? (
+                  <Input
+                    disabled
+                    defaultValue="Disabled"
+                    style={{ width: "68%" }}
+                    placeholder="인증번호를 입력하세요"
+                    inputProps={ariaLabel}
+                    onChange={onAuthNumber}
+                  />
+                ) : (
+                  <Input
+                    style={{ width: "68%" }}
+                    placeholder="인증번호를 입력하세요"
+                    inputProps={ariaLabel}
+                    onChange={onAuthNumber}
+                  />
+                )}
+                {buttonsAuthNumber}
+                <Snackbar
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                  open={snackOpen}
+                  autoHideDuration={2000}
+                  message={errorMessage}
+                  onClose={handleClose}
+                  key={state.vertical + state.horizontal}
+                ></Snackbar>
+              </>
+            )}
+            <br />
             {auth && userId.length > 1 && isUserId ? (
-              <span style={{ color: "green" }}>{userIdMessege}</span>
+              <>
+                {isAuth ? (
+                  <span style={{ color: "green" }}>
+                    이메일 인증이 완료되었습니다
+                  </span>
+                ) : (
+                  <span style={{ color: "green" }}>{userIdMessege}</span>
+                )}
+              </>
             ) : (
               <span style={{ color: "red" }}>{userIdMessege}</span>
             )}

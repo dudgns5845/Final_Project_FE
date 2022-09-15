@@ -12,8 +12,6 @@ import MyPage from "./pages/MyPage";
 
 import { useEffect, useState } from "react";
 import Detail from "./pages/DetailPage";
-
-import { getCookie } from "./shared/Cookie";
 import SubMyPage from "./pages/SubMyPage";
 
 function App() {
