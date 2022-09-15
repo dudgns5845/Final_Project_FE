@@ -5,20 +5,23 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import apis from "../apis/Apis";
-function SubMyPage() {
+const temp = [1, 2, 3, 4, 5];
+export default function SubMyPage() {
   const navigate = useNavigate();
-  const [postList, setPostList] = useState([]);
+  const [ttt, setTTT] = useState([]);
+
   useEffect(() => {
     apis
-      .getAllPostList(`?searchValue=&category=`)
+      .myWritepost("/mypage/posts")
       .then((response) => {
         console.log(response);
-        setPostList(response.data.data.content);
+        setTTT(response.data.data.content);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
   return (
     <>
       <Header>
@@ -31,11 +34,10 @@ function SubMyPage() {
       </Header>
 
       <div style={{ marginTop: "5em" }}>
-        {postList.map((post, idx) => {
+        {ttt.map((post, idx) => {
           return <Post post={post} key={idx}></Post>;
         })}
       </div>
     </>
   );
 }
-export default SubMyPage;
