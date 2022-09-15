@@ -78,26 +78,26 @@ export default function MyPage() {
   // };
 
   const LogOutAction = () => {
-    // apis.logOutUser().then((response) => {
-    //   console.log(response);
-    //   if (response.data.data.success === true) {
-    //     deleteCookie('accessToken');
-    //     deleteCookie('refreshToken');
-    //     deleteCookie('id');
-    //     deleteCookie('nickname');
-    //   }
-    //   window.location.reload();
-    // }).catch((error) => {
-    //   console.log(error);
-    // })
+    apis
+      .logOutUser()
+      .then((response) => {
+        console.log(response);
+        deleteCookie("accessToken");
+        deleteCookie("refreshToken");
+        deleteCookie("id");
+        deleteCookie("nickname");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    deleteCookie('accessToken');
-    deleteCookie('refreshToken');
-    deleteCookie('id');
-    deleteCookie('nickname');
-    window.location.reload();
-
-  }
+    // deleteCookie('accessToken');
+    // deleteCookie('refreshToken');
+    // deleteCookie('id');
+    // deleteCookie('nickname');
+    // window.location.reload();
+  };
 
   return (
     <>

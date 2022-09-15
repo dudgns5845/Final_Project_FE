@@ -80,11 +80,12 @@ const apis = {
   loginUser: (payload) => api.post("/users/login", payload),
   writePost: (payload) => apiForm.post("posts", payload),
 
-  getAllPostList: (payload) => api.get(`posts?searchValue=&category=&page=${payload}`),
+  getAllPostList: (payload) =>
+    api.get(`posts?searchValue=&category=&page=${payload}`),
   postDetail: (payload) => api.get(`posts/${payload}`),
   editProfile: (payload) => apiForm.put("/users", payload),
   myWritepost: () => api.get("/mypage/posts"),
-  logOutUser: () => api.get('users/logout'),
+  logOutUser: () => api.delete("users/logout"),
 
   //이부분을 수정할 것!!
   //user
