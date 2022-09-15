@@ -101,6 +101,8 @@ export default function Login({ ChangeCookie }) {
           console.log(error);
           return setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
         });
+    } else if (!isAuth) {
+      return setErrorMessage("이메일 인증을 진행해주세요");
     } else if (!isPasswordConfirm) {
       return setErrorMessage("비밀번호가 일치하지 않습니다");
     } else if (nickName.length === 0) {
