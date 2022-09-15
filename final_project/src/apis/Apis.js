@@ -86,21 +86,7 @@ const apis = {
   editProfile: (payload) => apiForm.put("/users", payload),
   myWritepost: () => api.get("/mypage/posts"),
   logOutUser: () => api.delete("users/logout"),
-
-  //이부분을 수정할 것!!
-  //user
-  // dupCheckId: (payload) => api.get(`users/auth/dupcheck/${payload}`),
-  // registerUser: (payload) => api.post('/users/auth/signup', payload),
-  // loginUser: (payload) => api.post('/users/auth/login', payload),
-  // logoutUser: (payload) => api.get('/users/logout', payload),
-  // getNewToken: (payload) => api.post('/users/renew', payload),
-
-  // post
-  // getAllPosts: () => api.get('/posts'),
-  // writePost: (payload) => apiForm.post('/posts', payload),
-  // getThisPost: (postId) => api.get(`posts/${postId}`),
-  // editPost: (payload) => api.post('url', payload),
-  // removePost: (postId) => api.delete(`posts/${postId}`),
+  addBookMark: (payload) => api.post(`/posts/${payload}/pick`, payload),
 };
 
 export default apis;

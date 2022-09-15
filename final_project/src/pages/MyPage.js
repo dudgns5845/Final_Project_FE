@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { ConstructionOutlined, SettingsEthernet } from "@mui/icons-material";
@@ -12,6 +13,7 @@ export default function MyPage() {
   const navigate = useNavigate();
   const [editProfile, setEditProfile] = useState(false);
   const [myNick, setMyNick] = useState("성원");
+  const imgfile = useRef();
   const [tmpNick, setTmpNick] = useState(myNick);
   const [myImage, setMyImage] = useState(
     "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg"
@@ -30,8 +32,8 @@ export default function MyPage() {
 
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
-    const a = URL.createObjectURL(imgSelectList[0]);
-    setTmpImage(a);
+    const url = URL.createObjectURL(imgSelectList[0]);
+    setTmpImage(url);
   };
 
   const ClickHandler = (e) => {
@@ -42,24 +44,21 @@ export default function MyPage() {
       return;
     }
 
-    const buf = new Buffer();
-    const file = new File([buf], myImage);
-    console.log(file);
     const postData = new FormData();
-    const nickname = {
+    const nicknames = {
       nickname: tmpNick,
     };
 
-    postData.append("imageFile", file);
+    postData.append("imageFile", imgfile.current.files[0]);
     postData.append(
       "requestDto",
-      new Blob([JSON.stringify(nickname)], {
+      new Blob([JSON.stringify(nicknames)], {
         type: "application/json",
       })
     );
     console.log(postData);
     console.log(tmpNick);
-    console.log(myImage);
+    console.log(imgfile.current.files[0]);
     apis
       .editProfile(postData)
       .then((response) => {
@@ -71,11 +70,6 @@ export default function MyPage() {
       });
     setEditProfile(false);
   };
-  // const ChangeNick = () => {
-  //   const nickRef = nick.current.value;
-  //   setNickRef(nickRef);
-  //   console.log(nickRef);
-  // };
 
   const LogOutAction = () => {
     apis
@@ -91,12 +85,6 @@ export default function MyPage() {
       .catch((error) => {
         console.log(error);
       });
-
-    // deleteCookie('accessToken');
-    // deleteCookie('refreshToken');
-    // deleteCookie('id');
-    // deleteCookie('nickname');
-    // window.location.reload();
   };
 
   return (
@@ -134,6 +122,7 @@ export default function MyPage() {
             accept="image/*"
             encType="multipart/form-data"
             hidden
+            ref={imgfile}
           />
         </label>
 

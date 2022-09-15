@@ -15,6 +15,7 @@ import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded";
+import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
 import Header from "../components/Header";
 import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
@@ -27,6 +28,20 @@ export default function Detail() {
 
   const [postData, setPostData] = useState([]);
   const [imageList, setImageList] = useState(["/default-image.jpg"]);
+  const [isBookMark, setIsBookMark] = useState(false);
+  const Bookmarking = () => {
+     apis
+      .addBookMark(param.postid)
+      .then((response) => {
+        console.log(response);
+        if (response.data.success === true) {
+          setIsBookMark(!isBookMark);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     apis
@@ -35,6 +50,7 @@ export default function Detail() {
         console.log(response);
         setPostData(response.data.data);
         setImageList((preList) => [...response.data.data.imageUrl]);
+        setIsBookMark(response.data.data.)
       })
       .catch((error) => {
         console.log(error);
@@ -90,8 +106,8 @@ export default function Detail() {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <BookmarkIcon />
+          <IconButton aria-label="add to favorites" onClick={Bookmarking}>
+            {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
           </IconButton>
           <Button
             style={ButtonCss}
