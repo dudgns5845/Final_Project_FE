@@ -1,44 +1,66 @@
-import { useRef, useState } from "react";
+import { useInsertionEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Modal from "../components/Modal";
-
-import { CompressOutlined } from "@mui/icons-material";
-import zIndex from "@mui/material/styles/zIndex";
+import apis from "../apis/Apis";
 
 export default function MyPage() {
   const navigate = useNavigate();
   const [editProfile, setEditProfile] = useState(false);
-  const [myNick, setMyNick] = useState("장호");
+  const [myNick, setMyNick] = useState();
+  const [tmpNick, setTmpNick] = useState(myNick);
   const [myImage, setMyImage] = useState(
     "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg"
   );
+  const [tmpImage, setTmpImage] = useState(myImage);
+
   const Open = () => {
     setEditProfile(true);
   };
   const ChangeNick = (e) => {
-    setMyNick(e.target.value);
-    console.log(myNick);
+    setTmpNick(e.target.value);
   };
   const close = () => {
     setEditProfile(false);
-    setMyNick("장호");
-    setMyImage(
-      "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg"
-    );
   };
-  const onFileChange = (e) => {
-    setMyImage(e.target.files[0]);
-  };
+
   const AddImage = (e) => {
-    const imgSelectList = e.target.files;
-    const imgUrl = URL.createObjectURL(imgSelectList[0]);
-    setMyImage(imgUrl);
+    const imgSelectList = e.target.files[0];
+    setTmpImage(imgSelectList);
   };
-  const ClickHandler = () => {
-    console.log(myNick, myImage);
+
+  const ClickHandler = (e) => {
+    if (e.target.name === "edit") {
+      setMyNick(tmpNick);
+      setMyImage(tmpImage);
+    } else {
+      return;
+    }
+
+    const postData = new FormData();
+    const nickname = {
+      nickname: tmpNick,
+    };
+    postData.append("imageFile", tmpImage);
+    postData.append(
+      "requestDto",
+      new Blob([JSON.stringify(nickname)], {
+        type: "application/json",
+      })
+    );
+    console.log(tmpNick);
+    console.log(tmpImage);
+    apis
+      .editProfile(postData)
+      .then((response) => {
+        console.log(response);
+        // navigate(`/detail/${response.data.data.id}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setEditProfile(false);
   };
   // const ChangeNick = () => {
@@ -69,20 +91,23 @@ export default function MyPage() {
       </Container>
       <Modal visible={editProfile} style={{ zIndex: 10 }}>
         <label onChange={AddImage}>
-          <Image style={{ marginTop: "5vh" }} src={myImage}></Image>
+          <Image
+            style={{ marginTop: "5vh" }}
+            src={tmpImage === myImage ? myImage : URL.createObjectURL(tmpImage)}
+          />
           <input
             type="file"
             accept="image/*"
-            encType="multipart/form-data"
             hidden
-            onChange={onFileChange}
+            encType="multipart/form-data"
           />
         </label>
+
         <InputSt
           type="text"
           onChange={ChangeNick}
           name="nick"
-          placeholder={myNick}
+          placeholder={tmpNick}
         />
         <div style={{ textAlign: "center", alignItems: "center" }}>
           <Button
@@ -95,6 +120,7 @@ export default function MyPage() {
             variant="contained"
             component="label"
             onClick={ClickHandler}
+            name="edit"
           >
             수정하기
           </Button>
@@ -149,7 +175,7 @@ const NickName = styled.div`
   grid-area: nick;
   margin: auto;
   width: 5rem;
-  height:5rem;
+  height: 5rem;
   font-size: 20px;
   text-align: left;
 `;
