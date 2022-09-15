@@ -18,6 +18,7 @@ export default function PostPage() {
   const [category, setCategory] = useState("카테고리 선택");
   const [tmpcategory, setTmpCategory] = useState(category);
   const [open, setOpen] = useState(false);
+
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
     const imgUploadList = [...imgState];
@@ -113,6 +114,7 @@ export default function PostPage() {
   };
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));
+    setImgFile(imgFile.filter((_, index) => index !== id));
   };
   return (
     <>

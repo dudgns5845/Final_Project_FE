@@ -5,11 +5,13 @@ import Header from "../components/Header";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Modal from "../components/Modal";
 import apis from "../apis/Apis";
+import { ConstructionOutlined, SettingsEthernet } from "@mui/icons-material";
+import { areArraysEqual } from "@mui/base";
 
 export default function MyPage() {
   const navigate = useNavigate();
   const [editProfile, setEditProfile] = useState(false);
-  const [myNick, setMyNick] = useState();
+  const [myNick, setMyNick] = useState("성원");
   const [tmpNick, setTmpNick] = useState(myNick);
   const [myImage, setMyImage] = useState(
     "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg"
@@ -27,8 +29,9 @@ export default function MyPage() {
   };
 
   const AddImage = (e) => {
-    const imgSelectList = e.target.files[0];
-    setTmpImage(imgSelectList);
+    const imgSelectList = e.target.files;
+    const a = URL.createObjectURL(imgSelectList[0]);
+    setTmpImage(a);
   };
 
   const ClickHandler = (e) => {
@@ -39,19 +42,24 @@ export default function MyPage() {
       return;
     }
 
+    const buf = new Buffer();
+    const file = new File([buf], myImage);
+    console.log(file);
     const postData = new FormData();
     const nickname = {
       nickname: tmpNick,
     };
-    postData.append("imageFile", tmpImage);
+
+    postData.append("imageFile", file);
     postData.append(
       "requestDto",
       new Blob([JSON.stringify(nickname)], {
         type: "application/json",
       })
     );
+    console.log(postData);
     console.log(tmpNick);
-    console.log(tmpImage);
+    console.log(myImage);
     apis
       .editProfile(postData)
       .then((response) => {
@@ -95,13 +103,14 @@ export default function MyPage() {
         <label onChange={AddImage}>
           <Image
             style={{ marginTop: "5vh" }}
-            src={tmpImage === myImage ? myImage : URL.createObjectURL(tmpImage)}
+            // src={tmpImage === myImage ? myImage : URL.createObjectURL(tmpImage)}
+            src={tmpImage}
           />
           <input
             type="file"
             accept="image/*"
-            hidden
             encType="multipart/form-data"
+            hidden
           />
         </label>
 
