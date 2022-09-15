@@ -74,7 +74,12 @@ function App() {
             path="/mypage"
             element={isLoggedIn ? <MyPage /> : <Navigate replace to="/start" />}
           />
-          <Route path="/submypage" element={<SubMyPage />} />
+          <Route
+            path="/submypage"
+            element={
+              isLoggedIn ? <SubMyPage /> : <Navigate replace to="/start" />
+            }
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
