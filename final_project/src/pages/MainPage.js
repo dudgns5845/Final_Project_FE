@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Post from "../components/Post";
-import { IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
@@ -17,14 +17,41 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import apis from "../apis/Apis";
 
+
+import { useInView } from "react-intersection-observer"
+
 export default function MainPage() {
 
+  const [ref, inView] = useInView();
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (inView && !loading) {
+      // 다음페이지 인덱스 증가
+      setPage(page => page + 1)
+      // 증가한 인덱스 데이터 가져오기
+
+      apis.getAllPostList(page).then((response) => {
+        console.log(response);
+        setPostList([...postList, ...response.data.data.content])
+      }).catch((error) => {
+        console.log(error);
+      })
+
+      console.log(page);
+      console.log('hohohoho', postList);
+    }
+  }, [inView, loading]);
+
+  console.log('여기', inView);
   const navigate = useNavigate();
 
+  //로드한 데이터 리스트 - > 여기다가 축적해나갈것
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
-    apis.getAllPostList(`?searchValue=& category=`).then((response) => {
+    apis.getAllPostList(page).then((response) => {
       console.log(response);
       setPostList(response.data.data.content)
     }).catch((error) => {
@@ -54,9 +81,15 @@ export default function MainPage() {
 
       <div style={{ marginTop: "5em" }}>
         {postList.map((post, idx) => {
-          return <Post post={post} key={idx}></Post>;
+          if (idx === postList.length - 1) {
+            return <Post myref={ref} post={post} key={idx}></Post>;
+          }
+          else {
+            return <Post post={post} key={idx}></Post>;
+          }
         })}
       </div>
+
       <IconButton
         onClick={() => {
           window.scrollTo(0, 0);
