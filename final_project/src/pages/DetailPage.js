@@ -30,7 +30,7 @@ export default function Detail() {
   const [imageList, setImageList] = useState(["/default-image.jpg"]);
   const [isBookMark, setIsBookMark] = useState(false);
   const Bookmarking = () => {
-     apis
+    apis
       .addBookMark(param.postid)
       .then((response) => {
         console.log(response);
@@ -50,7 +50,7 @@ export default function Detail() {
         console.log(response);
         setPostData(response.data.data);
         setImageList((preList) => [...response.data.data.imageUrl]);
-        setIsBookMark(response.data.data.)
+        // setIsBookMark(response.data.data.)
       })
       .catch((error) => {
         console.log(error);

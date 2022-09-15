@@ -23,6 +23,14 @@ export default function SubMyPage() {
         console.log(error);
       });
   }, []);
+  apis
+    .myBookMarkList()
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   return (
     <>

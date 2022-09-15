@@ -87,6 +87,7 @@ const apis = {
   myWritepost: () => api.get("/mypage/posts"),
   logOutUser: () => api.delete("users/logout"),
   addBookMark: (payload) => api.post(`/posts/${payload}/pick`, payload),
+  myBookMarkList: () => api.get("/mypage/picks"),
 };
 
 export default apis;
