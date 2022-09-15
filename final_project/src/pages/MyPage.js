@@ -7,7 +7,7 @@ import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { ConstructionOutlined, SettingsEthernet } from "@mui/icons-material";
 import { areArraysEqual } from "@mui/base";
-
+import { deleteCookie } from "../shared/Cookie";
 export default function MyPage() {
   const navigate = useNavigate();
   const [editProfile, setEditProfile] = useState(false);
@@ -76,6 +76,29 @@ export default function MyPage() {
   //   setNickRef(nickRef);
   //   console.log(nickRef);
   // };
+
+  const LogOutAction = () => {
+    // apis.logOutUser().then((response) => {
+    //   console.log(response);
+    //   if (response.data.data.success === true) {
+    //     deleteCookie('accessToken');
+    //     deleteCookie('refreshToken');
+    //     deleteCookie('id');
+    //     deleteCookie('nickname');
+    //   }
+    //   window.location.reload();
+    // }).catch((error) => {
+    //   console.log(error);
+    // })
+
+    deleteCookie('accessToken');
+    deleteCookie('refreshToken');
+    deleteCookie('id');
+    deleteCookie('nickname');
+    window.location.reload();
+
+  }
+
   return (
     <>
       <Container>
@@ -97,7 +120,7 @@ export default function MyPage() {
           내가 작성한 게시글
         </MyPost>
         <Zzim>내가 찜한 게시글</Zzim>
-        <LogOut>로그아웃</LogOut>
+        <LogOut onClick={LogOutAction}>로그아웃</LogOut>
       </Container>
       <Modal visible={editProfile} style={{ zIndex: 10 }}>
         <label onChange={AddImage}>

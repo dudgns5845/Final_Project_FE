@@ -8,14 +8,14 @@ import apis from "../apis/Apis";
 
 export default function SubMyPage() {
   const navigate = useNavigate();
-  const [ttt, setTTT] = useState([]);
+  const [postList, setPostList] = useState([]);
 
   useEffect(() => {
     apis
       .myWritepost()
       .then((response) => {
         console.log(response);
-        setTTT(response.data.data);
+        setPostList(response.data.data);
         console.log(response.data.data);
       })
 
@@ -35,7 +35,7 @@ export default function SubMyPage() {
         />
       </Header>
       <div style={{ marginTop: "5em" }}>
-        {ttt.map((post, idx) => {
+        {postList.map((post, idx) => {
           return <Post post={post} key={idx}></Post>;
         })}
       </div>

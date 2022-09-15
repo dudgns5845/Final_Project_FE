@@ -94,7 +94,7 @@ export default function MainPage() {
       <div style={{ marginTop: "5em" }}>
         {postList.map((post, idx) => {
           if (idx === postList.length - 1) {
-            return <Post ref={ref} post={post} key={idx}></Post>;
+            // return <Post ref={ref} post={post} key={idx}></Post>;
           } else {
             return <Post post={post} key={idx}></Post>;
           }

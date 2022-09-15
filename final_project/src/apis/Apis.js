@@ -84,6 +84,7 @@ const apis = {
   postDetail: (payload) => api.get(`posts/${payload}`),
   editProfile: (payload) => apiForm.put("/users", payload),
   myWritepost: () => api.get("/mypage/posts"),
+  logOutUser: () => api.get('users/logout'),
 
   //이부분을 수정할 것!!
   //user

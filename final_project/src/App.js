@@ -31,11 +31,14 @@ function App() {
   };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const cookie = getCookie("accessToken");
 
   //상태관리 로직 사용 (issue 등록);리듀서 , usecontext
   // useefftect 에서 쿠키 유무를 알 수 있게
   useEffect(() => {
-    const cookie = getCookie("accessToken");
+
+    // cookie = getCookie("accessToken");
+
     if (cookie === undefined) {
       setIsLoggedIn(false);
     } else {
@@ -49,11 +52,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/start"
+            path="start"
             element={!isLoggedIn ? <Start /> : <Navigate replace to="/" />}
           />
           <Route
-            path="/login"
+            path="login"
             element={
               !isLoggedIn ? (
                 <Login ChangeCookie={ChangeCookie} />
