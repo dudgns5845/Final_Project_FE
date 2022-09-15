@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import styled from "styled-components";
+import { getCookie } from "../shared/Cookie";
 
 export default function Start() {
   const navigate = useNavigate();
@@ -37,6 +38,15 @@ export default function Start() {
   useEffect(() => {
     setStyle({ marginLeft: `-${current}00%` });
   }, [current]);
+
+
+  // const cookie = getCookie('accessToken');
+
+  // useEffect((e) => {
+  //   if (cookie) {
+  //     navigate("/");
+  //   } 
+  // }); 
 
   return (
     <Container
@@ -130,17 +140,10 @@ export default function Start() {
       <div style={{ display: "grid" }}>
         <Button
           variant="contained"
-          style={{ marginTop: "5vw" }}
-          onClick={() => navigate("/login:write")}
+          style={{ marginTop: "5vw", height: "9vh", fontSize: "x-large" }}
+          onClick={() => navigate("/login")}
         >
-          로그인
-        </Button>
-        <Button
-          variant="outlined"
-          style={{ marginTop: "3vw" }}
-          onClick={() => navigate("/login:regi")}
-        >
-          회원가입
+          시작하기
         </Button>
       </div>
     </Container>

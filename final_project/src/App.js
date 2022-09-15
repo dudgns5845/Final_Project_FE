@@ -40,7 +40,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/start" element={!isLoggedIn ? <Start /> : <Navigate replace to='/' />} />
-          <Route path="/login:id" element={!isLoggedIn ? <Login /> : <Navigate replace to='/' />} />
+          <Route path="/login" element={!isLoggedIn ? <Login /> : <Navigate replace to='/' />} />
           <Route path="/" element={isLoggedIn ? <MainPage /> : <Navigate replace to='/start' />} />
           <Route path="/searchpage" element={isLoggedIn ? <SearchPage /> : <Navigate replace to='/start' />} />
           <Route path="/detail/:postid" element={isLoggedIn ? <Detail /> : <Navigate replace to='/start' />} />

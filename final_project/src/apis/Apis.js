@@ -72,10 +72,13 @@ api.interceptors.response.use(
 
 // 4.
 const apis = {
+  emailCheck: (payload) => api.post("/users/check/email", payload),
+  emailSend: (payload) => api.post("/mail/send", payload),
+  nicknameCheck: (payload) => api.post("/users/check/nickname", payload),
   registerUser: (payload) => api.post("/users/signup", payload),
   loginUser: (payload) => api.post("/users/login", payload),
   writePost: (payload) => apiForm.post("posts", payload),
-  getAllPostList: () => api.get('posts?searchValue=&category='),
+  getAllPostList: () => api.get("posts?searchValue=&category="),
   postDetail: (payload) => api.get(`posts/${payload}`),
 
   //이부분을 수정할 것!!
