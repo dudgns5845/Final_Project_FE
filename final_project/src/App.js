@@ -52,7 +52,7 @@ function App() {
             element={!isLoggedIn ? <Start /> : <Navigate replace to="/" />}
           />
           <Route
-            path="/login:id"
+            path="/login"
             element={
               !isLoggedIn ? (
                 <Login ChangeCookie={ChangeCookie} />
