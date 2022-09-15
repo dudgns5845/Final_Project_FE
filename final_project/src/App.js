@@ -24,23 +24,25 @@ function App() {
   useEffect(() => {
     setScreenSize();
   });
-  const [cookie, setCookie] = useState();
+
+  const [cookieState, setCookieState] = useState();
   const ChangeCookie = (cookie) => {
-    setCookie(cookie);
+    setCookieState(cookie);
     console.log(cookie);
   };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  //   const cookie = getCookie("accessToken");
+
   //상태관리 로직 사용 (issue 등록);리듀서 , usecontext
   // useefftect 에서 쿠키 유무를 알 수 있게
   useEffect(() => {
+    const cookie = getCookie("accessToken");
     if (cookie === undefined) {
       setIsLoggedIn(false);
     } else {
       setIsLoggedIn(true);
     }
-  }, [cookie]);
+  }, [cookieState]);
   console.log(isLoggedIn);
 
   return (
