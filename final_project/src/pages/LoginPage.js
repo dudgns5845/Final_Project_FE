@@ -85,15 +85,15 @@ export default function Login() {
             response.data.data.id,
             response.data.data.token.accessTokenExpiresIn
           );
-          // setTimeout(() => {
-          //   navigate("/");
-          // }, 2000);
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
           navigate("/");
           return;
         })
         .catch((error) => {
           console.log(error);
-          return setErrorMessage("다시 시도해주세요");
+          return setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
         });
     } else if (!isPasswordConfirm) {
       return setErrorMessage("비밀번호가 일치하지 않습니다");

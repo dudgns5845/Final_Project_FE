@@ -7,6 +7,10 @@ import { getCookie } from "../shared/Cookie";
 
 export default function Start() {
   const navigate = useNavigate();
+  const moveMainPage = () => {
+    navigate("/");
+    console.log(isLoggedIn, "asdf");
+  };
 
   const images = useRef([
     {
@@ -39,14 +43,17 @@ export default function Start() {
     setStyle({ marginLeft: `-${current}00%` });
   }, [current]);
 
+  const cookie = getCookie("accessToken");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // const cookie = getCookie('accessToken');
-
-  // useEffect((e) => {
-  //   if (cookie) {
-  //     navigate("/");
-  //   } 
-  // }); 
+  useEffect(() => {
+    if (cookie === undefined) {
+      setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
+    }
+  }, [cookie]);
+  console.log(isLoggedIn);
 
   return (
     <Container
@@ -141,7 +148,9 @@ export default function Start() {
         <Button
           variant="contained"
           style={{ marginTop: "5vw", height: "9vh", fontSize: "x-large" }}
-          onClick={() => navigate("/login")}
+          onClick={() => {
+            isLoggedIn ? moveMainPage() : navigate("/login");
+          }}
         >
           시작하기
         </Button>
