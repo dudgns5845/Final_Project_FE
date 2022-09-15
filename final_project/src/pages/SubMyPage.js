@@ -35,7 +35,7 @@ export default function SubMyPage() {
         />
       </Header>
       <div style={{ marginTop: "5em" }}>
-        {ttt?.map((post, idx) => {
+        {ttt.map((post, idx) => {
           return <Post post={post} key={idx}></Post>;
         })}
       </div>

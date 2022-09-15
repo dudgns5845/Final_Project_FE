@@ -6,6 +6,7 @@ import theme from "./style/theme";
 import ErrorPage from "./pages/ErrorPage";
 import SearchPage from "./pages/SearchPage";
 import Login from "./pages/LoginPage";
+import { getCookie } from "./shared/Cookie";
 
 import Start from "./pages/StartPage";
 import MyPage from "./pages/MyPage";
