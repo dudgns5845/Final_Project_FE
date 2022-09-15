@@ -85,7 +85,9 @@ export default function MyPage() {
         <NickName> {myNick} 님</NickName>
         <Edit onClick={Open}>프로필 수정</Edit>
         <Rank>랭크 정보(거래 횟수 기준)</Rank>
-        <MyPost>내가 작성한 게시글</MyPost>
+        <MyPost onClick={() => navigate("/submypage")}>
+          내가 작성한 게시글
+        </MyPost>
         <Zzim>내가 찜한 게시글</Zzim>
         <LogOut>로그아웃</LogOut>
       </Container>
@@ -183,7 +185,7 @@ const NickName = styled.div`
 const Edit = styled.button`
   display: grid;
   grid-area: edit;
-  margin: auto;
+  margin: 0 auto -40px auto;
   text-align: center;
   vertical-align: middle;
   padding: 10px;
