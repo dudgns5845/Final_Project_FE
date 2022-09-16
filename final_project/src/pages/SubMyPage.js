@@ -8,7 +8,7 @@ import apis from "../apis/Apis";
 export default function SubMyPage() {
   const params = useParams();
   const [changePage, setChangePage] = useState(
-    params.id === ":mywrite" ? true : false
+    params.id === ":mywrite" ? "mywrite" : "mybookmark"
   );
   console.log(params);
   const navigate = useNavigate();
@@ -16,28 +16,28 @@ export default function SubMyPage() {
   const [bookMarkList, setBookMarkList] = useState([]);
 
   useEffect(() => {
-    {
-      changePage
-        ? apis
-            .myWritepost()
-            .then((response) => {
-              setPostList(response.data.data.content);
-              console.log(response.data.data.content);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-        : apis
-            .myBookMarkList()
-            .then((response) => {
-              setBookMarkList(response.data.data);
-              console.log(response.data.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+    if (changePage === "mywrite") {
+      apis
+        .myWritepost()
+        .then((response) => {
+          setPostList(response.data.data.content);
+          console.log(response.data.data.content);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (changePage === "mybookmark") {
+      apis
+        .myBookMarkList()
+        .then((response) => {
+          setBookMarkList(response.data.data);
+          console.log(response.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, [setChangePage]);
+  }, []);
 
   return (
     <>
@@ -49,13 +49,14 @@ export default function SubMyPage() {
           }}
         />
       </Header>
-      {changePage ? (
+      {changePage === "mywrite" && (
         <div style={{ marginTop: "5em" }}>
           {postList.map((post, idx) => {
             return <Post post={post} key={idx}></Post>;
           })}
         </div>
-      ) : (
+      )}
+      {changePage === "mybookmark" && (
         <div style={{ marginTop: "5em" }}>
           {bookMarkList.map((post, idx) => {
             return <Post post={post} key={idx}></Post>;
