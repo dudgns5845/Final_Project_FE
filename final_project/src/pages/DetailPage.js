@@ -46,7 +46,7 @@ export default function Detail() {
         console.log(response);
         setPostData(response.data.data);
         setImageList((preList) => [...response.data.data.imageUrl]);
-        // setIsBookMark(response.data.data.isPicked)
+        setIsBookMark(response.data.data.postPicked);
       })
       .catch((error) => {
         console.log(error);
@@ -75,7 +75,11 @@ export default function Detail() {
       <Card sx={{ width: "100vw" }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+            <Avatar
+              sx={{ bgcolor: "red" }}
+              aria-label="recipe"
+              src={postData.userImageUrl}
+            >
               {postData.userImageUrl}
             </Avatar>
           }
