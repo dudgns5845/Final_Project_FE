@@ -1,4 +1,4 @@
-import { useInsertionEffect, useRef, useState } from "react";
+import { useEffect, useInsertionEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
@@ -12,7 +12,7 @@ import { deleteCookie } from "../shared/Cookie";
 export default function MyPage() {
   const navigate = useNavigate();
   const [editProfile, setEditProfile] = useState(false);
-  const [myNick, setMyNick] = useState("성원");
+  const [myNick, setMyNick] = useState();
   const imgfile = useRef();
   const [tmpNick, setTmpNick] = useState(myNick);
   const [myImage, setMyImage] = useState(
@@ -29,6 +29,20 @@ export default function MyPage() {
   const close = () => {
     setEditProfile(false);
   };
+  useEffect(() => {
+    apis
+      .getProfile()
+      .then((response) => {
+        console.log(response);
+        setTmpNick(response.data.data.nickname);
+        setTmpImage(response.data.data.profileUrl);
+        setMyNick(response.data.data.nickname);
+        setMyImage(response.data.data.profileUrl);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
