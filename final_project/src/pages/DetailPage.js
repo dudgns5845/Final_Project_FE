@@ -19,13 +19,10 @@ import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
 import Header from "../components/Header";
 import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
 export default function Detail() {
   const navigate = useNavigate();
-
   const param = useParams();
-
   const [postData, setPostData] = useState([]);
   const [imageList, setImageList] = useState(["/default-image.jpg"]);
   const [isBookMark, setIsBookMark] = useState(false);
@@ -42,7 +39,6 @@ export default function Detail() {
         console.log(error);
       });
   };
-
   useEffect(() => {
     apis
       .postDetail(param.postid)
@@ -68,7 +64,6 @@ export default function Detail() {
       >
         <ChevronLeftRoundedIcon fontSize="large" />
       </IconButton>
-
       <img
         style={imgCss}
         src={imageList[0]}
@@ -121,24 +116,20 @@ export default function Detail() {
     </>
   );
 }
-
 const IconCss = {
   position: "absolute",
   color: "white",
 };
-
 const imgCss = {
   width: "100vw",
   height: "60vh",
   backgroundColor: "gray",
   objectFit: "cover",
 };
-
 const ButtonCss = {
   color: "white",
   backgroundColor: "gray",
 };
-
 const postData = {
   nickname: "영등포꿀쟁이",
   location: "영등포구",
