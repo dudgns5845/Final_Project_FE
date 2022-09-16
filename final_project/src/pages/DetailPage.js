@@ -29,7 +29,7 @@ export default function Detail() {
 
   // 캐로셀 넘버링
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slideRef = useRef(null);
+  const slideRef = useRef();
 
   const [postData, setPostData] = useState([]);
   const [imageList, setImageList] = useState(["/default-image.jpg"]);
@@ -80,9 +80,19 @@ export default function Detail() {
     }
   };
 
+  console.log(slideRef.current, "adbr");
+  useEffect(() => {
+    slideRef.current.style.transition = "all 0.5s ease-in-out";
+    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
+  }, [currentSlide]);
   return (
     <>
       <div style={ImgContainer}>
+        <div style={Slide} ref={slideRef}>
+          {imageList.map((images, index) => (
+            <img key={index} alt="" style={imgCss} src={images} />
+          ))}
+        </div>
         <IconButton
           style={IconCss}
           size="large"
@@ -93,18 +103,6 @@ export default function Detail() {
           <ChevronLeftRoundedIcon fontSize="large" />
         </IconButton>
         <ArrowBackIosIcon style={ButtonLeft} onClick={PreveSlide} />
-
-        {imageList.map((images, index) => (
-          <img
-            key={index}
-            alt=""
-            style={imgCss}
-            src={images}
-            onClick={() => {
-              alert("클릭!");
-            }}
-          />
-        ))}
         <ArrowForwardIosIcon style={ButtonRight} onClick={NextSlide} />
       </div>
 
@@ -159,12 +157,23 @@ export default function Detail() {
 const IconCss = {
   position: "absolute",
   color: "white",
+  top: "5px",
 };
+
 const ImgContainer = {
+  display: "flex",
   width: "100vw",
   height: "60vh",
   overflow: "hidden",
+  alignItems: "center",
 };
+
+const Slide = {
+  width: "100%",
+  height: "100%",
+  display: "flex",
+};
+
 const ButtonLeft = {
   position: "absolute",
   display: "flex",
@@ -173,6 +182,8 @@ const ButtonLeft = {
   fontSize: "2rem",
   color: "#dcdcdc",
   padding: "0 10px",
+  left: "5px",
+  top: "28%",
 };
 
 const imgCss = {
@@ -185,13 +196,14 @@ const imgCss = {
 
 const ButtonRight = {
   position: "absolute",
-  right: " 7.5%",
+  right: "0",
   display: "flex",
   alignItems: "center",
   cursor: "pointer",
   fontSize: "2rem",
   color: "#dcdcdc",
   padding: "0 10px",
+  top: "28%",
 };
 const ButtonCss = {
   color: "white",
