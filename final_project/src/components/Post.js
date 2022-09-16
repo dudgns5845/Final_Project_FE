@@ -7,7 +7,7 @@ export default function Post({ post }) {
     <CardActionArea onClick={() => navigate(`/detail/${post.id}`)}>
       <div style={CardCss}>
         {/* <img style={ImageCss} src='https://picsum.photos/200' /> */}
-        <img style={ImageCss} src={post.imageUrl} />
+        <img style={ImageCss} src={post.postImageUrl} />
         <div style={TextCss}>
           <h3>
             {post.title} {post.id}
