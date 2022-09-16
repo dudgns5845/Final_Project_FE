@@ -83,6 +83,7 @@ const apis = {
   getAllPostList: (payload) =>
     api.get(`posts?searchValue=&category=&page=${payload}`),
   postDetail: (payload) => api.get(`posts/${payload}`),
+  getProfile: () => api.get("/mypage"),
   editProfile: (payload) => apiForm.put("/users", payload),
   myWritepost: () => api.get("/mypage/posts"),
   logOutUser: () => api.delete("users/logout"),
