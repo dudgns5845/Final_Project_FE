@@ -19,6 +19,7 @@ export default function SearchPage() {
     apis
       .searchList(test)
       .then((response) => {
+        setPostList(response.data.data.content);
         console.log(response);
       })
 
