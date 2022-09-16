@@ -15,8 +15,8 @@ export default function SubMyPage() {
       .myWritepost()
       .then((response) => {
         console.log(response);
-        setPostList(response.data.data);
-        console.log(response.data.data);
+        setPostList(response.data.data.content);
+        console.log(response.data.data.content);
       })
 
       .catch((error) => {
@@ -43,9 +43,10 @@ export default function SubMyPage() {
         />
       </Header>
       <div style={{ marginTop: "5em" }}>
-        {postList.map((post, idx) => {
-          return <Post post={post} key={idx}></Post>;
-        })}
+        {postList &&
+          postList.map((post, idx) => {
+            return <Post post={post} key={idx}></Post>;
+          })}
       </div>
     </>
   );

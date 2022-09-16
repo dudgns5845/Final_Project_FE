@@ -46,7 +46,7 @@ export default function Detail() {
         console.log(response);
         setPostData(response.data.data);
         setImageList((preList) => [...response.data.data.imageUrl]);
-        // setIsBookMark(response.data.data.)
+        // setIsBookMark(response.data.data.isPicked)
       })
       .catch((error) => {
         console.log(error);
