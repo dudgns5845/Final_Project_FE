@@ -112,6 +112,7 @@ export default function PostPage() {
         console.log(error);
       });
   };
+  //업로드 사진 삭제 기능
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));
     setImgFile(imgFile.filter((_, index) => index !== id));
