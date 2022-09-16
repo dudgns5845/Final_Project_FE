@@ -41,7 +41,7 @@ export default function Login({ ChangeCookie }) {
   const [isEmail, setIsEmail] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
 
-  // MUI snackbar
+  // MUI
   const state = {
     open: false,
     errorMessage,
@@ -53,6 +53,16 @@ export default function Login({ ChangeCookie }) {
 
   const handleClose = () => {
     setsnackOpen(false);
+  };
+  const ITEM_HEIGHT = 40;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
   };
 
   const onSubmitHandler = (e) => {
@@ -125,7 +135,7 @@ export default function Login({ ChangeCookie }) {
         .then((response) => {
           console.log(response);
           setErrorMessage("회원가입 성공");
-          return <Navigate to="/login" />;
+          setAuth(false);
         })
         .catch((error) => {
           console.log(error);
@@ -564,38 +574,36 @@ export default function Login({ ChangeCookie }) {
                 value={region}
                 onChange={handleChange}
                 label="region"
-                style={{}}
+                MenuProps={MenuProps}
               >
-                <div style={{ height: "9rem" }}>
-                  <MenuItem value="">
-                    <em>---지역 선택---</em>
-                  </MenuItem>
-                  <MenuItem value="강남구">강남구</MenuItem>
-                  <MenuItem value="강동구">강동구</MenuItem>
-                  <MenuItem value="강북구">강북구</MenuItem>
-                  <MenuItem value="강서구">강서구</MenuItem>
-                  <MenuItem value="관악구">관악구</MenuItem>
-                  <MenuItem value="광진구">광진구</MenuItem>
-                  <MenuItem value="구로구">구로구</MenuItem>
-                  <MenuItem value="금천구">금천구</MenuItem>
-                  <MenuItem value="노원구">노원구</MenuItem>
-                  <MenuItem value="도봉구">도봉구</MenuItem>
-                  <MenuItem value="동대문구">동대문구</MenuItem>
-                  <MenuItem value="동작구">동작구</MenuItem>
-                  <MenuItem value="마포구">마포구</MenuItem>
-                  <MenuItem value="서대문구">서대문구</MenuItem>
-                  <MenuItem value="서초구">서초구</MenuItem>
-                  <MenuItem value="성동구">성동구</MenuItem>
-                  <MenuItem value="성북구">성북구</MenuItem>
-                  <MenuItem value="송파구">송파구</MenuItem>
-                  <MenuItem value="양천구">양천구</MenuItem>
-                  <MenuItem value="영등포구">영등포구</MenuItem>
-                  <MenuItem value="용산구">용산구</MenuItem>
-                  <MenuItem value="은평구">은평구</MenuItem>
-                  <MenuItem value="종로구">종로구</MenuItem>
-                  <MenuItem value="중구">중구</MenuItem>
-                  <MenuItem value="중랑구">중랑구</MenuItem>
-                </div>
+                <MenuItem value="">
+                  <em>---지역 선택---</em>
+                </MenuItem>
+                <MenuItem value="강남구">강남구</MenuItem>
+                <MenuItem value="강동구">강동구</MenuItem>
+                <MenuItem value="강북구">강북구</MenuItem>
+                <MenuItem value="강서구">강서구</MenuItem>
+                <MenuItem value="관악구">관악구</MenuItem>
+                <MenuItem value="광진구">광진구</MenuItem>
+                <MenuItem value="구로구">구로구</MenuItem>
+                <MenuItem value="금천구">금천구</MenuItem>
+                <MenuItem value="노원구">노원구</MenuItem>
+                <MenuItem value="도봉구">도봉구</MenuItem>
+                <MenuItem value="동대문구">동대문구</MenuItem>
+                <MenuItem value="동작구">동작구</MenuItem>
+                <MenuItem value="마포구">마포구</MenuItem>
+                <MenuItem value="서대문구">서대문구</MenuItem>
+                <MenuItem value="서초구">서초구</MenuItem>
+                <MenuItem value="성동구">성동구</MenuItem>
+                <MenuItem value="성북구">성북구</MenuItem>
+                <MenuItem value="송파구">송파구</MenuItem>
+                <MenuItem value="양천구">양천구</MenuItem>
+                <MenuItem value="영등포구">영등포구</MenuItem>
+                <MenuItem value="용산구">용산구</MenuItem>
+                <MenuItem value="은평구">은평구</MenuItem>
+                <MenuItem value="종로구">종로구</MenuItem>
+                <MenuItem value="중구">중구</MenuItem>
+                <MenuItem value="중랑구">중랑구</MenuItem>
               </Select>
             </FormControl>
             <br />
