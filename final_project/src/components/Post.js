@@ -1,6 +1,6 @@
 import React from "react";
 import { CardActionArea } from "@mui/material";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function Post({ post }) {
   const navigate = useNavigate();
   return (

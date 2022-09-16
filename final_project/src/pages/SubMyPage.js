@@ -7,8 +7,10 @@ import { useEffect } from "react";
 import apis from "../apis/Apis";
 
 export default function SubMyPage() {
+  const [changePage, setChangePage] = useState(false);
   const navigate = useNavigate();
   const [postList, setPostList] = useState([]);
+  const [bookMarkList, setBookMarkList] = useState([]);
 
   useEffect(() => {
     apis
@@ -22,15 +24,16 @@ export default function SubMyPage() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-  apis
-    .myBookMarkList()
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }, [changePage]);
+  //   apis
+  //     .myBookMarkList()
+  //     .then((response) => {
+  //       setBookMarkList(response.data.data.content);
+  //       console.log(response);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
 
   return (
     <>
@@ -42,12 +45,19 @@ export default function SubMyPage() {
           }}
         />
       </Header>
-      <div style={{ marginTop: "5em" }}>
-        {postList &&
-          postList.map((post, idx) => {
+      {changePage ? (
+        <div style={{ marginTop: "5em" }}>
+          {postList.map((post, idx) => {
             return <Post post={post} key={idx}></Post>;
           })}
-      </div>
+        </div>
+      ) : (
+        <div style={{ marginTop: "5em" }}>
+          {postList.map((post, idx) => {
+            return <Post post={post} key={idx}></Post>;
+          })}
+        </div>
+      )}
     </>
   );
 }
