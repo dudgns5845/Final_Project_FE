@@ -1,13 +1,10 @@
-import { useEffect, useInsertionEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import Modal from "../components/Modal";
 import apis from "../apis/Apis";
-import { ConstructionOutlined, SettingsEthernet } from "@mui/icons-material";
-import { areArraysEqual } from "@mui/base";
 import { deleteCookie } from "../shared/Cookie";
 export default function MyPage() {
   const navigate = useNavigate();
@@ -118,10 +115,12 @@ export default function MyPage() {
         <NickName> {myNick} 님</NickName>
         <Edit onClick={Open}>프로필 수정</Edit>
         <Rank>랭크 정보(거래 횟수 기준)</Rank>
-        <MyPost onClick={() => navigate("/submypage")}>
+        <MyPost onClick={() => navigate("/submypage:mywrite")}>
           내가 작성한 게시글
         </MyPost>
-        <Zzim>내가 찜한 게시글</Zzim>
+        <Zzim onClick={() => navigate("/submypage:mybookmark")}>
+          내가 찜한 게시글
+        </Zzim>
         <LogOut onClick={LogOutAction}>로그아웃</LogOut>
       </Container>
       <Modal visible={editProfile} style={{ zIndex: 10 }}>

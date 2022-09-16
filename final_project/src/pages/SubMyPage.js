@@ -1,39 +1,43 @@
 import Header from "../components/Header";
 import Post from "../components/Post";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import apis from "../apis/Apis";
 
 export default function SubMyPage() {
-  const [changePage, setChangePage] = useState(false);
+  const params = useParams();
+  const [changePage, setChangePage] = useState(
+    params.id === ":mywrite" ? true : false
+  );
+  console.log(params);
   const navigate = useNavigate();
   const [postList, setPostList] = useState([]);
   const [bookMarkList, setBookMarkList] = useState([]);
 
   useEffect(() => {
-    apis
-      .myWritepost()
-      .then((response) => {
-        console.log(response);
-        setPostList(response.data.data.content);
-        console.log(response.data.data.content);
-      })
-
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [changePage]);
-  //   apis
-  //     .myBookMarkList()
-  //     .then((response) => {
-  //       setBookMarkList(response.data.data.content);
-  //       console.log(response);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
+    {
+      changePage
+        ? apis
+            .myWritepost()
+            .then((response) => {
+              setPostList(response.data.data.content);
+              console.log(response.data.data.content);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : apis
+            .myBookMarkList()
+            .then((response) => {
+              setBookMarkList(response.data.data);
+              console.log(response.data.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+    }
+  }, [setChangePage]);
 
   return (
     <>
@@ -53,7 +57,7 @@ export default function SubMyPage() {
         </div>
       ) : (
         <div style={{ marginTop: "5em" }}>
-          {postList.map((post, idx) => {
+          {bookMarkList.map((post, idx) => {
             return <Post post={post} key={idx}></Post>;
           })}
         </div>

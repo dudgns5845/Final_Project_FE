@@ -36,7 +36,6 @@ function App() {
   //상태관리 로직 사용 (issue 등록);리듀서 , usecontext
   // useefftect 에서 쿠키 유무를 알 수 있게
   useEffect(() => {
-
     // cookie = getCookie("accessToken");
 
     if (cookie === undefined) {
@@ -92,7 +91,7 @@ function App() {
             element={isLoggedIn ? <MyPage /> : <Navigate replace to="/start" />}
           />
           <Route
-            path="/submypage"
+            path="/submypage:id"
             element={
               isLoggedIn ? <SubMyPage /> : <Navigate replace to="/start" />
             }
