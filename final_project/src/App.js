@@ -14,6 +14,7 @@ import MyPage from "./pages/MyPage";
 import { useEffect, useState } from "react";
 import Detail from "./pages/DetailPage";
 import SubMyPage from "./pages/SubMyPage";
+import ChatRoomPage from "./pages/ChatroomPage";
 
 function App() {
   function setScreenSize() {
@@ -94,6 +95,12 @@ function App() {
             path="/submypage:id"
             element={
               isLoggedIn ? <SubMyPage /> : <Navigate replace to="/start" />
+            }
+          />
+          <Route
+            path="/mychat"
+            element={
+              isLoggedIn ? <ChatRoomPage /> : <Navigate replace to="/start" />
             }
           />
           <Route path="*" element={<ErrorPage />} />
