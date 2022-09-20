@@ -49,7 +49,6 @@ export default function Start() {
       setIsLoggedIn(true);
     }
   }, [cookie]);
-  console.log(isLoggedIn);
 
   return (
     <Container

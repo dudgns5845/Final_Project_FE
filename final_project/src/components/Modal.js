@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-function Modal({ visible, children }) {
+export default function Modal({ visible, children }) {
   return (
     <div className="Modal">
       <ModalWrap visible={visible}></ModalWrap>
@@ -8,7 +8,6 @@ function Modal({ visible, children }) {
     </div>
   );
 }
-export default Modal;
 
 const ModalWrap = styled.div`
   width: 100vw;

@@ -10,7 +10,7 @@ export default function SubMyPage() {
   const [changePage, setChangePage] = useState(
     params.id === ":mywrite" ? "mywrite" : "mybookmark"
   );
-  console.log(params);
+
   const navigate = useNavigate();
   const [postList, setPostList] = useState([]);
   const [bookMarkList, setBookMarkList] = useState([]);
@@ -21,7 +21,6 @@ export default function SubMyPage() {
         .myWritepost()
         .then((response) => {
           setPostList(response.data.data.content);
-          console.log(response.data.data.content);
         })
         .catch((error) => {
           console.log(error);
@@ -31,7 +30,6 @@ export default function SubMyPage() {
         .myBookMarkList()
         .then((response) => {
           setBookMarkList(response.data.data);
-          console.log(response.data.data);
         })
         .catch((err) => {
           console.log(err);

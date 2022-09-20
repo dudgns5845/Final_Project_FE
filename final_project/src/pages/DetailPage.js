@@ -209,12 +209,3 @@ const ButtonCss = {
   color: "white",
   backgroundColor: "gray",
 };
-const postData = {
-  nickname: "영등포꿀쟁이",
-  location: "영등포구",
-  postDate: "2022.08.13",
-  postTitle: "IT 전공 서적 교환하실 분~!!",
-  category: "서적",
-  content:
-    "IT 전공서적 교환하실 분 구합니다.\n기프티콘과 거래했으면 좋겠습니다.\n대면으로 거래 희망합니다.\n장소는 숭실대입구역에서 진행합니다.\n희망 시 채팅주시길 바랍니다.😆",
-};

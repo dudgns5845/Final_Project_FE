@@ -86,7 +86,6 @@ export default function MyPage() {
     apis
       .logOutUser()
       .then((response) => {
-        console.log(response);
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
         deleteCookie("id");
