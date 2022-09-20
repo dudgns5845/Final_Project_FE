@@ -29,7 +29,7 @@ export default function MainPage() {
       // 다음페이지 인덱스 증가
       setPage((page) => page + 1);
       // 증가한 인덱스 데이터 가져오기
-
+      setLoading(true);
       apis
         .getAllPostList(page)
         .then((response) => {
@@ -39,7 +39,7 @@ export default function MainPage() {
         .catch((error) => {
           console.log(error);
         });
-
+      setLoading(false);
       console.log(page);
       console.log("hohohoho", postList);
     }
@@ -99,6 +99,8 @@ export default function MainPage() {
             return <Post post={post} key={idx}></Post>;
           }
         })}
+        <div style={{ height: '100px' }}></div>
+        <div style={{ height: '100px' }} ref={ref}></div>
       </div>
 
       <IconButton

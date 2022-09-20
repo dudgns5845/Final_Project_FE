@@ -6,8 +6,10 @@ export default function Post({ post }) {
   return (
     <CardActionArea onClick={() => navigate(`/detail/${post.id}`)}>
       <div style={CardCss}>
-        {/* <img style={ImageCss} src='https://picsum.photos/200' /> */}
-        <img style={ImageCss} src={post.postImageUrl} />
+        <div style={{ width: '100px', height: '100px' }}>
+          <img style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '10px' }} src={post.postImageUrl} />
+        </div>
+
         <div style={TextCss}>
           <h3>
             {post.title} {post.id}
@@ -34,7 +36,15 @@ const TextCss = {
   width: "100%",
 };
 const ImageCss = {
-  width: "7em",
-  height: "7em",
-  borderRadius: "0.5em",
+  // maxWidth: "100px",
+  // maxHeight: "100px",
+  // minWidth: "100px",
+  // minHeight: "100px",
+  width: '100px',
+  height: '100px',
+  aspectRatio: 'auto',
+  borderRadius: '5px',
+  backgroundColor: '#c3d0d8',
+  objectFit: 'fill',
+
 };

@@ -190,8 +190,8 @@ const imgCss = {
   width: "100%",
   height: "100%",
   backgroundColor: "gray",
-  objectFit: "cover",
-  display: "felx",
+  objectFit: "fill",
+  display: "flex",
 };
 
 const ButtonRight = {
