@@ -80,6 +80,7 @@ export default function Login({ ChangeCookie }) {
         .loginUser(UserData)
         .then((response) => {
           setErrorMessage("로그인 성공");
+          setAuth(true);
           setCookie(
             "accessToken",
             response.data.data.token.accessToken,
