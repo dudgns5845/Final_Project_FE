@@ -159,9 +159,7 @@ export default function PostPage() {
           onClick={() => {
             navigate("/");
           }}
-        >
-          되돌아가기
-        </ArrowBackIcon>
+        />
         <h4>게시글쓰기</h4>
         <Button
           style={{

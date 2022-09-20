@@ -1,43 +1,24 @@
-import { io } from "socket.io-client";
-import { initSocketConnection } from "../../socketio";
-export let socket = io("http://서버:서버 포트", {
-  transports: ["websocket"],
+import SockJS from "sockjs-client";
+import StompJs from "@stomp/stompjs";
+
+const client = new StompJs.Client({
+  brokerURL: "/api/ws",
+  connectHeaders: {
+    login: "user",
+    passcode: "password",
+  },
+  debug: function (str) {
+    console.log(str);
+  },
+  reconnectDelay: 5000, //자동 재 연결
+  heartbeatIncoming: 4000,
+  heartbeatOutgoing: 4000,
 });
-export default const initSocketConnection = () => {
-  if (socket) return;
-  socket.connect();
-};
-export const sendSocketMessage = (cmd, body = null) => {
-  if (socket == null || socket.connected === false) {
-    initiateSocketConnection();
-  }
-  socket.emit("message", {
-    cmd: cmd,
-    body: body,
-  });
-};
-let cbMap = new Map();
+client.onConnect = function (frame) {};
 
-// 해당 이벤트를 받고 콜백 함수를 실행함
-export const socketInfoReceived = (cbType, cb) => {
-  cbMap.set(cbType, cb);
-
-  if (socket.hasListeners("message")) {
-    socket.off("message");
-  }
-
-  socket.on("message", (ret) => {
-    for (let [, cbValue] of cbMap) {
-      cbValue(null, ret);
-    }
-  });
+client.onStompError = function (frame) {
+  console.log("Broker reported error: " + frame.headers["message"]);
+  console.log("Additional details: " + frame.body);
 };
-
-// 소켓 연결을 끊음
-export const disconnectSocket = () => {
-  if (socket == null || socket.connected === false) {
-    return;
-  }
-  socket.disconnect();
-  socket = undefined;
-};
+client.activate();
+client.deactivate();
