@@ -79,7 +79,6 @@ const apis = {
   registerUser: (payload) => api.post("/users/signup", payload),
   loginUser: (payload) => api.post("/users/login", payload),
   writePost: (payload) => apiForm.post("posts", payload),
-
   getAllPostList: (payload) =>
     api.get(`posts?searchValue=&category=&page=${payload}`),
   postDetail: (payload) => api.get(`posts/${payload}`),
@@ -91,6 +90,8 @@ const apis = {
   myBookMarkList: () => api.get("/mypage/picks"),
   searchList: (payload) =>
     api.get(`posts?searchValue=${payload.title}&category=${payload.category}`),
+  deleteDetail: (payload) => api.put(`/posts/${payload}`, payload),
+  editDetail: (payload) => api.put(`/posts/${payload}`, payload),
 };
 
 export default apis;
