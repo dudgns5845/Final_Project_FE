@@ -102,9 +102,7 @@ export default function Login({ ChangeCookie }) {
             response.data.data.id,
             response.data.data.token.accessTokenExpiresIn
           );
-          return setTimeout(() => {
-            navigate("/");
-          }, 1000);
+          return navigate("/");
         })
         .catch((error) => {
           console.log(error);
