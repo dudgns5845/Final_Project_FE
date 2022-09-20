@@ -11,6 +11,8 @@ import {
   Button,
   Hidden,
 } from "@mui/material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -23,6 +25,7 @@ import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
 import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 export default function Detail() {
   const navigate = useNavigate();
   const param = useParams();
@@ -34,6 +37,17 @@ export default function Detail() {
   const [postData, setPostData] = useState([]);
   const [imageList, setImageList] = useState(["/default-image.jpg"]);
   const [isBookMark, setIsBookMark] = useState(false);
+
+  // MUI Menu
+  const [anchorEl, setAnchorEl] = useState(false);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const Bookmarking = () => {
     apis
       .addBookMark(param.postid)
@@ -60,7 +74,19 @@ export default function Detail() {
         console.log(error);
       });
   }, [param]);
-  console.log(imageList);
+  // console.log(imageList);
+
+  // 게시물 수정
+  const PutHandler = () => {};
+
+  // 게시물 삭제
+
+  const DeleteHandler = () => {
+    apis
+      .deleteDetail(param.postid)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+  };
 
   // 캐로셀
   const TOTAL_SLIDES = imageList.length - 1;
@@ -80,7 +106,7 @@ export default function Detail() {
     }
   };
 
-  console.log(slideRef.current, "adbr");
+  // console.log(slideRef.current, "adbr");
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
@@ -118,8 +144,27 @@ export default function Detail() {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
+            <IconButton>
+              <MoreVertIcon
+                aria-label="settings"
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+              />
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={PutHandler}>수정</MenuItem>
+                <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
+              </Menu>
             </IconButton>
           }
           title={postData.nickname}
@@ -162,13 +207,14 @@ const IconCss = {
 
 const ImgContainer = {
   display: "flex",
-  width: "100vw",
+  width: "100%",
   height: "60vh",
   overflow: "hidden",
   alignItems: "center",
 };
 
 const Slide = {
+  objectFit: "cover",
   width: "100%",
   height: "100%",
   display: "flex",
@@ -190,7 +236,7 @@ const imgCss = {
   width: "100%",
   height: "100%",
   backgroundColor: "gray",
-  objectFit: "fill",
+  objectFit: "cover",
   display: "flex",
 };
 

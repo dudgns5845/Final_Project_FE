@@ -90,7 +90,7 @@ const apis = {
   myBookMarkList: () => api.get("/mypage/picks"),
   searchList: (payload) =>
     api.get(`posts?searchValue=${payload.title}&category=${payload.category}`),
-  deleteDetail: (payload) => api.put(`/posts/${payload}`, payload),
+  deleteDetail: (payload) => api.put(`/posts/${payload}/delete`, payload),
   editDetail: (payload) => api.put(`/posts/${payload}`, payload),
 };
 

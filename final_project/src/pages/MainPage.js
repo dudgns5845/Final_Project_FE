@@ -33,19 +33,19 @@ export default function MainPage() {
       apis
         .getAllPostList(page)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           setPostList([...postList, ...response.data.data.content]);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
       setLoading(false);
-      console.log(page);
-      console.log("hohohoho", postList);
+      // console.log(page);
+      // console.log("hohohoho", postList);
     }
   }, [inView, loading]);
 
-  console.log("여기", inView);
+  // console.log("여기", inView);
   const navigate = useNavigate();
 
   //로드한 데이터 리스트 - > 여기다가 축적해나갈것
@@ -55,11 +55,11 @@ export default function MainPage() {
     apis
       .getAllPostList(page)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setPostList(response.data.data.content);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -99,8 +99,8 @@ export default function MainPage() {
             return <Post post={post} key={idx}></Post>;
           }
         })}
-        <div style={{ height: '100px' }}></div>
-        <div style={{ height: '100px' }} ref={ref}></div>
+        <div style={{ height: "100px" }}></div>
+        <div style={{ height: "100px" }} ref={ref}></div>
       </div>
 
       <IconButton
