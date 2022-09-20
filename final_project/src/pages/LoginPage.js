@@ -6,7 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import apis from "../apis/Apis";
 import { setCookie } from "../shared/Cookie";
@@ -101,11 +101,9 @@ export default function Login({ ChangeCookie }) {
             response.data.data.id,
             response.data.data.token.accessTokenExpiresIn
           );
-
-          setTimeout(() => {
+          return setTimeout(() => {
             navigate("/");
           }, 1000);
-          return;
         })
         .catch((error) => {
           console.log(error);
