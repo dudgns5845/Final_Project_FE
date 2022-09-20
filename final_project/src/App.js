@@ -103,6 +103,12 @@ function App() {
               isLoggedIn ? <ChatRoomPage /> : <Navigate replace to="/start" />
             }
           />
+          {/* <Route
+            path="/chatdetail:id"
+            element={
+              isLoggedIn ? <ChatRoomPage /> : <Navigate replace to="/start" />
+            }
+          /> */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
