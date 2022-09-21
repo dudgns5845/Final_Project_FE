@@ -24,7 +24,11 @@ export default function Footer() {
         backgroundColor: "silver",
       }}
     >
-      <BottomNavigationAction label="홈" icon={<HomeRoundedIcon />} />
+      <BottomNavigationAction
+        label="홈"
+        icon={<HomeRoundedIcon />}
+        onClick={() => navigate("/")}
+      />
       <BottomNavigationAction
         label="채팅"
         icon={<QuestionAnswerRoundedIcon />}

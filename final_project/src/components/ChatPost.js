@@ -1,11 +1,14 @@
 import React from "react";
 import { autocompleteClasses, CardActionArea } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { PanoramaSharp } from "@mui/icons-material";
 
 export default function ChatPost({ post }) {
   const navigate = useNavigate();
+  const param = useParams();
+
   return (
-    <CardActionArea onClick={() => navigate(`/chatdetail/${post.id}`)}>
+    <CardActionArea onClick={() => navigate(`/chatdetail:${post.roomId}`)}>
       <div style={CardCss}>
         <div style={{ width: "5rem", height: "3.5rem" }}>
           <img
@@ -16,7 +19,7 @@ export default function ChatPost({ post }) {
               borderRadius: "100%",
               border: "1px solid gray",
             }}
-            src={post.postImageUrl}
+            src={post.profileUrl}
             alt=""
           />
         </div>
@@ -25,7 +28,7 @@ export default function ChatPost({ post }) {
           <label
             style={{ diaply: "flex", fontWeight: "600", fontSize: "1rem" }}
           >
-            {post.anoterId}
+            {post.nickname}
           </label>
           <label
             style={{
@@ -45,9 +48,9 @@ export default function ChatPost({ post }) {
               color: "gray",
             }}
           >
-            · {post.anotherRegion}
+            · {post.location}
           </label>
-          <p style={{ marginTop: "0.5rem" }}>{post.chatting}</p>
+          <p style={{ marginTop: "0.5rem" }}>{post.lastMessage}</p>
         </div>
       </div>
     </CardActionArea>

@@ -95,6 +95,7 @@ const apis = {
 
   // 채팅
   chatRooms: (payload) => api.get(`/chat/rooms`, payload),
+  chatDetilRooms: (payload) => api.get(`/chat/room/${payload}`, payload),
 };
 
 export default apis;

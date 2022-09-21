@@ -55,7 +55,7 @@ export default function MainPage() {
     apis
       .getAllPostList(page)
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         setPostList(response.data.data.content);
       })
       .catch((error) => {

@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import ChatForm from "../components/ChatForm";
+import apis from "../apis/Apis";
 export default function DetailChatPage() {
   const navigate = useNavigate();
+  const param = useParams();
+
   const [chat, setChat] = useState("");
   const [tmpchat, setTmpChat] = useState("");
 
@@ -28,6 +31,15 @@ export default function DetailChatPage() {
     setTest([...test, { id: "user", text: tmpchat }]);
   };
 
+  console.log(param.roomId);
+  useEffect(() => {
+    apis
+      .chatDetilRooms(param.roomId)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+  }, [param]);
   return (
     <>
       <Header>
