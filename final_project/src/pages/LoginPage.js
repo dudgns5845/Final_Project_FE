@@ -2,11 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 import Snackbar from "@mui/material/Snackbar";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import apis from "../apis/Apis";
 import { setCookie } from "../shared/Cookie";
@@ -14,18 +10,14 @@ import { setCookie } from "../shared/Cookie";
 const ariaLabel = { "aria-label": "description" };
 
 export default function Login({ ChangeCookie }) {
-  // login, register 페이지 스위치
-  const [auth, setAuth] = useState(false);
 
   const navigate = useNavigate();
 
   // 아이디, 비밀번호 등
   const [userId, setUserId] = useState("");
-  const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [region, setRegion] = useState("");
-  const [authNumber, setAuthNumber] = useState("");
+
 
   // 조건 오류 메시지
   const [userIdMessege, setUserIdMessege] = useState("");
@@ -65,70 +57,65 @@ export default function Login({ ChangeCookie }) {
     },
   };
 
-  useEffect(() => {
-    if (errorMessage === "로그인 성공") {
-      navigate("/");
-    }
-  }, [errorMessage]);
   const onSubmitHandler = (e) => {
-    if (e.target.innerText === "로그인") {
-      if (!isUserId) {
-        return setErrorMessage("이메일을 확인해주세요");
-      } else if (!isPassword) {
-        return setErrorMessage("비밀번호를 확인해주세요");
-      } else {
-        const UserData = {
-          email: userId,
-          password: password,
-        };
 
-        apis
-          .loginUser(UserData)
-          .then((response) => {
-            console.log(response);
-            if (!response.data.success) {
-              setErrorMessage("아이디와 비밀번호를 확인하세요");
-              return;
-            } else if (response.data.success) {
-              setErrorMessage("로그인 성공");
+    if (!isUserId) {
+      setErrorMessage("이메일을 확인해주세요");
+      setsnackOpen(true);
+      return
+    } else if (!isPassword) {
+      setErrorMessage("비밀번호를 확인해주세요");
+      setsnackOpen(true);
+      return
+    } else {
+      const UserData = {
+        email: userId,
+        password: password,
+      };
 
-              setCookie(
-                "accessToken",
-                response.data.data.token.accessToken,
-                response.data.data.token.accessTokenExpiresIn
-              );
+      apis
+        .loginUser(UserData)
+        .then((response) => {
+          console.log(response);
+          if (!response.data.success) {
+            setErrorMessage("아이디와 비밀번호를 확인하세요,111");
+            setsnackOpen(true);
+            return;
+          }
+          else if (response.data.success) {
+            setErrorMessage("로그인 성공!!");
+            setsnackOpen(true);
+            setCookie(
+              "accessToken",
+              response.data.data.token.accessToken,
+              response.data.data.token.accessTokenExpiresIn
+            );
 
+            setCookie("refreshToken", response.data.data.token.refreshToken);
+
+            setCookie(
+              "nickname",
+              response.data.data.nickname,
+              response.data.data.token.accessTokenExpiresIn
+            );
+
+            setCookie(
+              "id",
+              response.data.data.id,
+              response.data.data.token.accessTokenExpiresIn
+            );
+
+            //스낵바가 나타나고 화면전환을 위해 인터벌을 줌
+            setTimeout(() => {
               ChangeCookie(response.data.data.token.accessToken);
-
-              setCookie("refreshToken", response.data.data.token.refreshToken);
-
-              setCookie(
-                "nickname",
-                response.data.data.nickname,
-                response.data.data.token.accessTokenExpiresIn
-              );
-
-              setCookie(
-                "id",
-                response.data.data.id,
-                response.data.data.token.accessTokenExpiresIn
-              );
-            }
-
-            // alert(errorMessage);
-            // navigate("/");
-          })
-          .catch((error) => {
-            console.log(error);
-            setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
-          })
-          .then((response) => {
-            alert(errorMessage);
-            if (errorMessage === "로그인 성공") {
-              navigate("/");
-            }
-          });
-      }
+            }, 5000);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          setErrorMessage("이메일 또는 비밀번호를 확인해주세요,222");
+          setsnackOpen(true);
+        })
     }
   };
 
@@ -146,6 +133,7 @@ export default function Login({ ChangeCookie }) {
       setIsUserId(true);
     }
   };
+
   // 비밀번호 조건 확인
   const onChangePassword = useCallback((e) => {
     const passwordRegex =
@@ -175,11 +163,6 @@ export default function Login({ ChangeCookie }) {
     }
   }, [password, passwordConfirm]);
 
-  // login register 스위치
-  const onChangeHandler = (e) => {
-    e.preventDefault();
-    auth ? setAuth(false) : setAuth(true);
-  };
 
   return (
     <div
@@ -214,7 +197,6 @@ export default function Login({ ChangeCookie }) {
             fullWidth
             variant="contained"
             onClick={(e) => {
-              setsnackOpen(true);
               onSubmitHandler(e);
             }}
           >로그인
@@ -233,18 +215,10 @@ export default function Login({ ChangeCookie }) {
         </div>
       </form>
       <div style={{ textAlign: "right", marginTop: "10px" }}>
-        {/* <Link to='/signin'>회원가입하러 가기</Link> */}
-        {/* <Button variant="text" onClick={onChangeHandler}>
-          회원가입하러 가기
-        </Button> */}
         <Button variant="text" onClick={() => { navigate('/signin') }}>
           회원가입하러 가기
         </Button>
-
       </div>
     </div>
   );
 }
-
-
-const guList = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"]

@@ -9,13 +9,13 @@ import Select from "@mui/material/Select";
 import { useNavigate } from "react-router-dom";
 
 import apis from "../apis/Apis";
-import { setCookie } from "../shared/Cookie";
 
 const ariaLabel = { "aria-label": "description" };
 
-export default function Signin({ ChangeCookie }) {
-    // login, register 페이지 스위치
-    const [auth, setAuth] = useState(false);
+
+const guList = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
+
+export default function Signin() {
 
     const navigate = useNavigate();
 
@@ -39,6 +39,7 @@ export default function Signin({ ChangeCookie }) {
     const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
     const [isNickname, setIsNickName] = useState(false);
     const [isEmail, setIsEmail] = useState(false);
+    //회원 가입 여부 
     const [isAuth, setIsAuth] = useState(false);
 
     // MUI
@@ -54,6 +55,7 @@ export default function Signin({ ChangeCookie }) {
     const handleClose = () => {
         setsnackOpen(false);
     };
+
     const ITEM_HEIGHT = 40;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -64,120 +66,63 @@ export default function Signin({ ChangeCookie }) {
             },
         },
     };
-    useEffect(() => {
-        if (errorMessage === "로그인 성공") {
-            navigate("/");
-        }
-    }, [errorMessage]);
+
+    // 최종 회원 가입 버튼 클릭시 호출
     const onSubmitHandler = (e) => {
-        if (e.target.innerText === "로그인") {
-            if (!isUserId) {
-                return setErrorMessage("이메일을 확인해주세요");
-            } else if (!isPassword) {
-                return setErrorMessage("비밀번호를 확인해주세요");
-            } else {
-                const UserData = {
-                    email: userId,
-                    password: password,
-                };
 
-                apis
-                    .loginUser(UserData)
-                    .then((response) => {
-                        console.log(response);
-                        if (!response.data.success) {
-                            setErrorMessage("아이디와 비밀번호를 확인하세요");
-                            return;
-                        } else if (response.data.success) {
-                            setErrorMessage("로그인 성공");
+        if (!isAuth) {
+            setErrorMessage("이메일 인증을 진행해주세요");
+            setsnackOpen(true);
+            return
+        } else if (!isPasswordConfirm) {
+            setErrorMessage("비밀번호가 일치하지 않습니다");
+            setsnackOpen(true);
+            return;
+        } else if (nickName.length === 0) {
+            setErrorMessage("닉네임을 입력해주세요");
+            setsnackOpen(true);
+            return
+        } else if (passwordConfirm.length === 0) {
+            setErrorMessage("비밀번호 확인을 입력해주세요");
+            setsnackOpen(true);
+            return
+        } else if (!isNickname) {
+            setErrorMessage("닉네임 중복확인을 해주세요");
+            setsnackOpen(true);
+            return
+        } else {
+            const UserData = {
+                email: userId,
+                password: password,
+                passwordConfirm: passwordConfirm,
+                nickname: nickName,
+                location: region,
+            };
 
-                            setCookie(
-                                "accessToken",
-                                response.data.data.token.accessToken,
-                                response.data.data.token.accessTokenExpiresIn
-                            );
+            apis
+                .registerUser(UserData)
+                .then((response) => {
+                    console.log(response);
+                    setErrorMessage("회원가입 성공");
+                    setsnackOpen(true);
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 1300);
 
-                            ChangeCookie(response.data.data.token.accessToken);
-
-                            setCookie("refreshToken", response.data.data.token.refreshToken);
-
-                            setCookie(
-                                "nickname",
-                                response.data.data.nickname,
-                                response.data.data.token.accessTokenExpiresIn
-                            );
-
-                            setCookie(
-                                "id",
-                                response.data.data.id,
-                                response.data.data.token.accessTokenExpiresIn
-                            );
-                        }
-
-                        // alert(errorMessage);
-                        // navigate("/");
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
-                    })
-                    .then((response) => {
-                        alert(errorMessage);
-                        if (errorMessage === "로그인 성공") {
-                            navigate("/");
-                        }
-                    });
-            }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setErrorMessage("다시 시도해주세요");
+                    setsnackOpen(true);
+                    return;
+                });
         }
-        if (e.target.innerText === "회원가입") {
-            if (!isAuth) {
-                return setErrorMessage("이메일 인증을 진행해주세요");
-            } else if (!isPasswordConfirm) {
-                return setErrorMessage("비밀번호가 일치하지 않습니다");
-            } else if (nickName.length === 0) {
-                return setErrorMessage("닉네임을 입력해주세요");
-            } else if (passwordConfirm.length === 0) {
-                return setErrorMessage("비밀번호 확인을 입력해주세요");
-            } else if (!isNickname) {
-                return setErrorMessage("닉네임 중복확인을 해주세요");
-            } else {
-                const UserData = {
-                    email: userId,
-                    password: password,
-                    passwordConfirm: passwordConfirm,
-                    nickname: nickName,
-                    location: region,
-                };
 
-                apis
-                    .registerUser(UserData)
-                    .then((response) => {
-                        console.log(response);
-                        setErrorMessage("회원가입 성공");
-                        setAuth(false);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        return setErrorMessage("다시 시도해주세요");
-                    });
-            }
-        }
+
+
     };
 
-    const buttonsTotal = (
-        <>
-            <Button
-                fullWidth
-                variant="contained"
-                onClick={(e) => {
-                    setsnackOpen(true);
-                    onSubmitHandler(e);
-                }}
-            >
-                {auth ? "회원가입" : "로그인"}
-            </Button>
-        </>
-    );
+
 
     // 이메일 조건 확인
     const onChangeUserId = (e) => {
@@ -193,6 +138,7 @@ export default function Signin({ ChangeCookie }) {
             setIsUserId(true);
         }
     };
+
     // 비밀번호 조건 확인
     const onChangePassword = useCallback((e) => {
         const passwordRegex =
@@ -209,11 +155,13 @@ export default function Signin({ ChangeCookie }) {
             setIsPassword(true);
         }
     }, []);
+
     // 비밀번호 일치 확인
     const onChangePasswordConfirm = (e) => {
         const passwordConfirmCurrent = e.target.value;
         setPasswordConfirm(passwordConfirmCurrent);
     };
+
     useEffect(() => {
         if (passwordConfirm.length > 0) {
             if (password === passwordConfirm) {
@@ -230,9 +178,11 @@ export default function Signin({ ChangeCookie }) {
     const onChangeNickName = (e) => {
         setNickName(e.target.value);
     };
+
     const handleChange = (e) => {
         setRegion(e.target.value);
     };
+
     const onAuthNumber = (e) => {
         setAuthNumber(e.target.value);
     };
@@ -250,17 +200,28 @@ export default function Signin({ ChangeCookie }) {
                 .emailCheck(idCheck)
                 .then((response) => {
                     console.log(response);
-                    setErrorMessage("인증번호를 입력해주세요");
-                    setIsEmail(true);
-                    console.log(isEmail);
-                    apis
-                        .emailSend(idSend)
-                        .then((response) => {
-                            console.log(response);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
+                    //중복된 이메일로 가입했는지 체크
+                    if (response.data.success === false) {
+                        setErrorMessage(response.data.errorCode.message);
+                        setUserIdMessege(response.data.errorCode.message);
+                        setIsUserId(false);
+                        return;
+                    }
+                    //중복된 이메일로 가입안했다면
+                    else {
+                        // 인증 메일 발송
+                        setErrorMessage("인증번호를 입력해주세요");
+                        setIsEmail(true);
+                        console.log(isEmail);
+                        apis
+                            .emailSend(idSend)
+                            .then((response) => {
+                                console.log(response);
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -270,32 +231,34 @@ export default function Signin({ ChangeCookie }) {
 
     const buttonsEmail = (
         <>
-            {isEmail ? (
-                <Button
-                    style={{ marginLeft: "4%", fontSize: "x-small" }}
-                    disabled
-                    variant="outlined"
-                    onClick={(e) => {
-                        setsnackOpen(true);
-                        onDoublingHandler(e);
-                    }}
-                >
-                    발송 완료
-                </Button>
-            ) : (
-                <Button
-                    style={{ marginLeft: "4%", fontSize: "x-small" }}
-                    variant="outlined"
-                    onClick={(e) => {
-                        setsnackOpen(true);
-                        onDoublingHandler(e);
-                    }}
-                >
-                    메일 인증
-                </Button>
-            )}
+            {
+                isEmail ?
+                    <Button
+                        style={{ marginLeft: "4%", fontSize: "x-small" }}
+                        disabled
+                        variant="outlined"
+                        onClick={(e) => {
+                            setsnackOpen(true);
+                            onDoublingHandler(e);
+                        }}
+                    >
+                        발송 완료
+                    </Button>
+                    :
+                    <Button
+                        style={{ marginLeft: "4%", fontSize: "x-small" }}
+                        variant="outlined"
+                        onClick={(e) => {
+                            setsnackOpen(true);
+                            onDoublingHandler(e);
+                        }}
+                    >
+                        메일 인증
+                    </Button>
+            }
         </>
     );
+
     const certification = {
         email: userId,
         certificationNum: authNumber,
@@ -363,8 +326,10 @@ export default function Signin({ ChangeCookie }) {
                     console.log(response);
                     if (response.data.success) {
                         setIsNickName(true);
+                        setsnackOpen(true);
                         setErrorMessage("사용 가능한 닉네임입니다");
                     } else {
+                        setsnackOpen(true);
                         setErrorMessage("이미 사용중인 닉네임입니다");
                     }
                 })
@@ -403,12 +368,6 @@ export default function Signin({ ChangeCookie }) {
         </>
     );
 
-    // login register 스위치
-    const onChangeHandler = (e) => {
-        e.preventDefault();
-        auth ? setAuth(false) : setAuth(true);
-    };
-
     return (
         <div
             style={{
@@ -420,100 +379,80 @@ export default function Signin({ ChangeCookie }) {
                 boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
             }}
         >
-            <h2>{!auth ? "로그인" : "회원가입"}</h2>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                }}
+                open={snackOpen}
+                autoHideDuration={2000}
+                message={errorMessage}
+                onClose={handleClose}
+                key={state.vertical + state.horizontal}
+            ></Snackbar>
+            <h2>회원가입</h2>
             <form>
-                {!auth ? (
-                    <>
-                        <p>이메일</p>
-                        <Input
-                            fullWidth
-                            placeholder="이메일을 입력하세요"
-                            inputProps={ariaLabel}
-                            onChange={onChangeUserId}
-                        />
-                    </>
+
+                <p>이메일</p>
+                {isEmail ? (
+                    <Input
+                        disabled
+                        defaultValue="Disabled"
+                        style={{ width: "68%" }}
+                        placeholder="이메일을 입력하세요"
+                        inputProps={ariaLabel}
+                        onChange={onChangeUserId}
+                    />
                 ) : (
+                    <Input
+                        style={{ width: "68%" }}
+                        placeholder="이메일을 입력하세요"
+                        inputProps={ariaLabel}
+                        onChange={onChangeUserId}
+                    />
+                )
+                }
+                {buttonsEmail}
+
+                <br />
+                {isEmail && (
                     <>
-                        <p>이메일</p>
-                        {isEmail ? (
+                        {isAuth ? (
                             <Input
                                 disabled
                                 defaultValue="Disabled"
                                 style={{ width: "68%" }}
-                                placeholder="이메일을 입력하세요"
+                                placeholder="인증번호를 입력하세요"
                                 inputProps={ariaLabel}
-                                onChange={onChangeUserId}
+                                onChange={onAuthNumber}
                             />
                         ) : (
                             <Input
                                 style={{ width: "68%" }}
-                                placeholder="이메일을 입력하세요"
+                                placeholder="인증번호를 입력하세요"
                                 inputProps={ariaLabel}
-                                onChange={onChangeUserId}
+                                onChange={onAuthNumber}
                             />
                         )}
-                        {buttonsEmail}
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "center",
-                            }}
-                            open={snackOpen}
-                            autoHideDuration={2000}
-                            message={errorMessage}
-                            onClose={handleClose}
-                            key={state.vertical + state.horizontal}
-                        ></Snackbar>
-                        <br />
-                        {isEmail && (
-                            <>
-                                {isAuth ? (
-                                    <Input
-                                        disabled
-                                        defaultValue="Disabled"
-                                        style={{ width: "68%" }}
-                                        placeholder="인증번호를 입력하세요"
-                                        inputProps={ariaLabel}
-                                        onChange={onAuthNumber}
-                                    />
-                                ) : (
-                                    <Input
-                                        style={{ width: "68%" }}
-                                        placeholder="인증번호를 입력하세요"
-                                        inputProps={ariaLabel}
-                                        onChange={onAuthNumber}
-                                    />
-                                )}
-                                {buttonsAuthNumber}
-                                <Snackbar
-                                    anchorOrigin={{
-                                        vertical: "top",
-                                        horizontal: "center",
-                                    }}
-                                    open={snackOpen}
-                                    autoHideDuration={2000}
-                                    message={errorMessage}
-                                    onClose={handleClose}
-                                    key={state.vertical + state.horizontal}
-                                ></Snackbar>
-                            </>
-                        )}
-                        <br />
-                        {auth && userId.length > 1 && isUserId ? (
-                            <>
-                                {isAuth ? (
-                                    <span style={{ color: "green" }}>
-                                        이메일 인증이 완료되었습니다
-                                    </span>
-                                ) : (
-                                    <span style={{ color: "green" }}>{userIdMessege}</span>
-                                )}
-                            </>
-                        ) : (
-                            <span style={{ color: "red" }}>{userIdMessege}</span>
-                        )}
+                        {buttonsAuthNumber}
+
                     </>
                 )}
+                <br />
+                {userId.length > 1 && isUserId ? (
+                    <>
+                        {isAuth ? (
+                            <span style={{ color: "green" }}>
+                                이메일 인증이 완료되었습니다
+                            </span>
+                        ) : (
+                            <span style={{ color: "green" }}>{userIdMessege}</span>
+                        )}
+                    </>
+                ) : (
+                    <span style={{ color: "red" }}>{userIdMessege}</span>
+                )}
+
 
                 <p>비밀번호</p>
                 <Input
@@ -523,131 +462,82 @@ export default function Signin({ ChangeCookie }) {
                     onChange={onChangePassword}
                 />
                 <br />
-                {auth &&
-                    (isPassword ? (
+                {
+                    isPassword ? (
                         <span style={{ color: "green" }}>{passwordMessage}</span>
                     ) : (
                         <span style={{ color: "red" }}>{passwordMessage}</span>
-                    ))}
-                {auth && (
-                    <>
-                        <p>비밀번호 확인</p>
-                        <Input
-                            fullWidth
-                            type="password"
-                            placeholder="비밀번호를 한번 더 입력하세요"
-                            onChange={onChangePasswordConfirm}
-                        />
-                        <br />
-                        {passwordConfirm.length > 0 && !isPasswordConfirm ? (
-                            <span style={{ color: "red" }}>{passwordConfirmMessage}</span>
-                        ) : (
-                            <span style={{ color: "green" }}>{passwordConfirmMessage}</span>
-                        )}
-                    </>
+                    )
+                }
+
+                <p>비밀번호 확인</p>
+                <Input
+                    fullWidth
+                    type="password"
+                    placeholder="비밀번호를 한번 더 입력하세요"
+                    onChange={onChangePasswordConfirm}
+                />
+                <br />
+                {passwordConfirm.length > 0 && !isPasswordConfirm ? (
+                    <span style={{ color: "red" }}>{passwordConfirmMessage}</span>
+                ) : (
+                    <span style={{ color: "green" }}>{passwordConfirmMessage}</span>
                 )}
                 <p />
-                {auth && (
-                    <>
-                        <p>닉네임</p>
-                        {isNickname ? (
-                            <Input
-                                disabled
-                                defaultValue="Disabled"
-                                style={{ width: "68%" }}
-                                type="text"
-                                placeholder="닉네임을 입력하세요"
-                                onChange={onChangeNickName}
-                            />
-                        ) : (
-                            <Input
-                                style={{ width: "68%" }}
-                                type="text"
-                                placeholder="닉네임을 입력하세요"
-                                onChange={onChangeNickName}
-                            />
-                        )}
 
-                        {buttonsNickname}
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "center",
-                            }}
-                            open={snackOpen}
-                            autoHideDuration={2000}
-                            message={errorMessage}
-                            onClose={handleClose}
-                            key={state.vertical + state.horizontal}
-                        ></Snackbar>
-
-                        <FormControl
-                            variant="standard"
-                            sx={{ width: "100%", paddingBottom: "10px", marginTop: "10px" }}
-                        >
-                            <InputLabel id="demo-simple-select-standard-label">
-                                관심 지역
-                            </InputLabel>
-                            <Select
-                                labelId="demo-simple-select-standard-label"
-                                id="demo-simple-select-standard"
-                                value={region}
-                                onChange={handleChange}
-                                label="region"
-                                MenuProps={MenuProps}
-                            >
-                                <MenuItem value="">
-                                    <em>---지역 선택---</em>
-                                </MenuItem>
-                                <MenuItem value="강남구">강남구</MenuItem>
-                                <MenuItem value="강동구">강동구</MenuItem>
-                                <MenuItem value="강북구">강북구</MenuItem>
-                                <MenuItem value="강서구">강서구</MenuItem>
-                                <MenuItem value="관악구">관악구</MenuItem>
-                                <MenuItem value="광진구">광진구</MenuItem>
-                                <MenuItem value="구로구">구로구</MenuItem>
-                                <MenuItem value="금천구">금천구</MenuItem>
-                                <MenuItem value="노원구">노원구</MenuItem>
-                                <MenuItem value="도봉구">도봉구</MenuItem>
-                                <MenuItem value="동대문구">동대문구</MenuItem>
-                                <MenuItem value="동작구">동작구</MenuItem>
-                                <MenuItem value="마포구">마포구</MenuItem>
-                                <MenuItem value="서대문구">서대문구</MenuItem>
-                                <MenuItem value="서초구">서초구</MenuItem>
-                                <MenuItem value="성동구">성동구</MenuItem>
-                                <MenuItem value="성북구">성북구</MenuItem>
-                                <MenuItem value="송파구">송파구</MenuItem>
-                                <MenuItem value="양천구">양천구</MenuItem>
-                                <MenuItem value="영등포구">영등포구</MenuItem>
-                                <MenuItem value="용산구">용산구</MenuItem>
-                                <MenuItem value="은평구">은평구</MenuItem>
-                                <MenuItem value="종로구">종로구</MenuItem>
-                                <MenuItem value="중구">중구</MenuItem>
-                                <MenuItem value="중랑구">중랑구</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <br />
-                    </>
+                <p>닉네임</p>
+                {isNickname ? (
+                    <Input
+                        disabled
+                        defaultValue="Disabled"
+                        style={{ width: "68%" }}
+                        type="text"
+                        placeholder="닉네임을 입력하세요"
+                        onChange={onChangeNickName}
+                    />
+                ) : (
+                    <Input
+                        style={{ width: "68%" }}
+                        type="text"
+                        placeholder="닉네임을 입력하세요"
+                        onChange={onChangeNickName}
+                    />
                 )}
 
+                {buttonsNickname}
+
+
+                <FormControl
+                    variant="standard"
+                    sx={{ width: "100%", paddingBottom: "10px", marginTop: "10px" }}
+                >
+                    <InputLabel id="demo-simple-select-standard-label">
+                        관심 지역
+                    </InputLabel>
+                    <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        value={region}
+                        onChange={handleChange}
+                        label="region"
+                        MenuProps={MenuProps}
+                    >
+                        <MenuItem value="">
+                            <em>---지역 선택---</em>
+                        </MenuItem>
+                        {guList.map((item, idx) => {
+                            return <MenuItem value={item} key={idx}>{item}</MenuItem>
+                        })}
+                    </Select>
+                </FormControl>
+                <br />
                 <div>
-                    {buttonsTotal}
-                    <Snackbar
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "center",
-                        }}
-                        open={snackOpen}
-                        autoHideDuration={2000}
-                        message={errorMessage}
-                        onClose={handleClose}
-                        key={state.vertical + state.horizontal}
-                    ></Snackbar>
+                    <Button fullWidth variant="contained" onClick={(e) => { onSubmitHandler(e) }} >회원가입</Button>
                 </div>
             </form>
             <div style={{ textAlign: "right", marginTop: "10px" }}>
-                <Button variant="text" onClick={onChangeHandler}>
-                    {auth ? "뒤로" : "회원가입하러"} 가기
+                <Button variant="text" onClick={() => { navigate('/login') }}>
+                    뒤로가기
                 </Button>
             </div>
         </div>
