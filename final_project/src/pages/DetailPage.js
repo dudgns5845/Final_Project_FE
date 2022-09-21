@@ -84,7 +84,15 @@ export default function Detail() {
   const DeleteHandler = () => {
     apis
       .deleteDetail(param.postid)
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        if (window.confirm("게시물을 삭제하시겠습니까?")) {
+          alert("게시물이 삭제되었습니다");
+          navigate("/");
+        } else {
+          alert("취소되었습니다");
+        }
+      })
       .catch((error) => console.log(error));
   };
 

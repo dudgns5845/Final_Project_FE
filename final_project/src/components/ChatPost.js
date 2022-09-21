@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function ChatPost({ post }) {
   const navigate = useNavigate();
   return (
-    <CardActionArea onClick={() => navigate(`/chatdetail/${post.userid}`)}>
+    <CardActionArea onClick={() => navigate(`/chatdetail/${post.id}`)}>
       <div style={CardCss}>
         <div style={{ width: "5rem", height: "3.5rem" }}>
           <img

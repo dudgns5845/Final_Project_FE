@@ -64,80 +64,103 @@ export default function Login({ ChangeCookie }) {
       },
     },
   };
-
+  useEffect(() => {
+    if (errorMessage === "로그인 성공") {
+      navigate("/");
+    }
+  }, [errorMessage]);
   const onSubmitHandler = (e) => {
-    if (!isUserId) {
-      return setErrorMessage("이메일을 확인해주세요");
-    } else if (!isPassword) {
-      return setErrorMessage("비밀번호를 확인해주세요");
-    } else if (e.target.innerText === "로그인") {
-      const UserData = {
-        email: userId,
-        password: password,
-      };
+    if (e.target.innerText === "로그인") {
+      if (!isUserId) {
+        return setErrorMessage("이메일을 확인해주세요");
+      } else if (!isPassword) {
+        return setErrorMessage("비밀번호를 확인해주세요");
+      } else {
+        const UserData = {
+          email: userId,
+          password: password,
+        };
 
-      apis
-        .loginUser(UserData)
-        .then((response) => {
-          setErrorMessage("로그인 성공");
-          setIsAuth(true);
-          setCookie(
-            "accessToken",
-            response.data.data.token.accessToken,
-            response.data.data.token.accessTokenExpiresIn
-          );
+        apis
+          .loginUser(UserData)
+          .then((response) => {
+            console.log(response);
+            if (!response.data.success) {
+              setErrorMessage("아이디와 비밀번호를 확인하세요");
+              return;
+            } else if (response.data.success) {
+              setErrorMessage("로그인 성공");
 
-          ChangeCookie(response.data.data.token.accessToken);
+              setCookie(
+                "accessToken",
+                response.data.data.token.accessToken,
+                response.data.data.token.accessTokenExpiresIn
+              );
 
-          setCookie("refreshToken", response.data.data.token.refreshToken);
+              ChangeCookie(response.data.data.token.accessToken);
 
-          setCookie(
-            "nickname",
-            response.data.data.nickname,
-            response.data.data.token.accessTokenExpiresIn
-          );
+              setCookie("refreshToken", response.data.data.token.refreshToken);
 
-          setCookie(
-            "id",
-            response.data.data.id,
-            response.data.data.token.accessTokenExpiresIn
-          );
-          return navigate("/");
-        })
-        .catch((error) => {
-          console.log(error);
-          return setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
-        });
-    } else if (!isAuth) {
-      return setErrorMessage("이메일 인증을 진행해주세요");
-    } else if (!isPasswordConfirm) {
-      return setErrorMessage("비밀번호가 일치하지 않습니다");
-    } else if (nickName.length === 0) {
-      return setErrorMessage("닉네임을 입력해주세요");
-    } else if (passwordConfirm.length === 0) {
-      return setErrorMessage("비밀번호 확인을 입력해주세요");
-    } else if (!isNickname) {
-      return setErrorMessage("닉네임 중복확인을 해주세요");
-    } else if (e.target.innerText === "회원가입") {
-      const UserData = {
-        email: userId,
-        password: password,
-        passwordConfirm: passwordConfirm,
-        nickname: nickName,
-        location: region,
-      };
+              setCookie(
+                "nickname",
+                response.data.data.nickname,
+                response.data.data.token.accessTokenExpiresIn
+              );
 
-      apis
-        .registerUser(UserData)
-        .then((response) => {
-          console.log(response);
-          setErrorMessage("회원가입 성공");
-          setAuth(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          return setErrorMessage("다시 시도해주세요");
-        });
+              setCookie(
+                "id",
+                response.data.data.id,
+                response.data.data.token.accessTokenExpiresIn
+              );
+            }
+
+            // alert(errorMessage);
+            // navigate("/");
+          })
+          .catch((error) => {
+            console.log(error);
+            setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
+          })
+          .then((response) => {
+            alert(errorMessage);
+            if (errorMessage === "로그인 성공") {
+              navigate("/");
+            }
+          });
+      }
+    }
+    if (e.target.innerText === "회원가입") {
+      if (!isAuth) {
+        return setErrorMessage("이메일 인증을 진행해주세요");
+      } else if (!isPasswordConfirm) {
+        return setErrorMessage("비밀번호가 일치하지 않습니다");
+      } else if (nickName.length === 0) {
+        return setErrorMessage("닉네임을 입력해주세요");
+      } else if (passwordConfirm.length === 0) {
+        return setErrorMessage("비밀번호 확인을 입력해주세요");
+      } else if (!isNickname) {
+        return setErrorMessage("닉네임 중복확인을 해주세요");
+      } else {
+        const UserData = {
+          email: userId,
+          password: password,
+          passwordConfirm: passwordConfirm,
+          nickname: nickName,
+          location: region,
+        };
+
+        apis
+          .registerUser(UserData)
+          .then((response) => {
+            console.log(response);
+            setErrorMessage("회원가입 성공");
+            setAuth(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            return setErrorMessage("다시 시도해주세요");
+          });
+      }
     }
   };
 

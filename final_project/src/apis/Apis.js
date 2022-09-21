@@ -92,6 +92,9 @@ const apis = {
     api.get(`posts?searchValue=${payload.title}&category=${payload.category}`),
   deleteDetail: (payload) => api.put(`/posts/${payload}/delete`, payload),
   editDetail: (payload) => api.put(`/posts/${payload}`, payload),
+
+  // 채팅
+  chatRooms: (payload) => api.get(`/chat/rooms`, payload),
 };
 
 export default apis;

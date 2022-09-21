@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ChatPost from "../components/ChatPost";
 import Footer from "../components/Footer";
+import apis from "../apis/Apis";
 
 export default function ChatRoomPage() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function ChatRoomPage() {
   //     anoterId: '상대방아이디',
   //     anotherRagion: '상대방지역',
   //     time: '1시간전',
-  //     chatting : '안녕하세요! 아직 판매중이신가요?',
+  //     lastMessage : '안녕하세요! 아직 판매중이신가요?',
   //   }
   // )
   const dummy = [
@@ -21,7 +22,7 @@ export default function ChatRoomPage() {
       anoterId: "상대방아이디",
       anotherRegion: "영등포구",
       time: "1시간전",
-      chatting: "안녕하세요! 아직 판매중이신가요?",
+      lastMessage: "안녕하세요! 아직 판매중이신가요?",
       postImageUrl:
         "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg",
     },
@@ -29,10 +30,17 @@ export default function ChatRoomPage() {
       anoterId: "상대방아이디2",
       anotherRegion: "동작구",
       time: "14시간전",
-      chatting: "감사합니다",
+      lastMessage: "감사합니다",
       postImageUrl: "https://www.nicepng.com/png/full/317-3179513_21-.png",
     },
   ];
+  useEffect(() => {
+    apis
+      .chatRooms()
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+  });
+
   return (
     <>
       <Header>
