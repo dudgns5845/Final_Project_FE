@@ -16,6 +16,7 @@ import Detail from "./pages/DetailPage";
 import SubMyPage from "./pages/SubMyPage";
 import ChatRoomPage from "./pages/ChatroomPage";
 import DetailChatPage from "./pages/DetailchatPage";
+import SigninPage from "./pages/SigninPage";
 
 function App() {
   function setScreenSize() {
@@ -61,6 +62,16 @@ function App() {
             element={
               !isLoggedIn ? (
                 <Login ChangeCookie={ChangeCookie} />
+              ) : (
+                <Navigate replace to="/" />
+              )
+            }
+          />
+          <Route
+            path="signin"
+            element={
+              !isLoggedIn ? (
+                <SigninPage />
               ) : (
                 <Navigate replace to="/" />
               )
