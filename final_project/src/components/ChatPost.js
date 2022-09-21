@@ -8,7 +8,7 @@ export default function ChatPost({ post }) {
   const param = useParams();
 
   return (
-    <CardActionArea onClick={() => navigate(`/chatdetail:${post.roomId}`)}>
+    <CardActionArea onClick={() => navigate(`/chatdetail/${post.roomId}`)}>
       <div style={CardCss}>
         <div style={{ width: "5rem", height: "3.5rem" }}>
           <img

@@ -41,7 +41,7 @@ export default function ChatRoomPage() {
   ];
   useEffect(() => {
     apis
-      .chatRooms(param.roomId)
+      .chatRooms()
       .then((response) => {
         console.log(response);
         setChatList(response.data.data);

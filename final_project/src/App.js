@@ -105,7 +105,7 @@ function App() {
             }
           />
           <Route
-            path="/chatdetail:id"
+            path="/chatdetail/:roomId"
             element={
               isLoggedIn ? <DetailChatPage /> : <Navigate replace to="/start" />
             }

@@ -12,11 +12,7 @@ export default function DetailChatPage() {
   const [chat, setChat] = useState("");
   const [tmpchat, setTmpChat] = useState("");
 
-  const [test, setTest] = useState([
-    { id: "user", text: "안녕" },
-    { id: "my", text: "안녕" },
-    { id: "user", text: "네" },
-  ]);
+  const [test, setTest] = useState([{}]);
   const ChangeChat = (e) => {
     setChat(e.target.value);
   };
@@ -27,16 +23,17 @@ export default function DetailChatPage() {
   const SendChat = () => {
     setTest([...test, { id: "my", text: chat }]);
   };
-  const SendOtherChat = () => {
-    setTest([...test, { id: "user", text: tmpchat }]);
-  };
+  // const SendOtherChat = () => {
+  //   setTest([...test, { id: "user", text: tmpchat }]);
+  // };
 
-  console.log(param.roomId);
+  console.log(param);
   useEffect(() => {
     apis
       .chatDetilRooms(param.roomId)
       .then((response) => {
         console.log(response);
+        setTest([...test, response.data.data.messageList]);
       })
       .catch((error) => console.log(error));
   }, [param]);
@@ -72,12 +69,12 @@ export default function DetailChatPage() {
             onChange={ChangeChat}
           ></input>
           <button onClick={SendChat}>전송</button>
-          <input
+          {/* <input
             type="text"
             placeholder="상대 채팅방"
             onChange={ChangeUserChat}
           ></input>
-          <button onClick={SendOtherChat}>전송</button>
+          <button onClick={SendOtherChat}>전송</button> */}
         </div>
       </Wrap>
     </>
@@ -87,5 +84,5 @@ const Wrap = styled.div`
   height: 100vh;
   width: 100vw;
   padding: auto;
-  margin-top: 3vh;
+  margin-top: 10vh;
 `;

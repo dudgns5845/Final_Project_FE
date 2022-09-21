@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function ChatForm({ item }) {
   return (
     <>
-      {item.id === "my" ? (
+      {item.nickname === "asdf" ? (
         <div style={{ textAlign: "right", padding: "5px" }}>
           <span
             style={{
@@ -13,7 +13,7 @@ export default function ChatForm({ item }) {
               fontSize: "30px",
             }}
           >
-            {item.text}
+            {item.message}
           </span>
         </div>
       ) : (
@@ -26,7 +26,7 @@ export default function ChatForm({ item }) {
               fontSize: "30px",
             }}
           >
-            {item.text}
+            {item.message}
           </span>
         </div>
       )}
