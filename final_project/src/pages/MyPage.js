@@ -11,6 +11,7 @@ export default function MyPage() {
   const [editProfile, setEditProfile] = useState(false);
   const [myNick, setMyNick] = useState();
   const imgfile = useRef();
+  const [isNickname, setIsNickName] = useState(false);
   const [tmpNick, setTmpNick] = useState(myNick);
   const [myImage, setMyImage] = useState(
     "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg"
@@ -26,6 +27,31 @@ export default function MyPage() {
   const close = () => {
     setEditProfile(false);
   };
+
+  const checkNickname = { nickname: tmpNick };
+  const onDoublingNickHandler = (e) => {
+    e.preventDefault();
+    if (tmpNick.length === 0) {
+      return alert("닉네임을 입력해주세요");
+    } else {
+      apis
+        .nicknameCheck(checkNickname)
+        .then((response) => {
+          console.log(response);
+          if (response.data.success) {
+            setIsNickName(true);
+
+            alert("사용 가능한 닉네임입니다");
+          } else {
+            alert("이미 사용중인 닉네임입니다");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
   useEffect(() => {
     apis
       .getProfile()
@@ -48,14 +74,13 @@ export default function MyPage() {
   };
 
   const ClickHandler = (e) => {
-
     if (e.target.name === "edit") {
       const postData = new FormData();
       const nicknames = {
         nickname: tmpNick,
       };
-      if (imgfile.current.files[0] == undefined) {
-        postData.append("imageFile", '');
+      if (imgfile.current.files[0] === undefined) {
+        postData.append("imageFile", "");
       } else {
         postData.append("imageFile", imgfile.current.files[0]);
       }
@@ -75,11 +100,11 @@ export default function MyPage() {
           // navigate(`/detail/${response.data.data.id}`);
           setMyNick(tmpNick);
           setMyImage(tmpImage);
-
         })
         .catch((error) => {
           console.log(error);
-        }).then(() => {
+        })
+        .then(() => {
           setEditProfile(false);
         });
     } else {
@@ -142,13 +167,52 @@ export default function MyPage() {
             ref={imgfile}
           />
         </label>
-
-        <InputSt
-          type="text"
-          onChange={ChangeNick}
-          name="nick"
-          placeholder={tmpNick}
-        />
+        <div style={{ display: "flex" }}>
+          <InputSt
+            type="text"
+            onChange={ChangeNick}
+            name="nick"
+            placeholder={tmpNick}
+          />
+          {isNickname ? (
+            <Button
+              style={{
+                fontSize: "15px",
+                backgroundColor: "#FFBA46",
+                marginRight: "10px",
+                marginLeft: "5px",
+                borderRadius: "5px",
+                height: "30px",
+                marginTop: "4.5vh",
+              }}
+              disabled
+              variant="outlined"
+              onClick={(e) => {
+                onDoublingNickHandler(e);
+              }}
+            >
+              중복 확인
+            </Button>
+          ) : (
+            <Button
+              style={{
+                fontSize: "15px",
+                backgroundColor: "#FFBA46",
+                marginRight: "10px",
+                marginLeft: "5px",
+                borderRadius: "5px",
+                height: "30px",
+                marginTop: "4.5vh",
+              }}
+              variant="outlined"
+              onClick={(e) => {
+                onDoublingNickHandler(e);
+              }}
+            >
+              중복 확인
+            </Button>
+          )}
+        </div>
         <div style={{ textAlign: "center", alignItems: "center" }}>
           <Button
             style={{
@@ -164,6 +228,7 @@ export default function MyPage() {
           >
             수정하기
           </Button>
+
           <Button
             style={{
               fontSize: "20px",
@@ -272,7 +337,6 @@ const Button = styled.button`
   display: inline-block;
   border: none;
   margin-top: 2vh;
-
   background-color: transparent;
   color: white;
   &:hover {
@@ -287,8 +351,8 @@ const InputSt = styled.input`
   justify-content: center;
   border: 1px solid gainsboro;
   margin-top: 4vh;
-  margin-left: 18vw;
-  width: 60%;
+  margin-left: 20vw;
+  width: 50%;
   height: 30px;
   text-indent: 8px;
   &:focus {
