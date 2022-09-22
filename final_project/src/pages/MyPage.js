@@ -48,38 +48,43 @@ export default function MyPage() {
   };
 
   const ClickHandler = (e) => {
+
     if (e.target.name === "edit") {
-      setMyNick(tmpNick);
-      setMyImage(tmpImage);
+      const postData = new FormData();
+      const nicknames = {
+        nickname: tmpNick,
+      };
+      if (imgfile.current.files[0] == undefined) {
+        postData.append("imageFile", '');
+      } else {
+        postData.append("imageFile", imgfile.current.files[0]);
+      }
+      postData.append(
+        "requestDto",
+        new Blob([JSON.stringify(nicknames)], {
+          type: "application/json",
+        })
+      );
+      console.log(postData);
+      console.log(tmpNick);
+      console.log(imgfile.current.files[0]);
+      apis
+        .editProfile(postData)
+        .then((response) => {
+          console.log(response);
+          // navigate(`/detail/${response.data.data.id}`);
+          setMyNick(tmpNick);
+          setMyImage(tmpImage);
+
+        })
+        .catch((error) => {
+          console.log(error);
+        }).then(() => {
+          setEditProfile(false);
+        });
     } else {
       return;
     }
-
-    const postData = new FormData();
-    const nicknames = {
-      nickname: tmpNick,
-    };
-
-    postData.append("imageFile", imgfile.current.files[0]);
-    postData.append(
-      "requestDto",
-      new Blob([JSON.stringify(nicknames)], {
-        type: "application/json",
-      })
-    );
-    console.log(postData);
-    console.log(tmpNick);
-    console.log(imgfile.current.files[0]);
-    apis
-      .editProfile(postData)
-      .then((response) => {
-        console.log(response);
-        // navigate(`/detail/${response.data.data.id}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setEditProfile(false);
   };
 
   const LogOutAction = () => {

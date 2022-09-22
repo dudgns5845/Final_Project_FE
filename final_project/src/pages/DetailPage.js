@@ -77,7 +77,7 @@ export default function Detail() {
   // console.log(imageList);
 
   // 게시물 수정
-  const PutHandler = () => {};
+  const PutHandler = () => { };
 
   // 게시물 삭제
 
@@ -131,7 +131,7 @@ export default function Detail() {
           style={IconCss}
           size="large"
           onClick={() => {
-            navigate(-1);
+            navigate('/');
           }}
         >
           <ChevronLeftRoundedIcon fontSize="large" />
