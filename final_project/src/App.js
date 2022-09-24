@@ -17,7 +17,7 @@ import SubMyPage from "./pages/SubMyPage";
 import ChatRoomPage from "./pages/ChatroomPage";
 import DetailChatPage from "./pages/DetailchatPage";
 import SigninPage from "./pages/SigninPage";
-
+import Test from "./pages/Test";
 function App() {
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
@@ -69,13 +69,7 @@ function App() {
           />
           <Route
             path="signin"
-            element={
-              !isLoggedIn ? (
-                <SigninPage />
-              ) : (
-                <Navigate replace to="/" />
-              )
-            }
+            element={!isLoggedIn ? <SigninPage /> : <Navigate replace to="/" />}
           />
           <Route
             path="/"
@@ -117,9 +111,7 @@ function App() {
           />
           <Route
             path="/chatdetail/:roomId"
-            element={
-              isLoggedIn ? <DetailChatPage /> : <Navigate replace to="/start" />
-            }
+            element={isLoggedIn ? <Test /> : <Navigate replace to="/start" />}
           />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
