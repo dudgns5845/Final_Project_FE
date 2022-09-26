@@ -26,6 +26,22 @@ export default function Start() {
   });
   const imgSize = useRef(images.current.length);
 
+  // 3초에 한번식 자동으로 이미지 넘김
+  const ImageSlideTimer = () => {
+    let nextIndex = current + 1;
+
+    if (nextIndex < 0) {
+      nextIndex -= 1;
+    } else if (nextIndex >= imgSize.current) {
+      nextIndex = 0;
+    }
+
+    setCurrent(nextIndex);
+  };
+  const imageTimer = setTimeout(ImageSlideTimer, 3000);
+  // setTImeout
+
+  // 이미지 버튼으로 넘김
   const moveSlide = (i) => {
     let nextIndex = current + i;
 
@@ -62,7 +78,7 @@ export default function Start() {
         // userSelect: "none",
       }}
     >
-      <div style={{ transition: "all 0.3s ease-out" }}>
+      <div style={{ transition: "all 1.5s ease-out" }}>
         <div
           style={{
             display: "flex",
