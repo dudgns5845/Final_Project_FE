@@ -108,7 +108,7 @@ export default function Login({ ChangeCookie }) {
             //스낵바가 나타나고 화면전환을 위해 인터벌을 줌
             setTimeout(() => {
               ChangeCookie(response.data.data.token.accessToken);
-            }, 5000);
+            }, 1300);
           }
         })
         .catch((error) => {
