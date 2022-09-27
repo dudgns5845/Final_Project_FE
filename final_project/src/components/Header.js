@@ -9,7 +9,7 @@ export default function Header({ children }) {
   );
 }
 const AppCss = {
-  backgroundColor: "red",
+  backgroundColor: '#FF9387',
   position: "sticky",
   width: "100%",
   display: "flex",

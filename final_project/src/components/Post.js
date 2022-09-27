@@ -30,6 +30,7 @@ const CardCss = {
   borderTop: "1px solid gray",
   display: "flex",
   alignItems: "center",
+  // backgroundColor: '#ffe1cf'
 };
 const TextCss = {
   paddingLeft: "2em",
