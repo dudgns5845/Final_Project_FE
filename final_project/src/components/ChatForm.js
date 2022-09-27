@@ -1,9 +1,9 @@
 import styled from "styled-components";
-
+import { getCookie } from "../shared/Cookie";
 export default function ChatForm({ item }) {
   return (
     <>
-      {item.nickname === "asdf" ? (
+      {item.senderId == getCookie('id') ? (
         <div style={{ textAlign: "right", padding: "5px" }}>
           <span
             style={{
