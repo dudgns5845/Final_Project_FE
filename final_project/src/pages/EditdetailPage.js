@@ -151,11 +151,7 @@ export default function EditDetailPage() {
       postData.data.append("imageFileList", img);
     }
 
-    // console.log(postData.data["requestDto"]);
     // for (let value of postData.data.keys()) {
-    //   console.log(value);
-    // }
-    // for (let value of postData.data.values()) {
     //   console.log(value);
     // }
 
