@@ -91,17 +91,18 @@ export default function MainPage() {
         </div>
       </Header>
 
-      <div style={{ marginTop: "5em" }}>
+      <Box style={{ height: '75vh', width: '100%', overflow: 'auto', marginTop: '8vh', padding: '20px' }}>
         {postList.map((post, idx) => {
-          if (idx === postList.length - 1) {
-            // return <Post ref={ref} post={post} key={idx}></Post>;
-          } else {
-            return <Post post={post} key={idx}></Post>;
-          }
+          // if (idx === postList.length - 1) {
+          //   return <Post ref={ref} post={post} key={idx}></Post>;
+          // } else {
+          //   return <Post post={post} key={idx}></Post>;
+          // }
+          return <Post post={post} key={idx}></Post>;
         })}
         <div style={{ height: "100px" }}></div>
         <div style={{ height: "100px" }} ref={ref}></div>
-      </div>
+      </Box>
 
       <IconButton
         onClick={() => {

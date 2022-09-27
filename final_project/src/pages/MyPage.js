@@ -6,6 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { deleteCookie } from "../shared/Cookie";
+import { Box } from "@mui/material";
 export default function MyPage() {
   const navigate = useNavigate();
   const [editProfile, setEditProfile] = useState(false);
@@ -138,12 +139,17 @@ export default function MyPage() {
             }}
           />
           <h4>내 프로필</h4>
-          <button></button>
         </Header>
-        <Image src={myImage} />
-        <NickName> {myNick} 님</NickName>
-        <Edit onClick={Open}>프로필 수정</Edit>
-        <Rank>랭크 정보(거래 횟수 기준)</Rank>
+
+        {/* 유저 프로필 */}
+        <Box sx={{ margin: 'auto' }}>
+          <Image src={myImage} />
+          <NickName> {myNick} 님</NickName>
+          <Edit onClick={Open}>프로필 수정</Edit>
+          {/* <Rank>랭크 정보(거래 횟수 기준)</Rank> */}
+        </Box>
+
+
         <MyPost onClick={() => navigate("/submypage:mywrite")}>
           내가 작성한 게시글
         </MyPost>
@@ -248,7 +254,7 @@ export default function MyPage() {
 }
 
 const Container = styled.div`
-  display: grid;
+  /* display: grid; */
   margin: auto;
   height: 100vh;
   width: 100vw;

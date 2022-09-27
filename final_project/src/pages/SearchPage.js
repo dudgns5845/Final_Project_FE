@@ -5,6 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import Post from "../components/Post";
 import Select from "@mui/material/Select";
+import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
@@ -26,6 +27,7 @@ export default function SearchPage() {
   const onCategory = (e) => {
     setSearch({ ...search, category: e.target.value });
   };
+
   console.log(search);
   const Click = () => {
     apis
@@ -42,6 +44,7 @@ export default function SearchPage() {
 
   return (
     <>
+      {/* 헤더 영역 */}
       <Header>
         <ArrowBackIcon
           style={{ fontSize: "25px" }}
@@ -50,49 +53,51 @@ export default function SearchPage() {
           }}
         ></ArrowBackIcon>
       </Header>
-      <div style={{ padding: '5px' }}>
-        <div style={{ marginTop: "18%" }}></div>
-        <FormControl variant="standard" sx={{ width: "40%" }}>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            label="선택"
-            value={search.category}
-            onChange={onCategory}
-            displayEmpty
+
+      {/* 검색 영역 */}
+      <Box sx={{ padding: '10px 20px', marginTop: "18%" }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
+          <FormControl variant="standard" sx={{ width: "70%", textAlign: 'center' }}>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="선택"
+              value={search.category}
+              onChange={onCategory}
+              displayEmpty
+            >
+              <MenuItem value="">카테고리 선택</MenuItem>
+              <MenuItem value="DEVICE">디지털기기</MenuItem>
+              <MenuItem value="APPLANCE">생활가전</MenuItem>
+              <MenuItem value="KITCHEN">생활/주방</MenuItem>
+              <MenuItem value="WOMEN">여성의류/잡화</MenuItem>
+              <MenuItem value="MEN">남성의류/잡화</MenuItem>
+              <MenuItem value="BEAUTY">뷰티/미용</MenuItem>
+              <MenuItem value="GAME">취미/게임</MenuItem>
+              <MenuItem value="BOOK">도서</MenuItem>
+              <MenuItem value="TICKET">티켓</MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            variant="contained"
+            onClick={Click}
+          // style={{ marginLeft: "130px" }}
           >
-            <MenuItem value="">--선택--</MenuItem>
-            <MenuItem value="DEVICE">디지털기기</MenuItem>
-            <MenuItem value="APPLANCE">생활가전</MenuItem>
-            <MenuItem value="KITCHEN">생활/주방</MenuItem>
-            <MenuItem value="WOMEN">여성의류/잡화</MenuItem>
-            <MenuItem value="MEN">남성의류/잡화</MenuItem>
-            <MenuItem value="BEAUTY">뷰티/미용</MenuItem>
-            <MenuItem value="GAME">취미/게임</MenuItem>
-            <MenuItem value="BOOK">도서</MenuItem>
-            <MenuItem value="TICKET">티켓</MenuItem>
-          </Select>
-        </FormControl>
-        <Button
-          variant="contained"
-          onClick={Click}
-          style={{ marginLeft: "130px" }}
-        >
-          검색하기
-        </Button>
+            검색하기
+          </Button>
+        </Box>
+
         <TextField
           fullWidth
           id="outlined-basic"
           placeholder="검색어를 입력해주세요"
           variant="outlined"
           onChange={onSearch}
-        // style={{ width: "40%" }}
         />
-        {/* <input type="text" onChange={onSearch} /> */}
-      </div>
+      </Box>
 
-
-      <div>
+      {/* 검색 결과 영역  */}
+      <Box sx={{ height: '70vh', overflow: 'auto', padding: '20px' }}>
         {(searchList[0] === undefined) &&
           <div style={emptyCss}>
             <SearchRoundedIcon sx={{ width: '150px', height: '150px', color: 'gray' }} />
@@ -102,15 +107,15 @@ export default function SearchPage() {
         {searchList.map((post, idx) => {
           return <Post post={post} key={idx}></Post>;
         })}
-      </div>
+      </Box>
     </>
   );
 }
 
 const emptyCss = {
-  height: '80vh',
+  height: '100%',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  alignItems: 'center',
+  alignItems: 'center'
 }

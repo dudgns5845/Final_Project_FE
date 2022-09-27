@@ -17,7 +17,11 @@ import SubMyPage from "./pages/SubMyPage";
 import ChatRoomPage from "./pages/ChatroomPage";
 import DetailChatPage from "./pages/DetailchatPage";
 import SigninPage from "./pages/SigninPage";
+
+import Test from "./pages/Test";
+
 import EditdetailPage from "./pages/EditdetailPage";
+
 
 function App() {
   function setScreenSize() {
@@ -118,9 +122,7 @@ function App() {
           />
           <Route
             path="/chatdetail/:roomId"
-            element={
-              isLoggedIn ? <DetailChatPage /> : <Navigate replace to="/start" />
-            }
+            element={isLoggedIn ? <Test /> : <Navigate replace to="/start" />}
           />
 
           <Route path="*" element={<ErrorPage />} />
