@@ -91,7 +91,7 @@ export default function MainPage() {
         </div>
       </Header>
 
-      <div style={{ marginTop: "5em" }}>
+      <Box style={{ marginTop: "5em", height: '75vh', backgroundColor: 'gray', overflow: 'auto', marginTop: '8vh', padding: '20px' }}>
         {postList.map((post, idx) => {
           if (idx === postList.length - 1) {
             // return <Post ref={ref} post={post} key={idx}></Post>;
@@ -101,7 +101,7 @@ export default function MainPage() {
         })}
         <div style={{ height: "100px" }}></div>
         <div style={{ height: "100px" }} ref={ref}></div>
-      </div>
+      </Box>
 
       <IconButton
         onClick={() => {
