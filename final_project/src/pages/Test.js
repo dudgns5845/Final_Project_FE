@@ -5,6 +5,8 @@ import ChatForm from "../components/ChatForm";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { getCookie } from "../shared/Cookie";
+import { TextField, Container, Box, Button } from '@mui/material';
+import { display } from '@mui/system';
 
 const Chat = () => {
   const [chatList, setChatList] = useState([]);
@@ -75,15 +77,41 @@ const Chat = () => {
   };
 
   return (
-    <>
-      {chatList.map((item, index) => {
-        return <ChatForm item={item} key={index} />;
-      })}
-      <input id="message" ref={t} />
-      <button type="button" value="전송" id="btnSend" onClick={handleEnter}>
-        전송
-      </button>
-    </>
+
+    <Box>
+      {/* 헤더 */}
+      <Box sx={{
+        width: '100%', height: '10vh', position: 'absolute', top: '0',
+      }}>
+        UserName
+      </Box>
+
+      {/* 메세지 내용 */}
+      <Box sx={{ height: '70vh', backgroundColor: 'gray', overflow: 'auto', marginTop: '8vh', padding: '20px' }}>
+        {chatList.map((item, index) => {
+          return <ChatForm item={item} key={index} />;
+        })}
+      </Box>
+
+      {/* 메세지 입력 */}
+      <footer>
+        <Box sx={{
+          width: '100%', height: '5vh', padding: '10px', position: 'absolute',
+          bottom: '0'
+        }}>
+          <TextField
+            id="outlined-multiline-flexible"
+            multiline
+            maxRows={2}
+            ref={t}
+            sx={{ width: '70%', height: '3rem' }}
+          />
+          <Button variant="contained" sx={{ height: '3rem', width: '20%' }} onClick={handleEnter}>
+            전송
+          </Button>
+        </Box>
+      </footer>
+    </Box>
   );
 };
 
