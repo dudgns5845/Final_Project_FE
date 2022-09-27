@@ -9,7 +9,7 @@ import {
   Avatar,
   CardContent,
   Button,
-  Hidden,
+  // Hidden,
 } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -74,23 +74,21 @@ export default function Detail() {
         console.log(error);
       });
   }, [param]);
-  // console.log(imageList);
+  // console.log(param);
 
   // 게시물 수정
-  const PutHandler = () => { };
+  const PutHandler = () => {
+    navigate(`/detail-edit/${param.postid}`);
+  };
 
   // 게시물 삭제
-
   const DeleteHandler = () => {
     apis
       .deleteDetail(param.postid)
       .then((response) => {
         console.log(response);
         if (window.confirm("게시물을 삭제하시겠습니까?")) {
-          alert("게시물이 삭제되었습니다");
           navigate("/");
-        } else {
-          alert("취소되었습니다");
         }
       })
       .catch((error) => console.log(error));
@@ -113,12 +111,22 @@ export default function Detail() {
       setCurrentSlide(currentSlide - 1);
     }
   };
-
-  // console.log(slideRef.current, "adbr");
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
   }, [currentSlide]);
+
+  // 채팅방 생성
+  const CreateChat = () => {
+    apis
+      .chatCreate(param.postid)
+      .then((response) => {
+        console.log(response);
+        navigate(`/chatdetail/${response.data.data.roomId}`);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <div style={ImgContainer}>
@@ -131,7 +139,7 @@ export default function Detail() {
           style={IconCss}
           size="large"
           onClick={() => {
-            navigate('/');
+            navigate("/");
           }}
         >
           <ChevronLeftRoundedIcon fontSize="large" />
@@ -152,15 +160,17 @@ export default function Detail() {
             </Avatar>
           }
           action={
-            <IconButton>
-              <MoreVertIcon
+            <>
+              <IconButton
                 aria-label="settings"
                 id="basic-button"
                 aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
-              />
+              >
+                <MoreVertIcon />
+              </IconButton>
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
@@ -173,7 +183,7 @@ export default function Detail() {
                 <MenuItem onClick={PutHandler}>수정</MenuItem>
                 <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
               </Menu>
-            </IconButton>
+            </>
           }
           title={postData.nickname}
           subheader={postData.location}
@@ -199,6 +209,7 @@ export default function Detail() {
             style={ButtonCss}
             fullWidth
             startIcon={<QuestionAnswerRoundedIcon />}
+            onClick={CreateChat}
           >
             1:1 채팅
           </Button>
@@ -222,10 +233,10 @@ const ImgContainer = {
 };
 
 const Slide = {
-  objectFit: "cover",
   width: "100%",
   height: "100%",
   display: "flex",
+  backgroundColor: "gray",
 };
 
 const ButtonLeft = {
@@ -241,8 +252,8 @@ const ButtonLeft = {
 };
 
 const imgCss = {
-  width: "100%",
-  height: "100%",
+  minWidth: "100%",
+  minHeight: "100%",
   backgroundColor: "gray",
   objectFit: "cover",
   display: "flex",

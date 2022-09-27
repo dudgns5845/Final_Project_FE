@@ -17,7 +17,12 @@ import SubMyPage from "./pages/SubMyPage";
 import ChatRoomPage from "./pages/ChatroomPage";
 import DetailChatPage from "./pages/DetailchatPage";
 import SigninPage from "./pages/SigninPage";
+
 import Test from "./pages/Test";
+
+import EditdetailPage from "./pages/EditdetailPage";
+
+
 function App() {
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
@@ -88,6 +93,12 @@ function App() {
             element={isLoggedIn ? <Detail /> : <Navigate replace to="/start" />}
           />
           <Route
+            path="/detail-edit/:postid"
+            element={
+              isLoggedIn ? <EditdetailPage /> : <Navigate replace to="/start" />
+            }
+          />
+          <Route
             path="/postpage"
             element={
               isLoggedIn ? <PostPage /> : <Navigate replace to="/start" />
@@ -113,6 +124,7 @@ function App() {
             path="/chatdetail/:roomId"
             element={isLoggedIn ? <Test /> : <Navigate replace to="/start" />}
           />
+
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
