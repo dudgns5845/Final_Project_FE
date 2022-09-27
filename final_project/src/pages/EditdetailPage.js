@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../components/Modal";
 import styled from "styled-components";
 import apis from "../apis/Apis";
@@ -11,6 +11,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function EditDetailPage() {
   const navigate = useNavigate();
+  const param = useParams();
+  const [postData, setPostData] = useState({
+    data: new FormData(),
+    postid: "",
+  });
   const [imgState, setImgState] = useState([]);
   const [imgFile, setImgFile] = useState();
   const [titleState, setTitleState] = useState("");
@@ -37,6 +42,50 @@ export default function EditDetailPage() {
     }
     setImgState(imgUploadList);
   };
+
+  // 게시물에 있던 내용 입력
+  // console.log(param.postid);
+  useEffect(() => {
+    apis
+      .postDetail(param.postid)
+      .then((response) => {
+        console.log(response);
+        setTitleState(response.data.data.title);
+
+        setCategory(response.data.data.category);
+
+        if (category === "DEVICE") {
+          setTmpCategory("디지털기기");
+        } else if (category === "APPLIANCE") {
+          setTmpCategory("생활가전");
+        } else if (category === "KITCHEN") {
+          setTmpCategory("생활/주방");
+        } else if (category === "WOMEN") {
+          setTmpCategory("여성의류/잡화");
+        } else if (category === "MEN") {
+          setTmpCategory("남성의류/잡화");
+        } else if (category === "BEAUTY") {
+          setTmpCategory("뷰티/미용");
+        } else if (category === "GAME") {
+          setTmpCategory("취미/게임");
+        } else if (category === "BOOK") {
+          setTmpCategory("도서");
+        } else if (category === "TICKET") {
+          setTmpCategory("티켓");
+        }
+
+        setContentState(response.data.data.content);
+
+        const imageArray = [response.data.data.imageUrl].map((i) => i);
+        console.log(imageArray.length);
+        setImgState(imageArray[0]);
+        setImgFile(imageArray[0]);
+        setPostData({ ...postData, postid: param.postid });
+        console.log(postData);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   const TitleChange = (e) => {
     const titleState = e.target.value;
     setTitleState(titleState);
@@ -58,7 +107,7 @@ export default function EditDetailPage() {
     if (category === "디지털기기") {
       setTmpCategory("DEVICE");
     } else if (category === "생활가전") {
-      setTmpCategory("APPLANCE");
+      setTmpCategory("APPLIANCE");
     } else if (category === "생활/주방") {
       setTmpCategory("KITCHEN");
     } else if (category === "여성의류/잡화") {
@@ -81,7 +130,7 @@ export default function EditDetailPage() {
   const ClickHandler = () => {
     // console.log(titleState, contentState, imgFile, category);
 
-    const postData = new FormData();
+    // setPostData({ ...postData, data:  });
 
     const dto = {
       title: titleState,
@@ -89,23 +138,33 @@ export default function EditDetailPage() {
       category: tmpcategory,
     };
 
-    postData.append(
+    console.log(dto.category);
+
+    postData.data.append(
       "requestDto",
       new Blob([JSON.stringify(dto)], {
         type: "application/json",
       })
     );
-
-    for (let img of imgFile) {
-      postData.append("imageFileList", img);
-    }
     console.log(imgFile);
+    for (let img of imgFile) {
+      postData.data.append("imageFileList", img);
+    }
+
+    // console.log(postData.data["requestDto"]);
+    // for (let value of postData.data.keys()) {
+    //   console.log(value);
+    // }
+    // for (let value of postData.data.values()) {
+    //   console.log(value);
+    // }
+
     //통신
     apis
       .editDetail(postData)
       .then((response) => {
         console.log(response);
-        navigate(`/detail/${response.data.data.id}`);
+        // navigate(`/detail/${param.postid}`);
       })
 
       .catch((error) => {
@@ -160,7 +219,7 @@ export default function EditDetailPage() {
             navigate("/");
           }}
         />
-        <h4>게시글쓰기</h4>
+        <h4>수정하기</h4>
         <Button
           style={{
             fontSize: "10px",

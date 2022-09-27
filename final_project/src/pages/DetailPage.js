@@ -74,10 +74,12 @@ export default function Detail() {
         console.log(error);
       });
   }, [param]);
-  // console.log(imageList);
+  // console.log(param);
 
   // 게시물 수정
-  const PutHandler = () => {};
+  const PutHandler = () => {
+    navigate(`/detail-edit/${param.postid}`);
+  };
 
   // 게시물 삭제
   const DeleteHandler = () => {
@@ -86,10 +88,7 @@ export default function Detail() {
       .then((response) => {
         console.log(response);
         if (window.confirm("게시물을 삭제하시겠습니까?")) {
-          alert("게시물이 삭제되었습니다");
           navigate("/");
-        } else {
-          alert("취소되었습니다");
         }
       })
       .catch((error) => console.log(error));
@@ -161,15 +160,17 @@ export default function Detail() {
             </Avatar>
           }
           action={
-            <IconButton>
-              <MoreVertIcon
+            <>
+              <IconButton
                 aria-label="settings"
                 id="basic-button"
                 aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
-              />
+              >
+                <MoreVertIcon />
+              </IconButton>
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
@@ -182,7 +183,7 @@ export default function Detail() {
                 <MenuItem onClick={PutHandler}>수정</MenuItem>
                 <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
               </Menu>
-            </IconButton>
+            </>
           }
           title={postData.nickname}
           subheader={postData.location}
