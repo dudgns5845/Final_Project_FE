@@ -31,10 +31,12 @@ export default function PostPage() {
 
       const imgUrl = URL.createObjectURL(imgSelectList[i]);
       imgUploadList.push(imgUrl);
+
       if (imgUploadList.length > 5) {
         imgUploadList = imgUploadList.slice(0, 5);
       }
     }
+    console.log(imgUploadList);
     setImgState(imgUploadList);
   };
   const TitleChange = (e) => {
