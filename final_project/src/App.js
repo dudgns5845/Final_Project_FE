@@ -17,6 +17,7 @@ import SubMyPage from "./pages/SubMyPage";
 import ChatRoomPage from "./pages/ChatroomPage";
 import DetailChatPage from "./pages/DetailchatPage";
 import SigninPage from "./pages/SigninPage";
+import AlarmPage from "./pages/AlarmPage";
 
 function App() {
   function setScreenSize() {
@@ -69,13 +70,7 @@ function App() {
           />
           <Route
             path="signin"
-            element={
-              !isLoggedIn ? (
-                <SigninPage />
-              ) : (
-                <Navigate replace to="/" />
-              )
-            }
+            element={!isLoggedIn ? <SigninPage /> : <Navigate replace to="/" />}
           />
           <Route
             path="/"
@@ -87,6 +82,12 @@ function App() {
             path="/searchpage"
             element={
               isLoggedIn ? <SearchPage /> : <Navigate replace to="/start" />
+            }
+          />
+          <Route
+            path="/alarmpage"
+            element={
+              isLoggedIn ? <AlarmPage /> : <Navigate replace to="/start" />
             }
           />
           <Route

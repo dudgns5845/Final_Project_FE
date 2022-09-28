@@ -97,6 +97,9 @@ const apis = {
   chatRooms: (payload) => api.get(`/chat/rooms`, payload),
   chatDetilRooms: (payload) => api.get(`/chat/room/${payload}`, payload),
   chatCreate: (payload) => api.post(`/chat/room/${payload}`, payload),
+
+  //알림
+  readNotification: (payload) => api.put(`/notification/${payload}`)
 };
 
 export default apis;

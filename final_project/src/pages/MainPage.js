@@ -85,7 +85,11 @@ export default function MainPage() {
           >
             <CreateRoundedIcon />
           </IconButton>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              navigate("/alarmpage");
+            }}
+          >
             <NotificationsRoundedIcon />
           </IconButton>
         </div>
