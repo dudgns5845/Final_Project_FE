@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getCookie } from "../shared/Cookie";
+import { useEffect } from "react";
+import { getCookie, deleteCookie, setCookie } from "../shared/Cookie";
 
 // 1. Axios instance생성
 
@@ -66,7 +67,25 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log(error);
+    if (error.response.status === 401) {
+      apis
+        .loginRefresh()
+        .then((response) => {
+          // refreshToken 삭제
+          deleteCookie("refreshToken");
+          console.log(response);
+          // 새로운 Token 저장
+          setCookie(
+            "accessToken",
+            response.data.data.accessToken,
+            response.data.data.accessTokenExpiresIn
+          );
+          setCookie("refreshToken", response.data.data.refreshToken);
+
+          window.location.reload();
+        })
+        .catch((error) => console.log(error));
+    }
   }
 );
 
@@ -86,6 +105,8 @@ const apis = {
   editProfile: (payload) => apiForm.put("/users", payload),
   myWritepost: () => api.get("/mypage/posts"),
   logOutUser: () => api.delete("users/logout"),
+  loginRefresh: () => api.get("users/refresh"),
+
   addBookMark: (payload) => api.post(`/posts/${payload}/pick`, payload),
   myBookMarkList: () => api.get("/mypage/picks"),
   searchList: (payload) =>

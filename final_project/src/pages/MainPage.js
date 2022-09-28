@@ -29,6 +29,7 @@ export default function MainPage() {
       // 다음페이지 인덱스 증가
       setPage((page) => page + 1);
       // 증가한 인덱스 데이터 가져오기
+      console.log(page);
       setLoading(true);
       apis
         .getAllPostList(page)
@@ -67,7 +68,7 @@ export default function MainPage() {
     <>
       <Header>
         <Box style={{ display: "flex", alignItems: "space-evenly" }}>
-          <img src='logo_00.png' style={{ width: '30px', height: '30px' }} />
+          <img src="logo_00.png" style={{ width: "30px", height: "30px" }} />
           <span>우가우가</span>
         </Box>
 
@@ -92,7 +93,14 @@ export default function MainPage() {
         </div>
       </Header>
 
-      <Box style={{ height: '75vh', overflow: 'auto', marginTop: '8vh', padding: '20px' }}>
+      <Box
+        style={{
+          height: "75vh",
+          overflow: "auto",
+          marginTop: "8vh",
+          padding: "20px",
+        }}
+      >
         {postList.map((post, idx) => {
           return <Post post={post} key={idx}></Post>;
         })}
@@ -100,14 +108,14 @@ export default function MainPage() {
         <div style={{ height: "100px" }} ref={ref}></div>
       </Box>
 
-      <IconButton
+      {/* <IconButton
         onClick={() => {
           window.scrollTo(0, 0);
         }}
         style={IconCss}
       >
         <ArrowUpwardRoundedIcon style={ArrowCss} />
-      </IconButton>
+      </IconButton> */}
       <Footer />
     </>
   );

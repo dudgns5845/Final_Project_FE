@@ -142,21 +142,20 @@ export default function MyPage() {
         </Header>
 
         {/* 유저 프로필 */}
-        <Box sx={{ margin: 'auto' }}>
+        <Box sx={{ margin: "auto" }}>
           <Image src={myImage} />
           <NickName> {myNick} 님</NickName>
           <Edit onClick={Open}>프로필 수정</Edit>
           {/* <Rank>랭크 정보(거래 횟수 기준)</Rank> */}
+
+          <MyPost onClick={() => navigate("/submypage:mywrite")}>
+            내가 작성한 게시글
+          </MyPost>
+          <Zzim onClick={() => navigate("/submypage:mybookmark")}>
+            내가 찜한 게시글
+          </Zzim>
+          <LogOut onClick={LogOutAction}>로그아웃</LogOut>
         </Box>
-
-
-        <MyPost onClick={() => navigate("/submypage:mywrite")}>
-          내가 작성한 게시글
-        </MyPost>
-        <Zzim onClick={() => navigate("/submypage:mybookmark")}>
-          내가 찜한 게시글
-        </Zzim>
-        <LogOut onClick={LogOutAction}>로그아웃</LogOut>
       </Container>
       <Modal visible={editProfile} style={{ zIndex: 10 }}>
         <label onChange={AddImage}>
@@ -317,21 +316,21 @@ const Rank = styled.div`
 `;
 
 const MyPost = styled.div`
-  display: grid;
+  /* display: grid; */
   grid-area: mypost;
   margin: auto;
   cursor: pointer;
 `;
 
 const Zzim = styled.div`
-  display: grid;
+  /* display: grid; */
   grid-area: zzim;
   margin: auto;
   cursor: pointer;
 `;
 
 const LogOut = styled.div`
-  display: grid;
+  /* display: grid; */
   grid-area: out;
 
   margin: auto;
