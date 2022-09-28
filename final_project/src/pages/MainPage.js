@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Post from "../components/Post";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Avatar } from "@mui/material";
 
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -66,10 +66,11 @@ export default function MainPage() {
   return (
     <>
       <Header>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <LocationOnRoundedIcon />
-          <span>영등포구</span>
-        </div>
+        <Box style={{ display: "flex", alignItems: "space-evenly" }}>
+          <img src='logo_00.png' style={{ width: '30px', height: '30px' }} />
+          <span>우가우가</span>
+        </Box>
+
         <div>
           <IconButton
             onClick={() => {
@@ -91,13 +92,8 @@ export default function MainPage() {
         </div>
       </Header>
 
-      <Box style={{ height: '75vh', width: '100%', overflow: 'auto', marginTop: '8vh', padding: '20px' }}>
+      <Box style={{ height: '75vh', overflow: 'auto', marginTop: '8vh', padding: '20px' }}>
         {postList.map((post, idx) => {
-          // if (idx === postList.length - 1) {
-          //   return <Post ref={ref} post={post} key={idx}></Post>;
-          // } else {
-          //   return <Post post={post} key={idx}></Post>;
-          // }
           return <Post post={post} key={idx}></Post>;
         })}
         <div style={{ height: "100px" }}></div>

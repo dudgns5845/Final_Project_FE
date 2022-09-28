@@ -19,9 +19,7 @@ import DetailChatPage from "./pages/DetailchatPage";
 import SigninPage from "./pages/SigninPage";
 
 import Test from "./pages/Test";
-
 import EditdetailPage from "./pages/EditdetailPage";
-
 
 function App() {
   function setScreenSize() {

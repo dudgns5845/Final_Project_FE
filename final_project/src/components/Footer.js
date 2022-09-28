@@ -22,7 +22,7 @@ export default function Footer() {
         right: 0,
         height: "10vh",
         backgroundColor: "white",
-        boxShadow: '0 -5px 30px 0 gray'
+        boxShadow: '0 -0.3px 10px 0 rgba(0, 0, 0, 0.3)'
       }}
     >
       <BottomNavigationAction
