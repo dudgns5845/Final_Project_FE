@@ -17,10 +17,15 @@ const margin = {
     xxlarge: "3rem",
 };
 
+const font = {
+    main: "PyeongChangPeace-Light",
+}
+
 const theme = {
     fontSize,
     padding,
     margin,
+    font,
 };
 
 

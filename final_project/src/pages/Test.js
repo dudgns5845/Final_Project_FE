@@ -1,16 +1,19 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import apis from "../apis/Apis";
 import ChatForm from "../components/ChatForm";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { getCookie } from "../shared/Cookie";
 import { TextField, Container, Box, Button } from '@mui/material';
-import { display } from '@mui/system';
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 
 const Chat = () => {
 
   const [chatList, setChatList] = useState([]);
+  const navigate = useNavigate();
 
   // 스크롤을 맨밑으로
   const messagesEndRef = useRef(null)
@@ -112,17 +115,30 @@ const Chat = () => {
   };
 
   return (
-
-    <Box>
+    <Box sx={{ width: '100%', height: '100vh' }}>
       {/* 헤더 */}
       <Box sx={{
-        width: '100%', height: '10vh', position: 'absolute', top: '0',
+        width: '100%', height: '8%', position: 'absolute', backgroundColor: '#FF9387',
+        boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.5)',
+        display: 'flex', alignItems: 'center', color: 'white', fontWeight: 'bold'
       }}>
-        UserName
+        <ArrowBackIcon
+          style={{ fontSize: "25px", marginLeft: '20px' }}
+          onClick={() => {
+            navigate("/");
+          }}
+        ></ArrowBackIcon>
+
+        <Container sx={{ textAlign: 'center', fontSize: '1.5rem' }}>
+          유저 닉네임
+        </Container>
+
       </Box>
 
       {/* 메세지 내용 */}
-      <Box sx={{ height: '70vh', backgroundColor: 'gray', overflow: 'auto', marginTop: '8vh', padding: '20px', verticalAlign: 'baseline' }}>
+
+      <Box sx={{ height: '79%', overflow: 'auto', padding: '20px', verticalAlign: 'baseline' }}>
+        <Box sx={{ height: '10%' }}>빈박스</Box>
         {chatList.map((item, index) => {
           return <ChatForm item={item} key={index} />;
         })}
@@ -132,23 +148,19 @@ const Chat = () => {
       </Box>
 
       {/* 메세지 입력 */}
-      <footer>
-        <Box sx={{
-          width: '100%', height: '5vh', padding: '10px', position: 'absolute',
-          bottom: '0'
-        }}>
-          <TextField
-            id="outlined-multiline-flexible"
-            multiline
-            maxRows={2}
-            inputRef={t}
-            sx={{ width: '70%', height: '3rem' }}
-          />
-          <Button variant="contained" sx={{ height: '3rem', width: '20%' }} onClick={handleEnter}>
+
+      <Box sx={{
+        boxShadow: '0 -0.5px 5px 0 rgba(0, 0, 0, 0.2)',
+        width: '100%', height: '15%', padding: '0 10px', position: 'absolute', verticalAlign: 'baseline', bottom: '0', display: 'flex', justifyContent: 'center', alignItems: 'center',
+      }}>
+
+        <input placeholder="메세지를 입력세요" type='text' ref={t} style={{ width: '70%', height: '30px', border: 'solid 1px gray', borderRadius: '10px', fontSize: 'large', padding: '5px 10px', fontFamily: 'PyeongChangPeace-Light' }}></input>
+        <Box sx={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+          <Button sx={{ width: '20%', fontFamily: 'PyeongChangPeace-Light', color: 'black' }} onClick={handleEnter}>
             전송
           </Button>
         </Box>
-      </footer>
+      </Box>
     </Box>
   );
 };

@@ -1,34 +1,39 @@
 import styled from "styled-components";
 import { getCookie } from "../shared/Cookie";
+import { Box, Container } from "@mui/material";
 export default function ChatForm({ item }) {
   return (
     <>
       {item.senderId == getCookie('id') ? (
-        <div style={{ textAlign: "right", padding: "5px" }}>
-          <span
+        <Box style={{ textAlign: "right", marginTop: '20px' }}>
+          <Box
+            component="span"
             style={{
-              backgroundColor: "blue",
+              backgroundColor: "#B9C0EA",
               color: "white",
               borderRadius: "5px",
-              fontSize: "30px",
+              fontSize: "20px",
+              padding: '5px 10px'
             }}
           >
             {item.message}
-          </span>
-        </div>
+          </Box>
+        </Box>
       ) : (
-        <div style={{ textAlign: "left", padding: "5px" }}>
-          <span
+        <Box style={{ textAlign: "left", marginTop: '20px' }}>
+          <Box
+            component="span"
             style={{
-              backgroundColor: "orange",
+              backgroundColor: "#B3DFEC",
               color: "white",
               borderRadius: "5px",
-              fontSize: "30px",
+              fontSize: "20px",
+              padding: '5px 10px'
             }}
           >
             {item.message}
-          </span>
-        </div>
+          </Box>
+        </Box>
       )}
     </>
   );
