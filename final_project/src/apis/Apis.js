@@ -91,12 +91,13 @@ const apis = {
   searchList: (payload) =>
     api.get(`posts?searchValue=${payload.title}&category=${payload.category}`),
   deleteDetail: (payload) => api.put(`/posts/${payload}/delete`, payload),
-  editDetail: (payload) => api.put(`/posts/${payload.postid}`, payload.data),
+  editDetail: (payload) =>
+    apiForm.put(`/posts/${payload.postid}`, payload.data),
 
   // 채팅
   chatRooms: (payload) => api.get(`/chat/rooms`, payload),
-  chatDetilRooms: (payload) => api.get(`/chat/room/${payload}`, payload),
-  chatCreate: (payload) => api.post(`/chat/room/${payload}`, payload),
+  chatDetilRooms: (payload) => api.get(`/chat/room/${payload}`),
+  chatCreate: (payload) => api.post(`/chat/room/${payload}`),
 };
 
 export default apis;

@@ -1,145 +1,167 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import apis from "../apis/Apis";
 import ChatForm from "../components/ChatForm";
 import SockJS from "sockjs-client";
-import { Stomp } from "@stomp/stompjs";
+import Stomp from "stompjs";
+import { getCookie } from "../shared/Cookie";
+import { TextField, Container, Box, Button } from '@mui/material';
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+
 const Chat = () => {
-  const [msg, setMsg] = useState("");
-  const [name, setName] = useState("");
-  const [chatt, setChatt] = useState([]);
-  const [chkLog, setChkLog] = useState(false);
-  const [socketData, setSocketData] = useState();
-  const param = useParams();
 
-  const ws = useRef(null); //webSocket을 담는 변수,
-  //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
-  const stomp = Stomp.over(ws.current);
-  useEffect(() => {
-    if (socketData !== undefined) {
-      const tempData = chatt.concat(socketData);
-      console.log(tempData);
-      setChatt(tempData);
-    }
-  }, [socketData]);
+  const [chatList, setChatList] = useState([]);
+  const navigate = useNavigate();
 
-  //   const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component
-  //         ${reset}
-  //     `;
+  // 스크롤을 맨밑으로
+  const messagesEndRef = useRef(null)
 
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  const onText = (event) => {
-    console.log(event.target.value);
-    setMsg(event.target.value);
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getCookie("accessToken")}`,
   };
 
+  const t = useRef();
+
+  const param = useParams();
+
+  //이전 메시지 목록 불러오기
   useEffect(() => {
     apis
       .chatDetilRooms(param.roomId)
       .then((response) => {
+        const preTalk = response.data.data.messageList
+        preTalk.map((item) => {
+          setChatList((prev) => [
+            ...prev,
+            {
+              sender: item.sender,
+              senderId: item.senderId,
+              message: item.message,
+              createdAt: item.createdAt,
+            },
+          ]);
+        })
+
         console.log(response);
-        setChatt([...chatt, response.data.data]);
       })
       .catch((error) => console.log(error));
-  }, [param]);
+  }, []);
 
-  const webSocketLogin = useCallback(() => {
-    ws.current = new SockJS("http://13.125.71.197/ws-stomp");
+  useEffect(() => {
+    messagesEndRef.current.scrollIntoView();
+  }, [chatList]);
 
-    stomp.onmessage = (message) => {
-      const dataSet = JSON.parse(message.data);
-      setSocketData(dataSet);
+
+  // 연결을 관리해보자
+  const isConnected = useRef(false);
+  const stomp = useRef();
+
+  useEffect(() => {
+
+    const socketJs = new SockJS("http://13.125.71.197/ws-stomp");
+    stomp.current = Stomp.over(socketJs);
+
+    stomp.current.connect(
+      headers,
+      () => {
+        console.log('연결 성공!');
+        stomp.current.subscribe(
+          `/sub/chat/room/${param.roomId}`,
+          (e) => {
+            const newMessage = JSON.parse(e.body);
+            console.log('adfsdfad', newMessage)
+            setChatList((prev) => [
+              ...prev,
+              {
+                sender: newMessage.sender,
+                senderId: newMessage.senderId,
+                message: newMessage.message,
+                createdAt: null,
+              },
+            ]);
+          }
+        );
+      }
+    )
+
+    return () => {
+      if (isConnected.current) {
+        //연결되어 있으면 끊어
+        stomp.current.disconnect(() => {
+          isConnected.current = false;
+        })
+      }
     };
-  });
+  }, []);
 
-  const send = useCallback(() => {
-    if (!chkLog) {
-      if (name === "") {
-        alert("이름을 입력하세요.");
-        document.getElementById("name").focus();
-        return;
-      }
-      webSocketLogin();
-      setChkLog(true);
-    }
-
-    if (msg !== "") {
-      const data = {
-        type: "TALK",
-        sender: "영훈",
-        roomId: "29861f1f-4fd5-4a91-a6e3-3f1ccd170106",
-        message: new Date().toLocaleString(),
-        createdAt: "2000-10-31T01:30:00.000-05:00",
-      }; //전송 데이터(JSON)
-
-      const temp = JSON.stringify(data);
-
-      if (stomp.readyState === 0) {
-        //readyState는 웹 소켓 연결 상태를 나타냄
-        stomp.onopen = () => {
-          //webSocket이 맺어지고 난 후, 실행
-          console.log(ws.current.readyState);
-          stomp.send("http://http://13.125.71.197/pub/chat/message", temp);
-        };
-      } else {
-        stomp.send(temp);
-      }
-    } else {
-      alert("메세지를 입력하세요.");
-      document.getElementById("msg").focus();
+  const handleEnter = () => {
+    if (t.current.value === '') {
       return;
     }
-    setMsg("");
-  });
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
+
+    stomp.current.send(
+      `/pub/chat/message/${param.roomId}`,
+      headers,
+      JSON.stringify({
+        type: "TALK",
+        roomId: param.roomId,
+        message: t.current.value,
+      })
+    );
+    t.current.value = '';
+  };
 
   return (
-    <>
-      {/* <GlobalStyle /> */}
-      <div id="chat-wrap">
-        <div id="chatt">
-          <h1 id="title">WebSocket Chatting</h1>
-          <br />
-          <div id="talk">
-            <div className="talk-shadow"></div>
-            {chatt.map((item, index) => {
-              return <ChatForm item={item} key={index} />;
-            })}
-          </div>
-          <input
-            disabled={chkLog}
-            placeholder="이름을 입력하세요."
-            type="text"
-            id="name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-          <div id="sendZone">
-            <textarea
-              id="msg"
-              value={msg}
-              onChange={onText}
-              onKeyDown={(ev) => {
-                if (ev.keyCode === 13) {
-                  send();
-                }
-              }}
-            ></textarea>
-            <input type="button" value="전송" id="btnSend" onClick={send} />
-          </div>
+    <Box sx={{ width: '100%', height: '100vh' }}>
+      {/* 헤더 */}
+      <Box sx={{
+        width: '100%', height: '8%', position: 'absolute', backgroundColor: '#FF9387',
+        boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.5)',
+        display: 'flex', alignItems: 'center', color: 'white', fontWeight: 'bold'
+      }}>
+        <ArrowBackIcon
+          style={{ fontSize: "25px", marginLeft: '20px' }}
+          onClick={() => {
+            navigate("/");
+          }}
+        ></ArrowBackIcon>
+
+        <Container sx={{ textAlign: 'center', fontSize: '1.5rem' }}>
+          유저 닉네임
+        </Container>
+
+      </Box>
+
+      {/* 메세지 내용 */}
+
+      <Box sx={{ height: '79%', overflow: 'auto', padding: '20px', verticalAlign: 'baseline' }}>
+        <Box sx={{ height: '10%' }}>빈박스</Box>
+        {chatList.map((item, index) => {
+          return <ChatForm item={item} key={index} />;
+        })}
+        <div style={{ float: "left", clear: "both" }}
+          ref={messagesEndRef}>
         </div>
-      </div>
-    </>
+      </Box>
+
+      {/* 메세지 입력 */}
+
+      <Box sx={{
+        boxShadow: '0 -0.5px 5px 0 rgba(0, 0, 0, 0.2)',
+        width: '100%', height: '15%', padding: '0 10px', position: 'absolute', verticalAlign: 'baseline', bottom: '0', display: 'flex', justifyContent: 'center', alignItems: 'center',
+      }}>
+
+        <input placeholder="메세지를 입력세요" type='text' ref={t} style={{ width: '70%', height: '30px', border: 'solid 1px gray', borderRadius: '10px', fontSize: 'large', padding: '5px 10px', fontFamily: 'PyeongChangPeace-Light' }}></input>
+        <Box sx={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+          <Button sx={{ width: '20%', fontFamily: 'PyeongChangPeace-Light', color: 'black' }} onClick={handleEnter}>
+            전송
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

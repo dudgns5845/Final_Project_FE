@@ -9,6 +9,7 @@ import {
   Avatar,
   CardContent,
   Button,
+  Box
   // Hidden,
 } from "@mui/material";
 import Menu from "@mui/material/Menu";
@@ -201,23 +202,25 @@ export default function Detail() {
             {postData.content}
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" onClick={Bookmarking}>
-            {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
-          </IconButton>
-          <Button
-            style={ButtonCss}
-            fullWidth
-            startIcon={<QuestionAnswerRoundedIcon />}
-            onClick={CreateChat}
-          >
-            1:1 채팅
-          </Button>
-        </CardActions>
       </Card>
+
+      <Box sx={{ padding: '5px 10px', display: 'flex', position: 'absolute', bottom: '0', backgroundColor: 'orange' }}>
+        <IconButton aria-label="add to favorites" onClick={Bookmarking}>
+          {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
+        </IconButton>
+        <Button
+          style={ButtonCss}
+          fullWidth
+          startIcon={<QuestionAnswerRoundedIcon />}
+          onClick={CreateChat}
+        >
+          1:1 채팅
+        </Button>
+      </Box>
     </>
   );
 }
+
 const IconCss = {
   position: "absolute",
   color: "white",

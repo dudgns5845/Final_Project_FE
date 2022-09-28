@@ -52,26 +52,26 @@ export default function EditDetailPage() {
         console.log(response);
         setTitleState(response.data.data.title);
 
-        setCategory(response.data.data.category);
+        setTmpCategory(response.data.data.category);
 
-        if (category === "DEVICE") {
-          setTmpCategory("디지털기기");
-        } else if (category === "APPLIANCE") {
-          setTmpCategory("생활가전");
-        } else if (category === "KITCHEN") {
-          setTmpCategory("생활/주방");
-        } else if (category === "WOMEN") {
-          setTmpCategory("여성의류/잡화");
-        } else if (category === "MEN") {
-          setTmpCategory("남성의류/잡화");
-        } else if (category === "BEAUTY") {
-          setTmpCategory("뷰티/미용");
-        } else if (category === "GAME") {
-          setTmpCategory("취미/게임");
-        } else if (category === "BOOK") {
-          setTmpCategory("도서");
-        } else if (category === "TICKET") {
-          setTmpCategory("티켓");
+        if (response.data.data.category === "DEVICE") {
+          setCategory("디지털기기");
+        } else if (response.data.data.category === "APPLIANCE") {
+          setCategory("생활가전");
+        } else if (response.data.data.category === "KITCHEN") {
+          setCategory("생활/주방");
+        } else if (response.data.data.category === "WOMEN") {
+          setCategory("여성의류/잡화");
+        } else if (response.data.data.category === "MEN") {
+          setCategory("남성의류/잡화");
+        } else if (response.data.data.category === "BEAUTY") {
+          setCategory("뷰티/미용");
+        } else if (response.data.data.category === "GAME") {
+          setCategory("취미/게임");
+        } else if (response.data.data.category === "BOOK") {
+          setCategory("도서");
+        } else if (response.data.data.category === "TICKET") {
+          setCategory("티켓");
         }
 
         setContentState(response.data.data.content);

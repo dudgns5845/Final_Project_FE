@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.2.1",
     "add": "^2.0.6",
     "axios": "^0.27.2",
+    "net": "^1.0.2",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
@@ -37,8 +38,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
