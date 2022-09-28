@@ -26,10 +26,14 @@ import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
 import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../shared/Cookie";
 
 export default function Detail() {
   const navigate = useNavigate();
   const param = useParams();
+
+  const [myId, setMyId] = useState(getCookie('id'));
+
 
   // 캐로셀 넘버링
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -62,6 +66,7 @@ export default function Detail() {
         console.log(error);
       });
   };
+
   useEffect(() => {
     apis
       .postDetail(param.postid)
@@ -105,6 +110,7 @@ export default function Detail() {
       setCurrentSlide(currentSlide + 1);
     }
   };
+
   const PreveSlide = () => {
     if (currentSlide === 0) {
       setCurrentSlide(TOTAL_SLIDES);
@@ -112,6 +118,7 @@ export default function Detail() {
       setCurrentSlide(currentSlide - 1);
     }
   };
+
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
@@ -130,93 +137,105 @@ export default function Detail() {
 
   return (
     <>
-      <div style={ImgContainer}>
-        <div style={Slide} ref={slideRef}>
-          {imageList.map((images, index) => (
-            <img key={index} alt="" style={imgCss} src={images} />
-          ))}
+      <Box sx={{ height: '90vh', overflow: 'auto' }}>
+
+        <div style={ImgContainer}>
+          <div style={Slide} ref={slideRef}>
+            {imageList.map((images, index) => (
+              <img key={index} alt="" style={imgCss} src={images} />
+            ))}
+          </div>
+          <IconButton
+            style={IconCss}
+            size="large"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <ChevronLeftRoundedIcon fontSize="large" />
+          </IconButton>
+          <ArrowBackIosIcon style={ButtonLeft} onClick={PreveSlide} />
+          <ArrowForwardIosIcon style={ButtonRight} onClick={NextSlide} />
         </div>
-        <IconButton
-          style={IconCss}
-          size="large"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          <ChevronLeftRoundedIcon fontSize="large" />
-        </IconButton>
-        <ArrowBackIosIcon style={ButtonLeft} onClick={PreveSlide} />
-        <ArrowForwardIosIcon style={ButtonRight} onClick={NextSlide} />
-      </div>
-
-      <Card sx={{ width: "100vw" }}>
-        <CardHeader
-          avatar={
-            <Avatar
-              sx={{ bgcolor: "red" }}
-              aria-label="recipe"
-              src={postData.userImageUrl}
-            >
-              {postData.userImageUrl}
-            </Avatar>
-          }
-          action={
-            <>
-              <IconButton
-                aria-label="settings"
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
+        <Card>
+          <CardHeader
+            avatar={
+              <Avatar
+                sx={{ bgcolor: "red" }}
+                aria-label="recipe"
+                src={postData.userImageUrl}
               >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={PutHandler}>수정</MenuItem>
-                <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
-              </Menu>
-            </>
-          }
-          title={postData.nickname}
-          subheader={postData.location}
-        />
-        <CardContent>
-          <Typography variant="h5" color="text.main">
-            {postData.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {postData.category}&nbsp;&nbsp;{postData.postDate}
-          </Typography>
-        </CardContent>
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {postData.content}
-          </Typography>
-        </CardContent>
-      </Card>
+                {postData.userImageUrl}
+              </Avatar>
+            }
+            action={
+              <>
 
-      <Box sx={{ padding: '5px 10px', display: 'flex', position: 'absolute', bottom: '0', backgroundColor: 'orange' }}>
-        <IconButton aria-label="add to favorites" onClick={Bookmarking}>
-          {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
-        </IconButton>
-        <Button
-          style={ButtonCss}
-          fullWidth
-          startIcon={<QuestionAnswerRoundedIcon />}
-          onClick={CreateChat}
-        >
-          1:1 채팅
-        </Button>
+
+                {/* 자신의 게시글에서만 보여야함 */}
+                {myId == postData.userId &&
+                  <>
+                    <IconButton
+                      aria-label="settings"
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                    >
+                      <MenuItem onClick={PutHandler}>수정</MenuItem>
+                      <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
+                    </Menu>
+                  </>
+                }
+              </>
+            }
+            title={postData.nickname}
+            subheader={postData.location}
+          />
+          <CardContent>
+            <Typography variant="h5" color="text.main">
+              {postData.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {postData.category}&nbsp;&nbsp;{postData.postDate}
+            </Typography>
+          </CardContent>
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              {postData.content}
+            </Typography>
+          </CardContent>
+        </Card>
       </Box>
+
+      {/* 자신의 게시글은 사라지게 해야함 */}
+      {myId != postData.userId &&
+        <Box sx={{ height: '7vh', marginTop: '10px', padding: '5px 10px', display: 'flex' }}>
+          <IconButton aria-label="add to favorites" onClick={Bookmarking}>
+            {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
+          </IconButton>
+          <Button
+            style={ButtonCss}
+            fullWidth
+            startIcon={<QuestionAnswerRoundedIcon />}
+            onClick={CreateChat}
+          >
+            1:1 채팅
+          </Button>
+        </Box>
+      }
     </>
   );
 }
