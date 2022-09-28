@@ -11,10 +11,14 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function PostPage() {
   const navigate = useNavigate();
+  const [userPost, setUserPost] = useState({
+    title: "",
+    content: "",
+    category: "카테고리 선택",
+    tmpcategory: "",
+  });
   const [imgState, setImgState] = useState([]);
   const [imgFile, setImgFile] = useState();
-  const [titleState, setTitleState] = useState("");
-  const [contentState, setContentState] = useState("");
   const [category, setCategory] = useState("카테고리 선택");
   const [tmpcategory, setTmpCategory] = useState(category);
   const [open, setOpen] = useState(false);
@@ -40,15 +44,13 @@ export default function PostPage() {
     setImgState(imgUploadList);
   };
   const TitleChange = (e) => {
-    const titleState = e.target.value;
-    setTitleState(titleState);
-    console.log(titleState);
+    setUserPost({ ...userPost, title: e.target.value });
   };
+  console.log(userPost);
   const ContentChange = (e) => {
-    const contentState = e.target.value;
-    setContentState(contentState);
-    console.log(contentState);
+    setUserPost({ ...userPost, content: e.target.value });
   };
+  console.log(userPost);
   const OpenModal = () => {
     setOpen(true);
   };
@@ -86,8 +88,8 @@ export default function PostPage() {
     const postData = new FormData();
 
     const dto = {
-      title: titleState,
-      content: contentState,
+      title: userPost.title,
+      content: userPost.content,
       category: tmpcategory,
     };
 
@@ -217,8 +219,9 @@ export default function PostPage() {
             label="글 제목"
             id="title"
             onChange={TitleChange}
-            value={titleState}
-            placeholder="글 제목을 입력해주세요."
+            value={userPost.title}
+            placeholder="제목을 입력해주세요."
+            required
           />
         </div>
         <div
@@ -246,7 +249,7 @@ export default function PostPage() {
           rows={18}
           placeholder="내용을 입력해주세요."
           onChange={ContentChange}
-          value={contentState}
+          value={userPost.content}
           required
         />
       </div>
