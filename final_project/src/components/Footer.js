@@ -4,7 +4,9 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import HomeSharpIcon from "@mui/icons-material/HomeSharp";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { useNavigate, useLocation } from "react-router-dom";
 export default function Footer({ firstBox }) {
   const [value, setValue] = useState(0);
@@ -38,18 +40,30 @@ export default function Footer({ firstBox }) {
     >
       <BottomNavigationAction
         label="홈"
-        icon={<HomeSharpIcon />}
+        icon={location === "/" ? <HomeSharpIcon /> : <HomeOutlinedIcon />}
         onClick={goHome}
       />
 
       <BottomNavigationAction
         label="채팅"
-        icon={<QuestionAnswerRoundedIcon />}
+        icon={
+          location === "/mychat" ? (
+            <QuestionAnswerRoundedIcon />
+          ) : (
+            <ForumOutlinedIcon />
+          )
+        }
         onClick={() => navigate("/mychat")}
       />
       <BottomNavigationAction
         label="마이페이지"
-        icon={<PersonRoundedIcon />}
+        icon={
+          location === "/mypage" ? (
+            <PersonRoundedIcon />
+          ) : (
+            <PersonOutlineOutlinedIcon />
+          )
+        }
         onClick={() => navigate("/mypage")}
       />
     </BottomNavigation>
