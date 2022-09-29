@@ -9,7 +9,7 @@ export default function ChatForm({ item }) {
           <Box
             component="span"
             style={{
-              backgroundColor: "#B9C0EA",
+              backgroundColor: "#989FA7",
               color: "white",
               borderRadius: "5px",
               fontSize: "20px",
@@ -18,13 +18,15 @@ export default function ChatForm({ item }) {
           >
             {item.message}
           </Box>
+          <div>{item.createdAt}</div>
         </Box>
       ) : (
-        <Box style={{ textAlign: "left", marginTop: "20px" }}>
+        <Box style={{ textAlign: "left", marginTop: "20px", display: 'flex' }}>
+
           <Box
             component="span"
             style={{
-              backgroundColor: "#B3DFEC",
+              backgroundColor: "#8D8C86",
               color: "white",
               borderRadius: "5px",
               fontSize: "20px",
@@ -32,6 +34,9 @@ export default function ChatForm({ item }) {
             }}
           >
             {item.message}
+          </Box>
+          <Box>
+            <Box sx={{ height: '100%', verticalAlign: 'middle', fontSize: '13px', color: 'gray' }}>{item.createdAt.slice(5, 7)}.{item.createdAt.slice(8, 10)}</Box>
           </Box>
         </Box>
       )}

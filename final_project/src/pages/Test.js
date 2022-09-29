@@ -133,6 +133,7 @@ const Chat = () => {
           padding: "20px",
           verticalAlign: "baseline",
         }}
+        onClick={() => { navigate(`/detail/${postData.postId}`) }}
       >
         <Box sx={{ width: '60%', height: '10%', backgroundColor: '#D2B48C', padding: '10px 20px', display: 'flex', alignItems: 'center', gap: '20px', margin: 'auto', borderRadius: '100px', boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px' }}>
           <img style={{ borderRadius: '100%', width: '15vw', height: '15vw' }} src={postData == null ? 'default-image.jpg' : postData.postImage} alt='' />
