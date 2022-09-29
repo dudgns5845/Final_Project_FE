@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import {
   IconButton,
   Typography,
-  CardActions,
   Card,
   CardHeader,
   Avatar,
   CardContent,
   Button,
-  Box
+  Box,
   // Hidden,
 } from "@mui/material";
 import Menu from "@mui/material/Menu";
@@ -34,6 +33,7 @@ export default function Detail() {
   // 캐로셀 넘버링
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef();
+  const [tt, setTT] = useState(false);
 
   const [postData, setPostData] = useState([]);
   const [imageList, setImageList] = useState(["/default-image.jpg"]);
@@ -148,74 +148,86 @@ export default function Detail() {
         <ArrowBackIosIcon style={ButtonLeft} onClick={PreveSlide} />
         <ArrowForwardIosIcon style={ButtonRight} onClick={NextSlide} />
       </div>
-
-      <Card sx={{ width: "100vw" }}>
-        <CardHeader
-          avatar={
-            <Avatar
-              sx={{ bgcolor: "red" }}
-              aria-label="recipe"
-              src={postData.userImageUrl}
-            >
-              {postData.userImageUrl}
-            </Avatar>
-          }
-          action={
-            <>
-              <IconButton
-                aria-label="settings"
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
+      <Box>
+        <Card sx={{ width: "100vw", height: "100vh" }}>
+          <CardHeader
+            avatar={
+              <Avatar
+                sx={{ bgcolor: "red" }}
+                aria-label="recipe"
+                src={postData.userImageUrl}
               >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={PutHandler}>수정</MenuItem>
-                <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
-              </Menu>
-            </>
-          }
-          title={postData.nickname}
-          subheader={postData.location}
-        />
-        <CardContent>
-          <Typography variant="h5" color="text.main">
-            {postData.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {postData.category}&nbsp;&nbsp;{postData.postDate}
-          </Typography>
-        </CardContent>
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {postData.content}
-          </Typography>
-        </CardContent>
-      </Card>
-
-      <Box sx={{ padding: '5px 10px', display: 'flex', position: 'absolute', bottom: '0', backgroundColor: 'orange' }}>
+                {postData.userImageUrl}
+              </Avatar>
+            }
+            action={
+              <>
+                <IconButton
+                  aria-label="settings"
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem onClick={PutHandler}>수정</MenuItem>
+                  <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
+                </Menu>
+              </>
+            }
+            title={postData.nickname}
+            subheader={postData.location}
+          />
+          <CardContent>
+            <Typography variant="h5" color="text.main">
+              {postData.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {postData.category}&nbsp;&nbsp;{postData.postDate}
+            </Typography>
+          </CardContent>
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              {postData.content}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
+      <Box
+        sx={{
+          padding: "5px 10px",
+          width: "100vw",
+          display: "flex",
+          position: "absolute",
+          justifyContent: "space-between",
+          bottom: "0",
+        }}
+      >
         <IconButton aria-label="add to favorites" onClick={Bookmarking}>
           {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
         </IconButton>
-        <Button
-          style={ButtonCss}
-          fullWidth
-          startIcon={<QuestionAnswerRoundedIcon />}
-          onClick={CreateChat}
-        >
-          1:1 채팅
-        </Button>
+        {tt ? (
+          <Button
+            style={ButtonCss}
+            startIcon={<QuestionAnswerRoundedIcon />}
+            onClick={CreateChat}
+          >
+            채팅하기
+          </Button>
+        ) : (
+          <Button disabled>거래가 완료된 게시물입니다.</Button>
+        )}
       </Box>
     </>
   );
@@ -223,14 +235,14 @@ export default function Detail() {
 
 const IconCss = {
   position: "absolute",
-  color: "white",
+  color: "black",
   top: "5px",
 };
 
 const ImgContainer = {
   display: "flex",
   width: "100%",
-  height: "60vh",
+  height: "45vh",
   overflow: "hidden",
   alignItems: "center",
 };
@@ -276,4 +288,6 @@ const ButtonRight = {
 const ButtonCss = {
   color: "white",
   backgroundColor: "gray",
+  width: "80vw",
+  marginRight: "5vw",
 };

@@ -1,22 +1,16 @@
 import React from "react";
-import { AppBar, Toolbar } from "@mui/material";
+import { Toolbar } from "@mui/material";
 
 export default function Header({ children }) {
-  return (
-    <AppBar>
-      <Toolbar sx={AppCss}>{children}</Toolbar>
-    </AppBar>
-  );
+  return <Toolbar sx={AppCss}>{children}</Toolbar>;
 }
 const AppCss = {
-  backgroundColor: '#FF9387',
   position: "sticky",
   display: "flex",
+  top: "0",
+  height: "5vh",
+  backgroundColor: "white",
   justifyContent: "space-between",
-  "*": {
-    color: "white",
-  },
-  div: {
-    padding: "0 2em",
-  },
+  borderBottom: "0.5px solid gainsboro",
+  "*": {},
 };

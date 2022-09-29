@@ -1,16 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Post from "../components/Post";
-import { Box, IconButton, Avatar } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 
-import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
+import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 
 import { useNavigate } from "react-router-dom";
 
@@ -21,8 +19,13 @@ import { useInView } from "react-intersection-observer";
 
 export default function MainPage() {
   const [ref, inView] = useInView();
+  //로드한 데이터 리스트 - > 여기다가 축적해나갈것
+  const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const firstBox = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (inView && !loading) {
@@ -33,44 +36,19 @@ export default function MainPage() {
       apis
         .getAllPostList(page)
         .then((response) => {
-          // console.log(response);
           setPostList([...postList, ...response.data.data.content]);
         })
         .catch((error) => {
-          // console.log(error);
+          console.log(error);
         });
       setLoading(false);
-      // console.log(page);
-      // console.log("hohohoho", postList);
     }
   }, [inView, loading]);
-
-  // console.log("여기", inView);
-  const navigate = useNavigate();
-
-  //로드한 데이터 리스트 - > 여기다가 축적해나갈것
-  const [postList, setPostList] = useState([]);
-
-  useEffect(() => {
-    apis
-      .getAllPostList(page)
-      .then((response) => {
-        console.log(response);
-        setPostList(response.data.data.content);
-      })
-      .catch((error) => {
-        // console.log(error);
-      });
-  }, []);
 
   return (
     <>
       <Header>
-        <Box style={{ display: "flex", alignItems: "space-evenly" }}>
-          <img src='logo_00.png' style={{ width: '30px', height: '30px' }} />
-          <span>우가우가</span>
-        </Box>
-
+        <img src="logo_00.jpg" alt="우가우가" style={logoCss} />
         <div>
           <IconButton
             onClick={() => {
@@ -79,51 +57,61 @@ export default function MainPage() {
           >
             <SearchRoundedIcon />
           </IconButton>
-          <IconButton
-            onClick={() => {
-              navigate("/postpage");
-            }}
-          >
-            <CreateRoundedIcon />
-          </IconButton>
+
           <IconButton>
             <NotificationsRoundedIcon />
           </IconButton>
         </div>
       </Header>
 
-      <Box style={{ height: '75vh', overflow: 'auto', marginTop: '8vh', padding: '20px' }}>
+      <Box
+        style={{
+          height: "85vh",
+          overflowY: "scroll",
+          backgroundColor: "#F9FAFA",
+        }}
+      >
         {postList.map((post, idx) => {
-          return <Post post={post} key={idx}></Post>;
+          if (idx === 0) {
+            return <Post post={post} key={idx} injRef={firstBox}></Post>;
+          } else {
+            return <Post post={post} key={idx}></Post>;
+          }
         })}
         <div style={{ height: "100px" }}></div>
         <div style={{ height: "100px" }} ref={ref}></div>
       </Box>
-
       <IconButton
         onClick={() => {
-          window.scrollTo(0, 0);
+          navigate("/postpage");
         }}
         style={IconCss}
       >
-        <ArrowUpwardRoundedIcon style={ArrowCss} />
+        <CreateRoundedIcon style={ArrowCss} />
       </IconButton>
-      <Footer />
+
+      <Footer firstBox={firstBox} />
     </>
   );
 }
 
 const IconCss = {
   position: "fixed",
-  width: "2.5em",
-  height: "2.5em",
-  bottom: "120px",
-  right: "30px",
-  backgroundColor: "skyblue",
+  width: "2.4em",
+  height: "2.4em",
+  top: "80vh",
+  right: "8vw",
+  backgroundColor: "#CED0CF",
+  border: "1px solid #CED0CF",
 };
 
 const ArrowCss = {
-  color: "white",
-  width: "1.3em",
-  height: "1.3em",
+  color: "#A25C01",
+  width: "1.12em",
+  height: "1.2em",
+};
+
+const logoCss = {
+  width: "8vw",
+  height: "5vh",
 };

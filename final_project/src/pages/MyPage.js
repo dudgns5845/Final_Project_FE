@@ -7,6 +7,8 @@ import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { deleteCookie } from "../shared/Cookie";
 import { Box } from "@mui/material";
+import Footer from "../components/Footer";
+
 export default function MyPage() {
   const navigate = useNavigate();
   const [editProfile, setEditProfile] = useState(false);
@@ -142,13 +144,12 @@ export default function MyPage() {
         </Header>
 
         {/* 유저 프로필 */}
-        <Box sx={{ margin: 'auto' }}>
+        <Box sx={{ margin: "auto" }}>
           <Image src={myImage} />
           <NickName> {myNick} 님</NickName>
           <Edit onClick={Open}>프로필 수정</Edit>
           {/* <Rank>랭크 정보(거래 횟수 기준)</Rank> */}
         </Box>
-
 
         <MyPost onClick={() => navigate("/submypage:mywrite")}>
           내가 작성한 게시글
@@ -249,6 +250,7 @@ export default function MyPage() {
           </Button>
         </div>
       </Modal>
+      <Footer />
     </>
   );
 }

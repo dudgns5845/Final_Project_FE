@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import styled from "styled-components";
@@ -46,11 +46,11 @@ export default function PostPage() {
   const TitleChange = (e) => {
     setUserPost({ ...userPost, title: e.target.value });
   };
-  console.log(userPost);
+
   const ContentChange = (e) => {
     setUserPost({ ...userPost, content: e.target.value });
   };
-  console.log(userPost);
+
   const OpenModal = () => {
     setOpen(true);
   };
@@ -169,7 +169,6 @@ export default function PostPage() {
           style={{
             fontSize: "10px",
             backgroundColor: "#FFBA46",
-            marginRight: "20PX",
             borderRadius: "5px",
           }}
           variant="contained"
@@ -179,80 +178,84 @@ export default function PostPage() {
           Upload
         </Button>
       </Header>
-      <div style={{ marginTop: "50px" }}>
-        <div
-          style={{
-            border: "1px solid gainsboro",
-            height: "100px",
-            borderRight: "0px",
-            borderLeft: "0px",
-            display: "fixed",
-            alignItems: "center",
-          }}
-        >
-          <label onChange={AddImage}>
-            <AddAPhotoIcon
-              style={{ fontSize: "40px", margin: "30px", marginLeft: "15px" }}
-            />
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              encType="multipart/form-data"
-              hidden
-            />
-          </label>
-          {imgState.map((image, id) => (
-            <img
-              key={id}
-              src={image}
-              alt={`${image}-${id}`}
-              style={{ width: "55px", height: "70px" }}
-              onClick={() => handleDeleteImage(id)}
-            />
-          ))}
-        </div>
-        <div>
-          <InputSt
-            type="text"
-            fullWidth
-            label="글 제목"
-            id="title"
-            onChange={TitleChange}
-            value={userPost.title}
-            placeholder="제목을 입력해주세요."
-            required
-          />
-        </div>
-        <div
-          style={{
-            border: "1px solid gainsboro",
-            height: "50px",
-            textIndent: "10px",
-            borderTop: "0px",
-            borderRight: "0px",
-            borderLeft: "0px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingRight: "5PX",
-          }}
-          onClick={OpenModal}
-        >
-          <Service>{category}</Service>
 
-          <ArrowForwardIosIcon style={{ fontSize: "15px" }} />
-        </div>
-        <ContentStyle
-          multiline
-          label="내용"
-          rows={18}
-          placeholder="내용을 입력해주세요."
-          onChange={ContentChange}
-          value={userPost.content}
+      <div
+        style={{
+          border: "1px solid gainsboro",
+          height: "100px",
+          borderRight: "0px",
+          borderLeft: "0px",
+          display: "fixed",
+          alignItems: "center",
+        }}
+      >
+        <label onChange={AddImage}>
+          <AddAPhotoIcon
+            style={{
+              fontSize: "40px",
+              margin: "30px 35px",
+              marginLeft: "15px",
+            }}
+          />
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            encType="multipart/form-data"
+            hidden
+          />
+        </label>
+
+        {imgState.map((image, id) => (
+          <img
+            key={id}
+            src={image}
+            alt={`${image}-${id}`}
+            style={{ width: "55px", height: "70px" }}
+            onClick={() => handleDeleteImage(id)}
+          />
+        ))}
+      </div>
+      <div>
+        <InputSt
+          type="text"
+          fullWidth
+          label="글 제목"
+          id="title"
+          onChange={TitleChange}
+          value={userPost.title}
+          placeholder="제목을 입력해주세요."
           required
         />
       </div>
+      <div
+        style={{
+          border: "1px solid gainsboro",
+          height: "50px",
+          textIndent: "10px",
+          borderTop: "0px",
+          borderRight: "0px",
+          borderLeft: "0px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingRight: "5PX",
+        }}
+        onClick={OpenModal}
+      >
+        <Service>{category}</Service>
+
+        <ArrowForwardIosIcon style={{ fontSize: "15px" }} />
+      </div>
+      <ContentStyle
+        multiline
+        label="내용"
+        rows={18}
+        placeholder="내용을 입력해주세요."
+        onChange={ContentChange}
+        value={userPost.content}
+        required
+      />
     </>
   );
 }

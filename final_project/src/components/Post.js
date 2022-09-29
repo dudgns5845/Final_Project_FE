@@ -1,32 +1,42 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-export default function Post({ post }) {
+
+export default function Post({ post, injRef }) {
   const navigate = useNavigate();
   return (
-    <Box sx={{ maxWidth: "80vw" }}>
-      <Box onClick={() => navigate(`/detail/${post.id}`)}>
-        <div style={CardCss}>
-          <div style={{ width: "100px", height: "100px" }}>
-            <img
-              style={{
-                width: "100px",
-                height: "100px",
-                objectFit: "cover",
-                borderRadius: "10px",
-              }}
-              src={post.postImageUrl}
-            />
-          </div>
-
-          <div style={TextCss}>
-            <h5>{post.title}</h5>
-            <h6>
-              {post.category} &nbsp; {post.createdAt}
-            </h6>
-          </div>
+    <Box
+      sx={{
+        Width: "100vw",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      ref={injRef}
+      onClick={() => navigate(`/detail/${post.id}`)}
+    >
+      <div style={CardCss}>
+        <div style={{ width: "100px", height: "100px" }}>
+          <img
+            style={{
+              width: "100px",
+              height: "100px",
+              objectFit: "cover",
+              borderRadius: "10px",
+              marginLeft: "10px",
+            }}
+            src={post.postImageUrl}
+            alt="null"
+          />
         </div>
-      </Box>
+
+        <div style={TextCss}>
+          <h5>{post.title}</h5>
+          <h6>
+            {post.category} &nbsp; {post.createdAt}
+          </h6>
+        </div>
+      </div>
     </Box>
   );
 }
@@ -34,23 +44,12 @@ export default function Post({ post }) {
 const CardCss = {
   display: "flex",
   width: "100%",
-  height: "8rem",
-  padding: "1em",
+  height: "3vh",
+  padding: "8vh 0",
   alignItems: "center",
   borderTop: "0.5px solid gainsboro",
-  borderBottom: "0.5px solid gainsboro",
-
-  // backgroundColor: '#ffe1cf'
 };
 const TextCss = {
-  paddingLeft: "1em",
+  paddingLeft: "8vw",
   width: "100%",
-};
-const ImageCss = {
-  width: "100px",
-  height: "100px",
-  aspectRatio: "auto",
-  borderRadius: "5px",
-  backgroundColor: "#c3d0d8",
-  objectFit: "fill",
 };

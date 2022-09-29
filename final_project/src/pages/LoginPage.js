@@ -4,20 +4,20 @@ import Input from "@mui/material/Input";
 import Snackbar from "@mui/material/Snackbar";
 import { useNavigate } from "react-router-dom";
 
+import ScreenSize from "../shared/ScreenSize";
+
 import apis from "../apis/Apis";
 import { setCookie } from "../shared/Cookie";
 
 const ariaLabel = { "aria-label": "description" };
 
 export default function Login({ ChangeCookie }) {
-
   const navigate = useNavigate();
 
   // 아이디, 비밀번호 등
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-
 
   // 조건 오류 메시지
   const [userIdMessege, setUserIdMessege] = useState("");
@@ -58,15 +58,14 @@ export default function Login({ ChangeCookie }) {
   };
 
   const onSubmitHandler = (e) => {
-
     if (!isUserId) {
       setErrorMessage("이메일을 확인해주세요");
       setsnackOpen(true);
-      return
+      return;
     } else if (!isPassword) {
       setErrorMessage("비밀번호를 확인해주세요");
       setsnackOpen(true);
-      return
+      return;
     } else {
       const UserData = {
         email: userId,
@@ -81,8 +80,7 @@ export default function Login({ ChangeCookie }) {
             setErrorMessage("아이디와 비밀번호를 확인하세요,111");
             setsnackOpen(true);
             return;
-          }
-          else if (response.data.success) {
+          } else if (response.data.success) {
             setErrorMessage("로그인 성공!!");
             setsnackOpen(true);
             setCookie(
@@ -115,7 +113,7 @@ export default function Login({ ChangeCookie }) {
           console.log(error);
           setErrorMessage("이메일 또는 비밀번호를 확인해주세요,222");
           setsnackOpen(true);
-        })
+        });
     }
   };
 
@@ -163,18 +161,8 @@ export default function Login({ ChangeCookie }) {
     }
   }, [password, passwordConfirm]);
 
-
   return (
-    <div
-      style={{
-        margin: "auto",
-        width: "80vw",
-        height: "100%",
-        marginTop: "2vh",
-        padding: "3vh",
-        boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-      }}
-    >
+    <ScreenSize>
       <h2>로그인</h2>
       <form>
         <p>이메일</p>
@@ -199,7 +187,8 @@ export default function Login({ ChangeCookie }) {
             onClick={(e) => {
               onSubmitHandler(e);
             }}
-          >로그인
+          >
+            로그인
           </Button>
           <Snackbar
             anchorOrigin={{
@@ -215,10 +204,15 @@ export default function Login({ ChangeCookie }) {
         </div>
       </form>
       <div style={{ textAlign: "right", marginTop: "10px" }}>
-        <Button variant="text" onClick={() => { navigate('/signin') }}>
+        <Button
+          variant="text"
+          onClick={() => {
+            navigate("/signin");
+          }}
+        >
           회원가입하러 가기
         </Button>
       </div>
-    </div>
+    </ScreenSize>
   );
 }

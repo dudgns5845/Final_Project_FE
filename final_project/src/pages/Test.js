@@ -188,7 +188,7 @@ const Chat = () => {
           />
         ) : (
           <input
-            placeholder="메세지를 입력세요"
+            placeholder="메세지를 입력하세요"
             type="text"
             ref={t}
             style={{
