@@ -1,13 +1,27 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import HomeSharpIcon from "@mui/icons-material/HomeSharp";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import { Navigate, useNavigate } from "react-router-dom";
-export default function Footer() {
-  const [value, setValue] = React.useState(0);
+import { useNavigate, useLocation } from "react-router-dom";
+export default function Footer({ firstBox }) {
+  const [value, setValue] = useState(0);
+  const [change, setChange] = useState(<HomeSharpIcon />);
   const navigate = useNavigate();
+  const location = useLocation().pathname;
+
+  const goHome = () => {
+    if (location === "/") {
+      setChange(<HomeOutlinedIcon />);
+      if (firstBox !== undefined) {
+        firstBox.current.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate("/");
+    }
+  };
   return (
     <BottomNavigation
       showLabels
@@ -22,14 +36,11 @@ export default function Footer() {
         right: 0,
         height: "10vh",
         backgroundColor: "white",
-        boxShadow: '0 -0.3px 10px 0 rgba(0, 0, 0, 0.3)'
+        borderTop: "0.5px solid gainsboro",
       }}
     >
-      <BottomNavigationAction
-        label="홈"
-        icon={<HomeRoundedIcon />}
-        onClick={() => navigate("/")}
-      />
+      <BottomNavigationAction label="홈" icon={change} onClick={goHome} />
+
       <BottomNavigationAction
         label="채팅"
         icon={<QuestionAnswerRoundedIcon />}

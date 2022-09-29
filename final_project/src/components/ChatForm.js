@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { getCookie } from "../shared/Cookie";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 export default function ChatForm({ item }) {
   return (
     <>
-      {item.senderId == getCookie('id') ? (
-        <Box style={{ textAlign: "right", marginTop: '20px' }}>
+      {item.senderId === getCookie("id") ? (
+        <Box style={{ textAlign: "right", marginTop: "20px" }}>
           <Box
             component="span"
             style={{
@@ -13,14 +13,14 @@ export default function ChatForm({ item }) {
               color: "white",
               borderRadius: "5px",
               fontSize: "20px",
-              padding: '5px 10px'
+              padding: "5px 10px",
             }}
           >
             {item.message}
           </Box>
         </Box>
       ) : (
-        <Box style={{ textAlign: "left", marginTop: '20px' }}>
+        <Box style={{ textAlign: "left", marginTop: "20px" }}>
           <Box
             component="span"
             style={{
@@ -28,7 +28,7 @@ export default function ChatForm({ item }) {
               color: "white",
               borderRadius: "5px",
               fontSize: "20px",
-              padding: '5px 10px'
+              padding: "5px 10px",
             }}
           >
             {item.message}
@@ -38,4 +38,3 @@ export default function ChatForm({ item }) {
     </>
   );
 }
-const Mychat = styled.div``;
