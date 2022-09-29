@@ -5,13 +5,15 @@ import ChatForm from "../components/ChatForm";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { getCookie } from "../shared/Cookie";
-import { Container, Box, Button } from "@mui/material";
+import { Container, Box, Button, IconButton, Typography } from "@mui/material";
+import Header from "../components/Header";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Chat = () => {
   const [chatList, setChatList] = useState([]);
   const [confirmationState, setConfirmationState] = useState(false);
+  const [postData, setPostData] = useState();
   const navigate = useNavigate();
 
   // 스크롤을 맨밑으로
@@ -31,6 +33,7 @@ const Chat = () => {
     apis
       .chatDetilRooms(param.roomId, param.nickname)
       .then((response) => {
+        setPostData(response.data.data);
         const preTalk = response.data.data.messageList;
         setUserName(response.data.data.nickname);
         preTalk.map((item) => {
@@ -109,42 +112,40 @@ const Chat = () => {
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       {/* 헤더 */}
-      <Box
-        sx={{
-          width: "100%",
-          height: "8%",
-          position: "absolute",
-          backgroundColor: "#FF9387",
-          boxShadow: "0 0.5px 0 0 rgba(0, 0, 0, 0.5)",
-          display: "flex",
-          alignItems: "center",
-          color: "white",
-          fontWeight: "bold",
-        }}
-      >
+      <Header>
         <ArrowBackIcon
-          style={{ fontSize: "25px", marginLeft: "20px" }}
+          style={{ fontSize: "25px" }}
           onClick={() => {
             navigate("/");
           }}
         ></ArrowBackIcon>
+        <Box>
+          {postData?.nickname}
+        </Box>
+      </Header>
 
-        <Container sx={{ textAlign: "center", fontSize: "1.5rem" }}>
-          {username === "" ? "" : username}
-        </Container>
-      </Box>
 
       {/* 메세지 내용 */}
-
       <Box
         sx={{
-          height: "79%",
+          height: "73%",
           overflow: "auto",
           padding: "20px",
           verticalAlign: "baseline",
         }}
       >
-        <Box sx={{ height: "10%" }}>빈박스</Box>
+        <Box sx={{ width: '60%', height: '10%', backgroundColor: '#D2B48C', padding: '10px 20px', display: 'flex', alignItems: 'center', gap: '20px', margin: 'auto', borderRadius: '100px', boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px' }}>
+          <img style={{ borderRadius: '100%', width: '15vw', height: '15vw' }} src={postData == null ? 'default-image.jpg' : postData.postImage} alt='' />
+          <Box sx={{ marign: 'auto' }}>
+            <Typography component="div" variant="h7">
+              {postData?.postTitle}
+            </Typography>
+            <Typography variant="body" color="text.secondary" component="div">
+              {postData?.nickname}
+            </Typography>
+          </Box>
+        </Box>
+
         {chatList.map((item, index) => {
           return <ChatForm item={item} key={index} />;
         })}
@@ -168,6 +169,7 @@ const Chat = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          fontFamily: 'S-CoreDream-3Light'
         }}
       >
         {confirmationState ? (
@@ -182,7 +184,6 @@ const Chat = () => {
               borderRadius: "10px",
               fontSize: "large",
               padding: "5px 10px",
-              fontFamily: "PyeongChangPeace-Light",
             }}
             disabled
           />
@@ -198,7 +199,7 @@ const Chat = () => {
               borderRadius: "10px",
               fontSize: "large",
               padding: "5px 10px",
-              fontFamily: "PyeongChangPeace-Light",
+              fontFamily: 'S-CoreDream-3Light'
             }}
           />
         )}
@@ -206,8 +207,8 @@ const Chat = () => {
           <Button
             sx={{
               width: "20%",
-              fontFamily: "PyeongChangPeace-Light",
               color: "black",
+              fontFamily: 'S-CoreDream-3Light'
             }}
             onClick={handleEnter}
           >
@@ -217,6 +218,28 @@ const Chat = () => {
       </Box>
     </Box>
   );
+};
+
+
+const IconCss = {
+  position: "fixed",
+  width: "2.4em",
+  height: "2.4em",
+  top: "80vh",
+  right: "8vw",
+  backgroundColor: "#CED0CF",
+  border: "1px solid #CED0CF",
+};
+
+const ArrowCss = {
+  color: "#A25C01",
+  width: "1.12em",
+  height: "1.2em",
+};
+
+const logoCss = {
+  width: "8vw",
+  height: "5vh",
 };
 
 export default Chat;

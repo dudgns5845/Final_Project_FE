@@ -17,7 +17,7 @@ import SubMyPage from "./pages/SubMyPage";
 import ChatRoomPage from "./pages/ChatroomPage";
 import DetailChatPage from "./pages/DetailchatPage";
 import SigninPage from "./pages/SigninPage";
-
+import AlarmPage from "./pages/AlarmPage";
 import Test from "./pages/Test";
 import EditdetailPage from "./pages/EditdetailPage";
 
@@ -88,6 +88,12 @@ function App() {
             }
           />
           <Route
+            path="/alarmpage"
+            element={
+              isLoggedIn ? <AlarmPage /> : <Navigate replace to="/start" />
+            }
+          />
+          <Route
             path="/detail/:postid"
             element={isLoggedIn ? <Detail /> : <Navigate replace to="/start" />}
           />
@@ -123,9 +129,11 @@ function App() {
             path="/chatdetail/:roomId"
             element={isLoggedIn ? <Test /> : <Navigate replace to="/start" />}
           />
-
           <Route path="*" element={<ErrorPage />} />
         </Routes>
+
+
+
       </BrowserRouter>
     </ThemeProvider>
   );
