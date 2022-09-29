@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, createTheme, ThemeProvider } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -30,9 +30,7 @@ export default function Start() {
   const ImageSlideTimer = () => {
     let nextIndex = current + 1;
 
-    if (nextIndex < 0) {
-      nextIndex -= 1;
-    } else if (nextIndex >= imgSize.current) {
+    if (nextIndex >= imgSize.current) {
       nextIndex = 0;
     }
 
@@ -43,6 +41,7 @@ export default function Start() {
 
   // 이미지 버튼으로 넘김
   const moveSlide = (i) => {
+    clearTimeout(imageTimer);
     let nextIndex = current + i;
 
     if (nextIndex < 0) nextIndex = imgSize.current - 1;
@@ -66,107 +65,119 @@ export default function Start() {
     }
   }, [cookie]);
 
+  const localTheme = createTheme({
+    palette: {
+      warning: {
+        main: "#FFBA46",
+        contrastText: "#fff",
+      },
+    },
+  });
+
   return (
-    <Container
-      style={{
-        display: "block",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100vw",
-        height: "80vh",
-        marginTop: "30vw",
-        // userSelect: "none",
-      }}
-    >
-      <div style={{ transition: "all 1.5s ease-out" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+    <ThemeProvider theme={localTheme}>
+      <Container
+        style={{
+          display: "block",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100vw",
+          height: "80vh",
+          marginTop: "30vw",
+          // userSelect: "none",
+        }}
+      >
+        <div style={{ transition: "all 1.5s ease-out" }}>
           <div
-            className="slide"
             style={{
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
             }}
           >
-            <BtnLeft
-              className="btn"
-              onClick={() => {
-                moveSlide(-1);
-              }}
-            >
-              &lt;
-            </BtnLeft>
             <div
-              className="window"
+              className="slide"
               style={{
-                // background: "coral",
-                width: "90vw",
-                height: "50vh",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <BtnLeft
+                className="btn"
+                onClick={() => {
+                  moveSlide(-1);
+                }}
+              >
+                &lt;
+              </BtnLeft>
+              <div
+                className="window"
+                style={{
+                  // background: "coral",
+                  width: "90vw",
+                  height: "50vh",
 
-                overflow: "hidden",
-              }}
-            >
-              <div className="flexbox" style={style}>
-                {images.current.map((img, i) => (
-                  <div
-                    key={i}
-                    className="img"
-                    style={{
-                      backgroundImage: `url(${img.src})`,
-                      width: "90vw",
-                      height: "50vh",
-                      backgroundPosition: "50% 50%",
-                      backgroundSize: "contain",
-                      backgroundRepeat: "no-repeat",
-                      flex: "none",
-                      float: "left",
-                    }}
-                  ></div>
-                ))}
+                  overflow: "hidden",
+                }}
+              >
+                <div className="flexbox" style={style}>
+                  {images.current.map((img, i) => (
+                    <div
+                      key={i}
+                      className="img"
+                      style={{
+                        backgroundImage: `url(${img.src})`,
+                        width: "90vw",
+                        height: "50vh",
+                        backgroundPosition: "50% 50%",
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                        flex: "none",
+                        float: "left",
+                      }}
+                    ></div>
+                  ))}
+                </div>
               </div>
+              <BtnRight
+                className="btn"
+                onClick={() => {
+                  moveSlide(1);
+                }}
+              >
+                &gt;
+              </BtnRight>
             </div>
-            <BtnRight
-              className="btn"
-              onClick={() => {
-                moveSlide(1);
+            <div
+              className="position"
+              style={{
+                marginTop: "15px",
+                display: "flex",
+                justifyContent: "center",
               }}
             >
-              &gt;
-            </BtnRight>
-          </div>
-          <div
-            className="position"
-            style={{
-              marginTop: "15px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            {images.current.map((x, i) => (
-              <Dot key={i} className={i === current ? "current" : "dots"} />
-            ))}
+              {images.current.map((x, i) => (
+                <Dot key={i} className={i === current ? "current" : "dots"} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <br />
-      <p />
-      <div style={{ display: "grid" }}>
-        <Button
-          variant="contained"
-          style={{ marginTop: "5vw", height: "9vh", fontSize: "x-large" }}
-          onClick={() => {
-            isLoggedIn ? navigate("/") : navigate("/login");
-          }}
-        >
-          시작하기
-        </Button>
-      </div>
-    </Container>
+        <br />
+        <p />
+        <div style={{ display: "grid" }}>
+          <Button
+            variant="contained"
+            color="warning"
+            style={{ marginTop: "5vw", height: "9vh", fontSize: "x-large" }}
+            onClick={() => {
+              isLoggedIn ? navigate("/") : navigate("/login");
+            }}
+          >
+            시작하기
+          </Button>
+        </div>
+      </Container>
+    </ThemeProvider>
   );
 }
 
