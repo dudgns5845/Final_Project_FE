@@ -319,21 +319,21 @@ const Rank = styled.div`
 `;
 
 const MyPost = styled.div`
-  display: grid;
+  /* display: grid; */
   grid-area: mypost;
   margin: auto;
   cursor: pointer;
 `;
 
 const Zzim = styled.div`
-  display: grid;
+  /* display: grid; */
   grid-area: zzim;
   margin: auto;
   cursor: pointer;
 `;
 
 const LogOut = styled.div`
-  display: grid;
+  /* display: grid; */
   grid-area: out;
 
   margin: auto;
