@@ -6,7 +6,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -ms-overflow-style: none;
-  overflow: hidden;
+  overflow:hidden;
+ 
+      
+    
 }
 
 code {
@@ -20,6 +23,7 @@ code {
 
 :root {
   --vh: 100%;
+  --vw: 100%;
 }
 
 @font-face {
@@ -28,4 +32,9 @@ code {
     format("woff2");
   font-weight: 300;
   font-style: normal;
+
 }
+.css-i4bv87-MuiSvgIcon-root{color:gray}
+.css-i4bv87-MuiSvgIcon-root{font-size: 1.5rem }
+.css-imwso6-MuiBottomNavigationAction-label {color:black}
+
