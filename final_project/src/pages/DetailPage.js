@@ -25,10 +25,13 @@ import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
 import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../shared/Cookie";
 
 export default function Detail() {
   const navigate = useNavigate();
   const param = useParams();
+
+  const [myId, setMyId] = useState(getCookie("id"));
 
   // 캐로셀 넘버링
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -62,6 +65,7 @@ export default function Detail() {
         console.log(error);
       });
   };
+
   useEffect(() => {
     apis
       .postDetail(param.postid)
@@ -105,6 +109,7 @@ export default function Detail() {
       setCurrentSlide(currentSlide + 1);
     }
   };
+
   const PreveSlide = () => {
     if (currentSlide === 0) {
       setCurrentSlide(TOTAL_SLIDES);
@@ -112,6 +117,7 @@ export default function Detail() {
       setCurrentSlide(currentSlide - 1);
     }
   };
+
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
@@ -130,26 +136,26 @@ export default function Detail() {
 
   return (
     <>
-      <div style={ImgContainer}>
-        <div style={Slide} ref={slideRef}>
-          {imageList.map((images, index) => (
-            <img key={index} alt="" style={imgCss} src={images} />
-          ))}
+      <Box sx={{ height: "90vh", overflow: "auto" }}>
+        <div style={ImgContainer}>
+          <div style={Slide} ref={slideRef}>
+            {imageList.map((images, index) => (
+              <img key={index} alt="" style={imgCss} src={images} />
+            ))}
+          </div>
+          <IconButton
+            style={IconCss}
+            size="large"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <ChevronLeftRoundedIcon fontSize="large" />
+          </IconButton>
+          <ArrowBackIosIcon style={ButtonLeft} onClick={PreveSlide} />
+          <ArrowForwardIosIcon style={ButtonRight} onClick={NextSlide} />
         </div>
-        <IconButton
-          style={IconCss}
-          size="large"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          <ChevronLeftRoundedIcon fontSize="large" />
-        </IconButton>
-        <ArrowBackIosIcon style={ButtonLeft} onClick={PreveSlide} />
-        <ArrowForwardIosIcon style={ButtonRight} onClick={NextSlide} />
-      </div>
-      <Box>
-        <Card sx={{ width: "100vw", height: "100vh" }}>
+        <Card>
           <CardHeader
             avatar={
               <Avatar
@@ -162,28 +168,33 @@ export default function Detail() {
             }
             action={
               <>
-                <IconButton
-                  aria-label="settings"
-                  id="basic-button"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={PutHandler}>수정</MenuItem>
-                  <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
-                </Menu>
+                {/* 자신의 게시글에서만 보여야함 */}
+                {myId == postData.userId && (
+                  <>
+                    <IconButton
+                      aria-label="settings"
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                    >
+                      <MenuItem onClick={PutHandler}>수정</MenuItem>
+                      <MenuItem onClick={DeleteHandler}>삭제</MenuItem>
+                    </Menu>
+                  </>
+                )}
               </>
             }
             title={postData.nickname}
@@ -204,31 +215,30 @@ export default function Detail() {
           </CardContent>
         </Card>
       </Box>
-      <Box
-        sx={{
-          padding: "5px 10px",
-          width: "100vw",
-          display: "flex",
-          position: "absolute",
-          justifyContent: "space-between",
-          bottom: "0",
-        }}
-      >
-        <IconButton aria-label="add to favorites" onClick={Bookmarking}>
-          {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
-        </IconButton>
-        {tt ? (
+
+      {/* 자신의 게시글은 사라지게 해야함 */}
+      {myId != postData.userId && (
+        <Box
+          sx={{
+            height: "7vh",
+            marginTop: "10px",
+            padding: "5px 10px",
+            display: "flex",
+          }}
+        >
+          <IconButton aria-label="add to favorites" onClick={Bookmarking}>
+            {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
+          </IconButton>
           <Button
             style={ButtonCss}
+            fullWidth
             startIcon={<QuestionAnswerRoundedIcon />}
             onClick={CreateChat}
           >
-            채팅하기
+            1:1 채팅
           </Button>
-        ) : (
-          <Button disabled>거래가 완료된 게시물입니다.</Button>
-        )}
-      </Box>
+        </Box>
+      )}
     </>
   );
 }

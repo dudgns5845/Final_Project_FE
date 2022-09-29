@@ -22,6 +22,7 @@ import Test from "./pages/Test";
 import EditdetailPage from "./pages/EditdetailPage";
 
 function App() {
+
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
