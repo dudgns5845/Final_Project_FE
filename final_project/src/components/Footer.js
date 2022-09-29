@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import HomeSharpIcon from "@mui/icons-material/HomeSharp";
@@ -8,16 +8,13 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import { useNavigate, useLocation } from "react-router-dom";
 export default function Footer({ firstBox }) {
   const [value, setValue] = useState(0);
-  const [change, setChange] = useState(<HomeSharpIcon />);
+  const home = useRef(null);
   const navigate = useNavigate();
   const location = useLocation().pathname;
 
   const goHome = () => {
-    if (location === "/") {
-      setChange(<HomeOutlinedIcon />);
-      if (firstBox !== undefined) {
-        firstBox.current.scrollIntoView({ behavior: "smooth" });
-      }
+    if (location === "/" && firstBox !== undefined) {
+      firstBox.current.scrollIntoView({ behavior: "smooth" });
     } else {
       navigate("/");
     }
@@ -39,7 +36,11 @@ export default function Footer({ firstBox }) {
         borderTop: "0.5px solid gainsboro",
       }}
     >
-      <BottomNavigationAction label="홈" icon={change} onClick={goHome} />
+      <BottomNavigationAction
+        label="홈"
+        icon={<HomeSharpIcon />}
+        onClick={goHome}
+      />
 
       <BottomNavigationAction
         label="채팅"

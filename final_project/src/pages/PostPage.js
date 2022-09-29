@@ -18,7 +18,7 @@ export default function PostPage() {
     tmpcategory: "",
   });
   const [imgState, setImgState] = useState([]);
-  const [imgFile, setImgFile] = useState();
+  const [imgFile, setImgFile] = useState([]);
   const [category, setCategory] = useState("카테고리 선택");
   const [tmpcategory, setTmpCategory] = useState(category);
   const [open, setOpen] = useState(false);
@@ -62,7 +62,7 @@ export default function PostPage() {
     if (category === "디지털기기") {
       setTmpCategory("DEVICE");
     } else if (category === "생활가전") {
-      setTmpCategory("APPLANCE");
+      setTmpCategory("APPLIANCE");
     } else if (category === "생활/주방") {
       setTmpCategory("KITCHEN");
     } else if (category === "여성의류/잡화") {
@@ -83,8 +83,6 @@ export default function PostPage() {
   };
 
   const ClickHandler = () => {
-    // console.log(titleState, contentState, imgFile, category);
-
     const postData = new FormData();
 
     const dto = {
@@ -99,9 +97,16 @@ export default function PostPage() {
         type: "application/json",
       })
     );
-
-    for (let img of imgFile) {
-      postData.append("imageFileList", img);
+    if (imgFile.length === 0) {
+      postData.append(
+        "imageFileList",
+        new File([], "none.jpg", { type: "multipart/form-data" })
+      );
+    } else {
+      for (let img of imgFile) {
+        postData.append("imageFileList", img);
+        console.log(img);
+      }
     }
     console.log(imgFile);
     //통신
