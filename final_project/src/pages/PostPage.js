@@ -98,14 +98,10 @@ export default function PostPage() {
       })
     );
     if (imgFile.length === 0) {
-      postData.append(
-        "imageFileList",
-        new File([], "none.jpg", { type: "multipart/form-data" })
-      );
+      postData.append("imageFileList", new File([], "none.jpg"));
     } else {
       for (let img of imgFile) {
         postData.append("imageFileList", img);
-        console.log(img);
       }
     }
     console.log(imgFile);
@@ -179,6 +175,7 @@ export default function PostPage() {
           variant="contained"
           component="label"
           onClick={ClickHandler}
+          disabled
         >
           Upload
         </Button>

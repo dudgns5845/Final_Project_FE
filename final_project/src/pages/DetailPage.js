@@ -26,6 +26,7 @@ import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../shared/Cookie";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 export default function Detail() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export default function Detail() {
   const [tt, setTT] = useState(false);
 
   const [postData, setPostData] = useState([]);
-  const [imageList, setImageList] = useState(["/default-image.jpg"]);
+  const [imageList, setImageList] = useState(["default-image.jpg"]);
   const [isBookMark, setIsBookMark] = useState(false);
 
   // MUI Menu
@@ -65,7 +66,6 @@ export default function Detail() {
         console.log(error);
       });
   };
-
   useEffect(() => {
     apis
       .postDetail(param.postid)
@@ -140,9 +140,10 @@ export default function Detail() {
         <div style={ImgContainer}>
           <div style={Slide} ref={slideRef}>
             {imageList.map((images, index) => (
-              <img key={index} alt="" style={imgCss} src={images} />
+              <img key={index} style={imgCss} src={images} alt="" />
             ))}
           </div>
+
           <IconButton
             style={IconCss}
             size="large"

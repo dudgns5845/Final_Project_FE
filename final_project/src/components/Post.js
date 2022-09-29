@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Post({ post, injRef }) {
   const navigate = useNavigate();
+  const onerrorImage = (e) => {
+    e.target.src = "default-image.jpg";
+    console.log("포스트 호출");
+  };
   return (
     <Box
       sx={{
@@ -25,8 +29,9 @@ export default function Post({ post, injRef }) {
               borderRadius: "10px",
               marginLeft: "10px",
             }}
+            onError={onerrorImage}
             src={post.postImageUrl}
-            alt="null"
+            alt=""
           />
         </div>
 
