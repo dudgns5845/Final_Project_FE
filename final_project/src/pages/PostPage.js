@@ -99,8 +99,8 @@ export default function PostPage() {
         type: "application/json",
       })
     );
-    if (imgFile.length === 0) {
-      postData.append("imageFileList", new File([], "none.jpg"));
+    if (imgFile === undefined) {
+      postData.append("imageFileList", "");
     } else {
       for (let img of imgFile) {
         postData.append("imageFileList", img);
