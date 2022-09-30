@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { deleteCookie } from "../shared/Cookie";
@@ -159,11 +160,13 @@ export default function MyPage() {
           style={{
             display: "flex",
             flexDirection: "column",
+
             height: "50vh",
           }}
         >
           <Setting value="write" onClick={() => navigate("/submypage:mywrite")}>
             내가 작성한 게시글
+            <ArrowForwardIosRoundedIcon />
           </Setting>
 
           <Setting
@@ -171,6 +174,7 @@ export default function MyPage() {
             onClick={() => navigate("/submypage:mybookmark")}
           >
             내가 찜한 게시글
+            <ArrowForwardIosRoundedIcon />
           </Setting>
           <Setting value="logout" onClick={LogOutAction}>
             로그아웃
@@ -179,10 +183,11 @@ export default function MyPage() {
       </ScreenSize>
       <Modal visible={editProfile}>
         <Header>
+          <ArrowBackIcon onClick={close} />
           <h4>프로필 수정</h4>
         </Header>
         <label onChange={AddImage}>
-          <Image
+          <ChangeImage
             style={{ marginTop: "5vh" }}
             // src={tmpImage === myImage ? myImage : URL.createObjectURL(tmpImage)}
             src={tmpImage}
@@ -256,19 +261,6 @@ export default function MyPage() {
           >
             수정하기
           </Button>
-
-          <Button
-            style={{
-              fontSize: "20px",
-              backgroundColor: "#FFBA46",
-
-              marginRight: "20PX",
-              borderRadius: "5px",
-            }}
-            onClick={close}
-          >
-            닫기
-          </Button>
         </div>
       </Modal>
       <Footer />
@@ -311,6 +303,7 @@ const Setting = styled.div`
   padding-top:3vh;
   text-indent: 2vw;
   font-weight: 300;
+    justify-content: space-between;
 
    &:hover {
     background-color: gainsboro;
@@ -349,4 +342,13 @@ const Div = styled.div`
   height: 10vh;
   margin: 5vh 4vw 0 5vw;
   align-items: center;
+`;
+
+const ChangeImage = styled.img`
+  width: 8rem;
+  height: 8rem;
+  background-size: cover;
+  border: 1px solid gainsboro;
+  margin-right: 5vw;
+  border-radius: 50%;
 `;

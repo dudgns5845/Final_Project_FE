@@ -136,6 +136,7 @@ export default function EditDetailPage() {
       title: titleState,
       content: contentState,
       category: tmpcategory,
+      stringImageFileList: imgFile,
     };
 
     console.log(dto.category);
@@ -146,7 +147,7 @@ export default function EditDetailPage() {
         type: "application/json",
       })
     );
-    console.log(imgFile);
+
     for (let img of imgFile) {
       postData.data.append("imageFileList", img);
     }

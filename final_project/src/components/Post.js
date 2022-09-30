@@ -33,16 +33,7 @@ export default function Post({ post, injRef }) {
             {post.category} &nbsp; {post.createdAt}
           </p>
         </div>
-        <img
-          style={{
-            width: "2rem",
-            height: "2rem",
-            objectFit: "cover",
-            borderRadius: "50%",
-          }}
-          src={post.userProfileImageUrl}
-          alt=""
-        />
+        <p>{post.postPickCount}</p>
       </div>
     </Box>
   );
