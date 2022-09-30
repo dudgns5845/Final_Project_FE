@@ -128,14 +128,11 @@ export default function EditDetailPage() {
   };
 
   const ClickHandler = () => {
-    // console.log(titleState, contentState, imgFile, category);
-
-    // setPostData({ ...postData, data:  });
-
     const dto = {
       title: titleState,
       content: contentState,
       category: tmpcategory,
+      stringImageFileList: imgFile,
     };
 
     console.log(dto.category);
@@ -146,14 +143,13 @@ export default function EditDetailPage() {
         type: "application/json",
       })
     );
-    console.log(imgFile);
-    for (let img of imgFile) {
-      postData.data.append("imageFileList", img);
+    if (imgFile === undefined) {
+      postData.append("imageFileList", "");
+    } else {
+      for (let img of imgFile) {
+        postData.data.append("imageFileList", img);
+      }
     }
-
-    // for (let value of postData.data.keys()) {
-    //   console.log(value);
-    // }
 
     //통신
     apis
@@ -237,7 +233,7 @@ export default function EditDetailPage() {
             height: "100px",
             borderRight: "0px",
             borderLeft: "0px",
-            display: "fixed",
+            display: "flex",
             alignItems: "center",
           }}
         >

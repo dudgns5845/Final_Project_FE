@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { deleteCookie } from "../shared/Cookie";
-import { Box } from "@mui/material";
 import Footer from "../components/Footer";
+import ScreenSize from "../shared/ScreenSize";
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -114,6 +115,9 @@ export default function MyPage() {
       return;
     }
   };
+  //  const SettingFunction =(e)=>{
+  //     if(e.target.value)
+  //  }
 
   const LogOutAction = () => {
     apis
@@ -132,48 +136,69 @@ export default function MyPage() {
 
   return (
     <>
-      <Container>
+      <ScreenSize>
         <Header>
-          <ArrowBackIcon
-            style={{ fontSize: "25px" }}
-            onClick={() => {
-              navigate("/");
-            }}
-          />
-          <h4>내 프로필</h4>
+          <h4>프로필</h4>
         </Header>
-
         {/* 유저 프로필 */}
-        <Box sx={{ margin: "auto" }}>
+        <Div>
           <Image src={myImage} />
-          <NickName> {myNick} 님</NickName>
+          <NickName>{myNick}</NickName>
+        </Div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            paddingTop: "3vh",
+            height: "10vh",
+          }}
+        >
           <Edit onClick={Open}>프로필 수정</Edit>
-          {/* <Rank>랭크 정보(거래 횟수 기준)</Rank> */}
-        </Box>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
 
-        <MyPost onClick={() => navigate("/submypage:mywrite")}>
-          내가 작성한 게시글
-        </MyPost>
-        <Zzim onClick={() => navigate("/submypage:mybookmark")}>
-          내가 찜한 게시글
-        </Zzim>
-        <LogOut onClick={LogOutAction}>로그아웃</LogOut>
-      </Container>
-      <Modal visible={editProfile} style={{ zIndex: 10 }}>
-        <label onChange={AddImage}>
-          <Image
-            style={{ marginTop: "5vh" }}
-            // src={tmpImage === myImage ? myImage : URL.createObjectURL(tmpImage)}
-            src={tmpImage}
-          />
-          <input
-            type="file"
-            accept="image/*"
-            encType="multipart/form-data"
-            hidden
-            ref={imgfile}
-          />
-        </label>
+            height: "50vh",
+          }}
+        >
+          <Setting value="write" onClick={() => navigate("/submypage:mywrite")}>
+            내가 작성한 게시글
+            <ArrowForwardIosRoundedIcon />
+          </Setting>
+
+          <Setting
+            value="zzim"
+            onClick={() => navigate("/submypage:mybookmark")}
+          >
+            내가 찜한 게시글
+            <ArrowForwardIosRoundedIcon />
+          </Setting>
+          <Setting value="logout" onClick={LogOutAction}>
+            로그아웃
+          </Setting>
+        </div>
+      </ScreenSize>
+
+      <Modal visible={editProfile}>
+        <Header>
+          <ArrowBackIcon onClick={close} />
+          <h4>프로필 수정</h4>
+        </Header>
+        <div style={{ display: "flex", justifyContetns: "center" }}>
+          <label onChange={AddImage}>
+            <ChangeImage src={tmpImage} />
+            <input
+              type="file"
+              accept="image/*"
+              encType="multipart/form-data"
+              hidden
+              ref={imgfile}
+            />
+          </label>
+        </div>
         <div style={{ display: "flex" }}>
           <InputSt
             type="text"
@@ -181,6 +206,7 @@ export default function MyPage() {
             name="nick"
             placeholder={tmpNick}
           />
+
           {isNickname ? (
             <Button
               style={{
@@ -235,19 +261,6 @@ export default function MyPage() {
           >
             수정하기
           </Button>
-
-          <Button
-            style={{
-              fontSize: "20px",
-              backgroundColor: "#FFBA46",
-
-              marginRight: "20PX",
-              borderRadius: "5px",
-            }}
-            onClick={close}
-          >
-            닫기
-          </Button>
         </div>
       </Modal>
       <Footer />
@@ -255,89 +268,45 @@ export default function MyPage() {
   );
 }
 
-const Container = styled.div`
-  /* display: grid; */
-  margin: auto;
-  height: 100vh;
-  width: 100vw;
-  grid-template-areas:
-    ". ."
-    "img nick"
-    "edit edit"
-    "rank rank"
-    "mypost mypost"
-    "zzim zzim"
-    "out out"
-    ". .";
-`;
 const Image = styled.img`
-  display: grid;
-  grid-area: img;
-  margin: auto;
-  width: 10rem;
-  height: 10rem;
+  width: 4.5rem;
+  height: 4.5rem;
   background-size: cover;
-  background-repeat: no-repeat;
-  border: 1px solid black;
-  border-radius: 100%;
-  flex: none;
+  border: 1px solid gainsboro;
+  margin-right: 5vw;
+  border-radius: 50%;
 `;
-
 const NickName = styled.div`
-  display: grid;
-  grid-area: nick;
-  margin: auto;
-  width: 5rem;
-  height: 5rem;
-  font-size: 20px;
-  text-align: left;
+  width: 4rem;
+  height: 1.5rem;
+  font-size: 1em;
+  font-weight: bold;
+  margin-top: 1vh;
 `;
 
 const Edit = styled.button`
-  display: grid;
-  grid-area: edit;
-  margin: 0 auto -40px auto;
   text-align: center;
   vertical-align: middle;
-  padding: 10px;
-  width: 75vw;
-  height: 8vh;
+  color: gray;
+  width: 90vw;
+  height: 5vh;
   border: none;
-  border-radius: 2%;
+  border-radius: 5px;
   background-color: gainboro;
 `;
 
-const Rank = styled.div`
-  display: grid;
-  grid-area: rank;
-  text-indent: 8px;
-  margin: auto;
-  border-radius: 2%;
-  background-color: rgba(0, 0, 0, 0.05);
-  width: 100%;
-  height: 100%;
-`;
-
-const MyPost = styled.div`
-  /* display: grid; */
-  grid-area: mypost;
-  margin: auto;
+const Setting = styled.div`
   cursor: pointer;
-`;
+  border-top:0.5px solid  #dcdcdc;
+  height: 15vh;
+  margin: 2vh 5vw;
+  padding-top:3vh;
+  text-indent: 2vw;
+  font-weight: 300;
+    justify-content: space-between;
 
-const Zzim = styled.div`
-  /* display: grid; */
-  grid-area: zzim;
-  margin: auto;
-  cursor: pointer;
-`;
-
-const LogOut = styled.div`
-  /* display: grid; */
-  grid-area: out;
-
-  margin: auto;
-  cursor: pointer;
+   &:hover {
+    background-color: gainsboro;
 `;
 
 const Button = styled.button`
@@ -366,4 +335,20 @@ const InputSt = styled.input`
   &:focus {
     outline: 1px solid gray;
   }
+`;
+
+const Div = styled.div`
+  display: flex;
+  height: 10vh;
+  margin: 5vh 4vw 0 5vw;
+  align-items: center;
+`;
+
+const ChangeImage = styled.img`
+  width: 8rem;
+  height: 8rem;
+  background-size: cover;
+  border: 1px solid gainsboro;
+  margin: 2vh;
+  border-radius: 50%;
 `;

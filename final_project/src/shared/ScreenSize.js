@@ -9,4 +9,5 @@ const MainWrap = styled.div`
   width: 100vw;
   height: 100vh;
   margin: auto;
+  background-color: #fbfcfc;
 `;

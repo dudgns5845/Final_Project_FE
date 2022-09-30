@@ -18,10 +18,11 @@ export default function PostPage() {
     tmpcategory: "",
   });
   const [imgState, setImgState] = useState([]);
-  const [imgFile, setImgFile] = useState();
+  const [imgFile, setImgFile] = useState([]);
   const [category, setCategory] = useState("카테고리 선택");
   const [tmpcategory, setTmpCategory] = useState(category);
   const [open, setOpen] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
@@ -62,7 +63,7 @@ export default function PostPage() {
     if (category === "디지털기기") {
       setTmpCategory("DEVICE");
     } else if (category === "생활가전") {
-      setTmpCategory("APPLANCE");
+      setTmpCategory("APPLIANCE");
     } else if (category === "생활/주방") {
       setTmpCategory("KITCHEN");
     } else if (category === "여성의류/잡화") {
@@ -83,9 +84,8 @@ export default function PostPage() {
   };
 
   const ClickHandler = () => {
-    // console.log(titleState, contentState, imgFile, category);
-
     const postData = new FormData();
+    setButtonDisabled(true);
 
     const dto = {
       title: userPost.title,
@@ -99,9 +99,12 @@ export default function PostPage() {
         type: "application/json",
       })
     );
-
-    for (let img of imgFile) {
-      postData.append("imageFileList", img);
+    if (imgFile === undefined) {
+      postData.append("imageFileList", "");
+    } else {
+      for (let img of imgFile) {
+        postData.append("imageFileList", img);
+      }
     }
     console.log(imgFile);
     //통신
@@ -116,6 +119,7 @@ export default function PostPage() {
         console.log(error);
       });
   };
+
   //업로드 사진 삭제 기능
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));
@@ -124,7 +128,15 @@ export default function PostPage() {
   return (
     <>
       <Modal visible={open} closeModal={CloseModal}>
-        <div style={{ marginTop: "40px" }}>
+        <ArrowBackIcon onClick={CloseModal} />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+
+            margin: "5vh",
+          }}
+        >
           <Div data-value="1" onClick={onChangeHandler}>
             디지털기기
           </Div>
@@ -152,9 +164,6 @@ export default function PostPage() {
           <Div data-value="9" onClick={onChangeHandler}>
             티켓
           </Div>
-          <Button style={{ marginTop: "20px" }} onClick={CloseModal}>
-            돌아가기
-          </Button>
         </div>
       </Modal>
       <Header>
@@ -174,6 +183,7 @@ export default function PostPage() {
           variant="contained"
           component="label"
           onClick={ClickHandler}
+          disabled={buttonDisabled}
         >
           Upload
         </Button>
@@ -263,13 +273,10 @@ export default function PostPage() {
 const Div = styled.div`
   margin-top: 10px;
   margin-left: 10px;
+  border: 0.5px solid gainboro;
   height: 40px;
   &:hover {
     text-decoration: underline;
-    border: 0.5px solid gainboro;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    color: rgba(0, 0, 0, 0.3);
   }
 `;
 

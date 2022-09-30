@@ -116,6 +116,7 @@ const apis = {
     apiForm.put(`/posts/${payload.postid}`, payload.data),
 
   // 채팅
+
   chatRooms: (payload) => api.get(`/chat/rooms/${payload}`, payload),
   chatDetilRooms: (payload) => api.get(`/chat/room/${payload}`),
   chatCreate: (payload) => api.post(`/chat/room/${payload}`),

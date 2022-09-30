@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function Post({ post, injRef }) {
   const navigate = useNavigate();
+  const onerrorImage = (e) => {
+    e.target.src = "default-image.jpg";
+  };
   return (
     <Box
       sx={{
@@ -16,26 +19,21 @@ export default function Post({ post, injRef }) {
       onClick={() => navigate(`/detail/${post.id}`)}
     >
       <div style={CardCss}>
-        <div style={{ width: "100px", height: "100px" }}>
+        <div style={{ border: "1px solid black", borderRadius: "5px" }}>
           <img
-            style={{
-              width: "100px",
-              height: "100px",
-              objectFit: "cover",
-              borderRadius: "10px",
-              marginLeft: "10px",
-            }}
+            style={ImgCss}
+            onError={onerrorImage}
             src={post.postImageUrl}
-            alt="null"
+            alt=""
           />
         </div>
-
         <div style={TextCss}>
           <h5>{post.title}</h5>
-          <h6>
+          <p style={{ fontSize: "1px", marginTop: "-20px" }}>
             {post.category} &nbsp; {post.createdAt}
-          </h6>
+          </p>
         </div>
+        <p>{post.postPickCount}</p>
       </div>
     </Box>
   );
@@ -43,13 +41,20 @@ export default function Post({ post, injRef }) {
 
 const CardCss = {
   display: "flex",
-  width: "100%",
-  height: "3vh",
-  padding: "8vh 0",
+  width: "90vw",
+  height: "2vh",
+  padding: "8vh 0 8vh 0",
   alignItems: "center",
-  borderTop: "0.5px solid gainsboro",
+  objectFit: "cover",
+
+  borderBottom: "0.5px solid gainsboro",
 };
 const TextCss = {
-  paddingLeft: "8vw",
+  paddingLeft: "5vw",
+  paddingBottom: "60px",
   width: "100%",
+};
+const ImgCss = {
+  width: "100px",
+  height: "100px",
 };
