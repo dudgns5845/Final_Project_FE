@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import ChatPost from "../components/ChatPost";
 import Footer from "../components/Footer";
 import apis from "../apis/Apis";
-
+import { getCookie } from "../shared/Cookie";
 export default function ChatRoomPage() {
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ export default function ChatRoomPage() {
 
   useEffect(() => {
     apis
-      .chatRooms()
+      .chatRooms(getCookie("id"))
       .then((response) => {
         console.log(response);
         setChatList(response.data.data);

@@ -4,8 +4,26 @@ import { Box } from "@mui/material";
 export default function ChatForm({ item }) {
   return (
     <>
-      {item.senderId === getCookie("id") ? (
-        <Box style={{ textAlign: "right", marginTop: "20px" }}>
+      {item.senderId == getCookie("id") ? (
+        <Box
+          style={{
+            textAlign: "right",
+            marginTop: "20px",
+            marginLeft: "auto",
+          }}
+        >
+          <Box>
+            <Box
+              sx={{
+                height: "100%",
+                verticalAlign: "middle",
+                fontSize: "13px",
+                color: "gray",
+              }}
+            >
+              {item.createdAt.slice(5, 7)}.{item.createdAt.slice(8, 10)}
+            </Box>
+          </Box>
           <Box
             component="span"
             style={{
@@ -18,11 +36,9 @@ export default function ChatForm({ item }) {
           >
             {item.message}
           </Box>
-          <div>{item.createdAt}</div>
         </Box>
       ) : (
-        <Box style={{ textAlign: "left", marginTop: "20px", display: 'flex' }}>
-
+        <Box style={{ textAlign: "left", marginTop: "20px", display: "flex" }}>
           <Box
             component="span"
             style={{
@@ -36,7 +52,16 @@ export default function ChatForm({ item }) {
             {item.message}
           </Box>
           <Box>
-            <Box sx={{ height: '100%', verticalAlign: 'middle', fontSize: '13px', color: 'gray' }}>{item.createdAt.slice(5, 7)}.{item.createdAt.slice(8, 10)}</Box>
+            <Box
+              sx={{
+                height: "100%",
+                verticalAlign: "middle",
+                fontSize: "13px",
+                color: "gray",
+              }}
+            >
+              {item.createdAt.slice(5, 7)}.{item.createdAt.slice(8, 10)}
+            </Box>
           </Box>
         </Box>
       )}
