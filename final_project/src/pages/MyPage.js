@@ -181,25 +181,24 @@ export default function MyPage() {
           </Setting>
         </div>
       </ScreenSize>
+
       <Modal visible={editProfile}>
         <Header>
           <ArrowBackIcon onClick={close} />
           <h4>프로필 수정</h4>
         </Header>
-        <label onChange={AddImage}>
-          <ChangeImage
-            style={{ marginTop: "5vh" }}
-            // src={tmpImage === myImage ? myImage : URL.createObjectURL(tmpImage)}
-            src={tmpImage}
-          />
-          <input
-            type="file"
-            accept="image/*"
-            encType="multipart/form-data"
-            hidden
-            ref={imgfile}
-          />
-        </label>
+        <div style={{ display: "flex", justifyContetns: "center" }}>
+          <label onChange={AddImage}>
+            <ChangeImage src={tmpImage} />
+            <input
+              type="file"
+              accept="image/*"
+              encType="multipart/form-data"
+              hidden
+              ref={imgfile}
+            />
+          </label>
+        </div>
         <div style={{ display: "flex" }}>
           <InputSt
             type="text"
@@ -207,6 +206,7 @@ export default function MyPage() {
             name="nick"
             placeholder={tmpNick}
           />
+
           {isNickname ? (
             <Button
               style={{
@@ -349,6 +349,6 @@ const ChangeImage = styled.img`
   height: 8rem;
   background-size: cover;
   border: 1px solid gainsboro;
-  margin-right: 5vw;
+  margin: 2vh;
   border-radius: 50%;
 `;
