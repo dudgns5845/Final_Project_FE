@@ -4,8 +4,9 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Post from "../components/Post";
 import { Box, IconButton } from "@mui/material";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 
-import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
+import NotificationAddRoundedIcon from "@mui/icons-material/NotificationAddRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
@@ -14,10 +15,20 @@ import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 import apis from "../apis/Apis";
+import { getCookie } from "../shared/Cookie";
 
 import { useInView } from "react-intersection-observer";
 
 export default function MainPage() {
+  const [listening, setListening] = useState(false);
+  const [alarmIconChange, setAlarmChange] = useState(
+    <NotificationsNoneOutlinedIcon />
+  );
+  const [alarmList, setAlarmList] = useState([]);
+  const [value, setValue] = useState(null);
+  const [meventSource, msetEventSource] = useState(undefined);
+  const [userId, setUserId] = useState(getCookie("id"));
+
   const [ref, inView] = useInView();
   //로드한 데이터 리스트 - > 여기다가 축적해나갈것
   const [postList, setPostList] = useState([]);
@@ -27,6 +38,47 @@ export default function MainPage() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log("매번 실행되는지");
+    console.log("listening", listening);
+
+    let eventSource = undefined;
+
+    if (!listening) {
+      //   eventSource = new EventSource("http://13.125.71.197/subscribe/2", {withCredentials: true}); //구독
+      eventSource = new EventSource(
+        `http://13.125.71.197/subscribe/${userId}`,
+        { withCredentials: true }
+      ); //구독
+      msetEventSource(eventSource);
+      console.log("eventSource", eventSource);
+
+      eventSource.onopen = (event) => {
+        console.log("connection opened");
+      };
+
+      eventSource.onmessage = (event) => {
+        console.log("result", event.data);
+        setAlarmChange(<NotificationAddRoundedIcon />);
+        setValue(event.data);
+      };
+
+      eventSource.onerror = (event) => {
+        console.log(event.target.readyState);
+        if (event.target.readyState === EventSource.CLOSED) {
+          console.log("eventsource closed (" + event.target.readyState + ")");
+        }
+        eventSource.close();
+      };
+
+      setListening(true);
+    }
+
+    return () => {
+      eventSource.close();
+      console.log("eventsource closed");
+    };
+  }, []);
   useEffect(() => {
     if (inView && !loading) {
       // 다음페이지 인덱스 증가
@@ -58,10 +110,12 @@ export default function MainPage() {
             <SearchRoundedIcon />
           </IconButton>
 
-          <IconButton onClick={() => {
-            navigate("/alarmpage");
-          }}>
-            <NotificationsRoundedIcon />
+          <IconButton
+            onClick={() => {
+              navigate("/alarmpage");
+            }}
+          >
+            {alarmIconChange}
           </IconButton>
         </div>
       </Header>

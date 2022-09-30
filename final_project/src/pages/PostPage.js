@@ -185,7 +185,7 @@ export default function PostPage() {
           height: "100px",
           borderRight: "0px",
           borderLeft: "0px",
-          display: "fixed",
+          display: "flex",
           alignItems: "center",
         }}
       >
@@ -211,7 +211,7 @@ export default function PostPage() {
             key={id}
             src={image}
             alt={`${image}-${id}`}
-            style={{ width: "55px", height: "70px" }}
+            style={{ width: "70px", height: "70px" }}
             onClick={() => handleDeleteImage(id)}
           />
         ))}
