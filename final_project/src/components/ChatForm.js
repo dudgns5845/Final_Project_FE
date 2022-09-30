@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 export default function ChatForm({ item }) {
   return (
     <>
-      {item.senderId === getCookie("id") ? (
+      {item.senderId == getCookie("id") ? (
         <Box style={{ textAlign: "right", marginTop: "20px" }}>
           <Box
             component="span"
