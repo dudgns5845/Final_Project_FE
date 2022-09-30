@@ -22,14 +22,14 @@ const ModalWrap = styled.div`
 const ModalBody = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
-  top: 54%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   background-color: white;
   border-radius: 10px;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   padding-left: 10px;
   z-index: 100;
 `;

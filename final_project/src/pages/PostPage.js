@@ -22,6 +22,7 @@ export default function PostPage() {
   const [category, setCategory] = useState("카테고리 선택");
   const [tmpcategory, setTmpCategory] = useState(category);
   const [open, setOpen] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
@@ -84,6 +85,7 @@ export default function PostPage() {
 
   const ClickHandler = () => {
     const postData = new FormData();
+    setButtonDisabled(true);
 
     const dto = {
       title: userPost.title,
@@ -117,6 +119,7 @@ export default function PostPage() {
         console.log(error);
       });
   };
+
   //업로드 사진 삭제 기능
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));
@@ -175,7 +178,7 @@ export default function PostPage() {
           variant="contained"
           component="label"
           onClick={ClickHandler}
-          disabled
+          disabled={buttonDisabled}
         >
           Upload
         </Button>

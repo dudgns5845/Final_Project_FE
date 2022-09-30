@@ -11,7 +11,7 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
+import styled from "styled-components";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 export default function SearchPage() {
@@ -49,36 +49,34 @@ export default function SearchPage() {
             navigate("/");
           }}
         ></ArrowBackIcon>
+        <InputSt
+          id="outlined-basic"
+          placeholder="검색어를 입력해주세요"
+          variant="outlined"
+          onChange={onSearch}
+        />
+        <Button
+          style={{
+            fontSize: "5px",
+            backgroundColor: "#FFBA46",
+            borderRadius: "5px",
+          }}
+          variant="contained"
+          onClick={Click}
+        >
+          검색하기
+        </Button>
       </Header>
 
       {/* 검색 영역 */}
-      <Box sx={{ padding: "10px 20px" }}>
+      <Box sx={{ padding: "0 5vw 0 5vw" }}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             marginBottom: "15px",
           }}
-        >
-          <TextField
-            style={{ width: "69vw" }}
-            id="outlined-basic"
-            placeholder="검색어를 입력해주세요"
-            variant="outlined"
-            onChange={onSearch}
-          />
-          <Button
-            style={{
-              fontSize: "10px",
-              backgroundColor: "#FFBA46",
-              borderRadius: "5px",
-            }}
-            variant="contained"
-            onClick={Click}
-          >
-            검색하기
-          </Button>
-        </Box>
+        ></Box>
         <FormControl
           variant="standard"
           sx={{ width: "70%", textAlign: "center" }}
@@ -130,3 +128,14 @@ const emptyCss = {
   justifyContent: "center",
   alignItems: "center",
 };
+const InputSt = styled.input`
+  border: none;
+
+  width: 70vw;
+  height: 7vh;
+  text-indent: 8px;
+
+  &:focus {
+    outline: 1px solid gray;
+  }
+`;

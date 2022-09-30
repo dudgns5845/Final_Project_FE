@@ -133,14 +133,24 @@ export default function Detail() {
       })
       .catch((error) => console.log(error));
   };
+  const onerrorImage = (e) => {
+    e.target.src = "/default-image.jpg";
 
+    console.log("포스트 호출");
+  };
   return (
     <>
       <Box sx={{ height: "90vh", overflow: "auto" }}>
         <div style={ImgContainer}>
           <div style={Slide} ref={slideRef}>
             {imageList.map((images, index) => (
-              <img key={index} style={imgCss} src={images} alt="" />
+              <img
+                key={index}
+                style={imgCss}
+                src={images}
+                alt=""
+                onError={onerrorImage}
+              />
             ))}
           </div>
 
