@@ -119,34 +119,49 @@ const Chat = () => {
             navigate("/");
           }}
         ></ArrowBackIcon>
-        <Box>
-          {postData?.nickname}
-        </Box>
+        <Box>{postData?.nickname}</Box>
       </Header>
+      <Box
+        sx={{
+          height: "10%",
+          backgroundColor: "#D2B48C",
+          padding: "10px 20px",
+          display: "flex",
+          alignItems: "center",
+          gap: "20px",
 
+          boxShadow:
+            "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+        }}
+      >
+        <img
+          style={{ borderRadius: "100%", width: "15vw", height: "15vw" }}
+          src={postData == null ? "default-image.jpg" : postData.postImage}
+          alt=""
+          onClick={() => {
+            navigate(`/detail/${postData.postId}`);
+          }}
+        />
 
+        <Box sx={{ marign: "auto" }}>
+          <Typography component="div" variant="h7">
+            {postData?.postTitle}
+          </Typography>
+          <Typography variant="body" color="text.secondary" component="div">
+            {postData?.nickname}
+          </Typography>
+        </Box>
+        <button>거래완료</button>
+      </Box>
       {/* 메세지 내용 */}
       <Box
         sx={{
-          height: "73%",
+          height: "55vh",
           overflow: "auto",
           padding: "20px",
           verticalAlign: "baseline",
         }}
-        onClick={() => { navigate(`/detail/${postData.postId}`) }}
       >
-        <Box sx={{ width: '60%', height: '10%', backgroundColor: '#D2B48C', padding: '10px 20px', display: 'flex', alignItems: 'center', gap: '20px', margin: 'auto', borderRadius: '100px', boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px' }}>
-          <img style={{ borderRadius: '100%', width: '15vw', height: '15vw' }} src={postData == null ? 'default-image.jpg' : postData.postImage} alt='' />
-          <Box sx={{ marign: 'auto' }}>
-            <Typography component="div" variant="h7">
-              {postData?.postTitle}
-            </Typography>
-            <Typography variant="body" color="text.secondary" component="div">
-              {postData?.nickname}
-            </Typography>
-          </Box>
-        </Box>
-
         {chatList.map((item, index) => {
           return <ChatForm item={item} key={index} />;
         })}
@@ -170,7 +185,7 @@ const Chat = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          fontFamily: 'S-CoreDream-3Light'
+          fontFamily: "S-CoreDream-3Light",
         }}
       >
         {confirmationState ? (
@@ -200,7 +215,7 @@ const Chat = () => {
               borderRadius: "10px",
               fontSize: "large",
               padding: "5px 10px",
-              fontFamily: 'S-CoreDream-3Light'
+              fontFamily: "S-CoreDream-3Light",
             }}
           />
         )}
@@ -209,7 +224,7 @@ const Chat = () => {
             sx={{
               width: "20%",
               color: "black",
-              fontFamily: 'S-CoreDream-3Light'
+              fontFamily: "S-CoreDream-3Light",
             }}
             onClick={handleEnter}
           >
@@ -220,7 +235,6 @@ const Chat = () => {
     </Box>
   );
 };
-
 
 const IconCss = {
   position: "fixed",
