@@ -128,7 +128,15 @@ export default function PostPage() {
   return (
     <>
       <Modal visible={open} closeModal={CloseModal}>
-        <div style={{ marginTop: "40px" }}>
+        <ArrowBackIcon onClick={CloseModal} />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+
+            margin: "5vh",
+          }}
+        >
           <Div data-value="1" onClick={onChangeHandler}>
             디지털기기
           </Div>
@@ -156,9 +164,6 @@ export default function PostPage() {
           <Div data-value="9" onClick={onChangeHandler}>
             티켓
           </Div>
-          <Button style={{ marginTop: "20px" }} onClick={CloseModal}>
-            돌아가기
-          </Button>
         </div>
       </Modal>
       <Header>
@@ -268,13 +273,10 @@ export default function PostPage() {
 const Div = styled.div`
   margin-top: 10px;
   margin-left: 10px;
+  border: 0.5px solid gainboro;
   height: 40px;
   &:hover {
     text-decoration: underline;
-    border: 0.5px solid gainboro;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    color: rgba(0, 0, 0, 0.3);
   }
 `;
 
