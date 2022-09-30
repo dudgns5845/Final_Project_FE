@@ -122,6 +122,7 @@ const apis = {
 
   //알림
   readNotification: (payload) => api.put(`/notification/${payload}`),
+  checkAlarm: () => api.get("/"),
 };
 
 export default apis;
