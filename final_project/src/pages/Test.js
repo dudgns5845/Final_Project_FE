@@ -120,7 +120,9 @@ const Chat = () => {
           }}
         ></ArrowBackIcon>
         <Box>{postData?.nickname}</Box>
+        <div style={{ width: "25px" }}></div>
       </Header>
+
       <Box
         sx={{
           height: "10%",

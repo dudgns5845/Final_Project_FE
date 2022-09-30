@@ -263,7 +263,7 @@ const IconCss = {
 const ImgContainer = {
   display: "flex",
   width: "100%",
-  height: "45vh",
+  height: "50vh",
   overflow: "hidden",
   alignItems: "center",
 };
@@ -291,6 +291,7 @@ const imgCss = {
   minWidth: "100%",
   minHeight: "100%",
   backgroundColor: "gray",
+
   objectFit: "cover",
   display: "flex",
 };

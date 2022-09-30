@@ -9,6 +9,7 @@ import apis from "../apis/Apis";
 import { deleteCookie } from "../shared/Cookie";
 import Footer from "../components/Footer";
 import ScreenSize from "../shared/ScreenSize";
+import { Box } from "@mui/material";
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -160,34 +161,62 @@ export default function MyPage() {
           style={{
             display: "flex",
             flexDirection: "column",
-
             height: "50vh",
           }}
         >
-          <Setting value="write" onClick={() => navigate("/submypage:mywrite")}>
-            내가 작성한 게시글
-            <ArrowForwardIosRoundedIcon />
-          </Setting>
-
-          <Setting
-            value="zzim"
-            onClick={() => navigate("/submypage:mybookmark")}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0 20px",
+              height: "15vh",
+              borderTop: "0.5px solid  #dcdcdc",
+            }}
           >
-            내가 찜한 게시글
+            <Setting onClick={() => navigate("/submypage:mywrite")}>
+              내가 작성한 게시글
+            </Setting>
             <ArrowForwardIosRoundedIcon />
-          </Setting>
-          <Setting value="logout" onClick={LogOutAction}>
-            로그아웃
-          </Setting>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0 20px",
+              height: "15vh",
+              borderTop: "0.5px solid  #dcdcdc",
+            }}
+          >
+            <Setting onClick={() => navigate("/submypage:mybookmark")}>
+              내가 찜한 게시글
+            </Setting>
+            <ArrowForwardIosRoundedIcon />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0 20px",
+              height: "15vh",
+              borderTop: "0.5px solid  #dcdcdc",
+            }}
+          >
+            <Setting onClick={LogOutAction}>로그아웃</Setting>
+          </Box>
         </div>
       </ScreenSize>
 
       <Modal visible={editProfile}>
         <Header>
-          <ArrowBackIcon onClick={close} />
-          <h4>프로필 수정</h4>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            <ArrowBackIcon onClick={close} />
+            <h4>프로필 수정</h4>
+          </Box>
         </Header>
-        <div style={{ display: "flex", justifyContetns: "center" }}>
+        <Box style={{ display: "flex", justifyContent: "center" }}>
           <label onChange={AddImage}>
             <ChangeImage src={tmpImage} />
             <input
@@ -198,7 +227,7 @@ export default function MyPage() {
               ref={imgfile}
             />
           </label>
-        </div>
+        </Box>
         <div style={{ display: "flex" }}>
           <InputSt
             type="text"
@@ -297,12 +326,11 @@ const Edit = styled.button`
 
 const Setting = styled.div`
   cursor: pointer;
-  border-top:0.5px solid  #dcdcdc;
-  height: 15vh;
-  margin: 2vh 5vw;
-  padding-top:3vh;
+
+
   text-indent: 2vw;
   font-weight: 300;
+ 
     justify-content: space-between;
 
    &:hover {
@@ -345,8 +373,8 @@ const Div = styled.div`
 `;
 
 const ChangeImage = styled.img`
-  width: 8rem;
-  height: 8rem;
+  width: 10rem;
+  height: 10rem;
   background-size: cover;
   border: 1px solid gainsboro;
   margin: 2vh;

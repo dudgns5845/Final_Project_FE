@@ -1,6 +1,8 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 export default function Post({ post, injRef }) {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export default function Post({ post, injRef }) {
       onClick={() => navigate(`/detail/${post.id}`)}
     >
       <div style={CardCss}>
-        <div style={{ border: "1px solid black", borderRadius: "5px" }}>
+        <div style={{ border: "0.5px solid gainsboro", borderRadius: "5px" }}>
           <img
             style={ImgCss}
             onError={onerrorImage}
@@ -29,11 +31,28 @@ export default function Post({ post, injRef }) {
         </div>
         <div style={TextCss}>
           <h5>{post.title}</h5>
-          <p style={{ fontSize: "1px", marginTop: "-20px" }}>
+          <p style={{ fontSize: "1px" }}>
             {post.category} &nbsp; {post.createdAt}
           </p>
+          <p style={{ display: "flex", gap: "5px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                fontSize: "1px",
+                alignItems: "center",
+              }}
+            >
+              <BookmarkIcon sx={{ fontSize: "small" }} />
+              {post.postPickCount}
+            </Box>
+            <Box
+              sx={{ display: "flex", fontSize: "1px", alignItems: "center" }}
+            >
+              <VisibilityOutlinedIcon sx={{ fontSize: "small" }} />
+              {post.postVisitCount}
+            </Box>
+          </p>
         </div>
-        <p>{post.postPickCount}</p>
       </div>
     </Box>
   );
@@ -51,7 +70,7 @@ const CardCss = {
 };
 const TextCss = {
   paddingLeft: "5vw",
-  paddingBottom: "60px",
+
   width: "100%",
 };
 const ImgCss = {
