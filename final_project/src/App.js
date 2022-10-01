@@ -15,14 +15,13 @@ import { useEffect, useState } from "react";
 import Detail from "./pages/DetailPage";
 import SubMyPage from "./pages/SubMyPage";
 import ChatRoomPage from "./pages/ChatroomPage";
-import DetailChatPage from "./pages/DetailchatPage";
+
 import SigninPage from "./pages/SigninPage";
 import AlarmPage from "./pages/AlarmPage";
 import Test from "./pages/Test";
 import EditdetailPage from "./pages/EditdetailPage";
 
 function App() {
-
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -34,7 +33,6 @@ function App() {
   const [cookieState, setCookieState] = useState();
   const ChangeCookie = (cookie) => {
     setCookieState(cookie);
-    console.log(cookie);
   };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,7 +49,6 @@ function App() {
       setIsLoggedIn(true);
     }
   }, [cookieState]);
-  console.log(isLoggedIn);
 
   return (
     <ThemeProvider theme={theme}>
@@ -131,9 +128,6 @@ function App() {
           />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-
-
-
       </BrowserRouter>
     </ThemeProvider>
   );

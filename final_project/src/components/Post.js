@@ -34,7 +34,7 @@ export default function Post({ post, injRef }) {
           <p style={{ fontSize: "1px" }}>
             {post.category} &nbsp; {post.createdAt}
           </p>
-          <p style={{ display: "flex", gap: "5px" }}>
+          <div style={{ display: "flex", gap: "4px" }}>
             <Box
               sx={{
                 display: "flex",
@@ -51,7 +51,7 @@ export default function Post({ post, injRef }) {
               <VisibilityOutlinedIcon sx={{ fontSize: "small" }} />
               {post.postVisitCount}
             </Box>
-          </p>
+          </div>
         </div>
       </div>
     </Box>
@@ -70,10 +70,9 @@ const CardCss = {
 };
 const TextCss = {
   paddingLeft: "5vw",
-
   width: "100%",
 };
 const ImgCss = {
-  width: "100px",
-  height: "100px",
+  width: "5rem",
+  height: "5rem",
 };

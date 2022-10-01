@@ -4,16 +4,23 @@ import apis from "../apis/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import AlarmCard from "../components/AlarmCard";
-import { getCookie } from "../shared/Cookie";
-import { Container, Button } from "@mui/material";
+import { Container } from "@mui/material";
 
 export default function AlarmPage() {
   const navigate = useNavigate();
-  const [listening, setListening] = useState(false);
   const [alarmList, setAlarmList] = useState([]);
-  const [value, setValue] = useState(null);
-  const [meventSource, msetEventSource] = useState(undefined);
-  const [userId, setUserId] = useState(getCookie("id"));
+
+  useEffect(() => {
+    apis
+      .checkAlarm()
+      .then((response) => {
+        setAlarmList(response.data.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <>
@@ -25,7 +32,7 @@ export default function AlarmPage() {
           }}
         />
         <Container>알림</Container>
-        <Button>모두 읽음</Button>
+        <button>모두 읽음</button>
       </Header>
       {alarmList.map((alarm, idx) => {
         return <AlarmCard alarm={alarm} key={idx}></AlarmCard>;
