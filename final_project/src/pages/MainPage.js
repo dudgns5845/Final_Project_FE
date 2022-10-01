@@ -24,7 +24,7 @@ export default function MainPage() {
   const [alarmIconChange, setAlarmChange] = useState(
     <NotificationsNoneOutlinedIcon />
   );
-  const [alarmList, setAlarmList] = useState([]);
+
   const [value, setValue] = useState(null);
   const [meventSource, msetEventSource] = useState(undefined);
   const [userId, setUserId] = useState(getCookie("id"));
