@@ -9,24 +9,20 @@ import {
   CardContent,
   Button,
   Box,
-  // Hidden,
 } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
-// import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded";
 import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
-// import Header from "../components/Header";
 import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../shared/Cookie";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 export default function Detail() {
   const navigate = useNavigate();

@@ -173,10 +173,9 @@ export default function MyPage() {
               height: "15vh",
               borderTop: "0.5px solid  #dcdcdc",
             }}
+            onClick={() => navigate("/submypage:mywrite")}
           >
-            <Setting onClick={() => navigate("/submypage:mywrite")}>
-              내가 작성한 게시글
-            </Setting>
+            <Setting>내가 작성한 게시글</Setting>
             <ArrowForwardIosRoundedIcon />
           </Box>
           <Box
@@ -188,10 +187,9 @@ export default function MyPage() {
               height: "15vh",
               borderTop: "0.5px solid  #dcdcdc",
             }}
+            onClick={() => navigate("/submypage:mybookmark")}
           >
-            <Setting onClick={() => navigate("/submypage:mybookmark")}>
-              내가 찜한 게시글
-            </Setting>
+            <Setting>내가 찜한 게시글</Setting>
             <ArrowForwardIosRoundedIcon />
           </Box>
           <Box
@@ -203,8 +201,9 @@ export default function MyPage() {
               height: "15vh",
               borderTop: "0.5px solid  #dcdcdc",
             }}
+            onClick={LogOutAction}
           >
-            <Setting onClick={LogOutAction}>로그아웃</Setting>
+            <Setting>로그아웃</Setting>
           </Box>
         </div>
       </ScreenSize>
@@ -326,13 +325,9 @@ const Edit = styled.button`
 
 const Setting = styled.div`
   cursor: pointer;
-
-
   text-indent: 2vw;
   font-weight: 300;
- 
-    justify-content: space-between;
-
+justify-content: space-between;
    &:hover {
     background-color: gainsboro;
 `;

@@ -1,11 +1,11 @@
-import React, { useCallback, useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import apis from "../apis/Apis";
 import ChatForm from "../components/ChatForm";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { getCookie } from "../shared/Cookie";
-import { Container, Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Header from "../components/Header";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -76,7 +76,7 @@ const Chat = () => {
             sender: newMessage.sender,
             senderId: newMessage.senderId,
             message: newMessage.message,
-            createdAt: null,
+            createdAt: newMessage.createdAt,
           },
         ]);
       });
@@ -246,17 +246,6 @@ const IconCss = {
   right: "8vw",
   backgroundColor: "#CED0CF",
   border: "1px solid #CED0CF",
-};
-
-const ArrowCss = {
-  color: "#A25C01",
-  width: "1.12em",
-  height: "1.2em",
-};
-
-const logoCss = {
-  width: "8vw",
-  height: "5vh",
 };
 
 export default Chat;

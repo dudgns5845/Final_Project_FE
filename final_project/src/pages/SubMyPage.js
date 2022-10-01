@@ -48,14 +48,14 @@ export default function SubMyPage() {
         />
       </Header>
       {changePage === "mywrite" && (
-        <div style={{ marginTop: "5em" }}>
+        <div>
           {postList.map((post, idx) => {
             return <Post post={post} key={idx}></Post>;
           })}
         </div>
       )}
       {changePage === "mybookmark" && (
-        <div style={{ marginTop: "5em" }}>
+        <div>
           {bookMarkList.map((post, idx) => {
             return <Post post={post} key={idx}></Post>;
           })}
