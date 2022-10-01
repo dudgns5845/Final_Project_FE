@@ -134,6 +134,7 @@ export default function Detail() {
 
     console.log("포스트 호출");
   };
+
   return (
     <>
       <Box sx={{ height: "90vh", overflow: "auto" }}>
@@ -161,8 +162,39 @@ export default function Detail() {
           </IconButton>
           <ArrowBackIosIcon style={ButtonLeft} onClick={PreveSlide} />
           <ArrowForwardIosIcon style={ButtonRight} onClick={NextSlide} />
+          <div
+            style={{
+              position: "absolute",
+              display: "flex",
+              marginTop: "19rem",
+              marginLeft: "37%",
+            }}
+          >
+            {imageList.map((x, i) => (
+              <div
+                key={i}
+                style={
+                  i === currentSlide
+                    ? {
+                        background: "gray",
+                        borderRadius: "100%",
+                        height: "10px",
+                        width: "10px",
+                        marginLeft: "20px",
+                      }
+                    : {
+                        background: "lightgray",
+                        borderRadius: "100%",
+                        height: "10px",
+                        width: "10px",
+                        marginLeft: "20px",
+                      }
+                }
+              />
+            ))}
+          </div>
         </div>
-        <Card>
+        <Card sx={{ borderRadius: "0", boxShadow: "0" }}>
           <CardHeader
             avatar={
               <Avatar
@@ -174,7 +206,26 @@ export default function Detail() {
               </Avatar>
             }
             action={
-              <>
+              <div style={{ display: "flex" }}>
+                {postData.dealState === "ONGOING" ? (
+                  <div
+                    style={{
+                      margin: "8.5px 10px 0 0",
+                      color: "green",
+                    }}
+                  >
+                    거래중
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      margin: "8.5px 10px 0 0",
+                      color: "gray",
+                    }}
+                  >
+                    거래완료
+                  </div>
+                )}
                 {/* 자신의 게시글에서만 보여야함 */}
                 {myId == postData.userId && (
                   <>
@@ -202,7 +253,7 @@ export default function Detail() {
                     </Menu>
                   </>
                 )}
-              </>
+              </div>
             }
             title={postData.nickname}
             subheader={postData.location}

@@ -81,7 +81,6 @@ api.interceptors.response.use(
             response.data.data.accessTokenExpiresIn
           );
           setCookie("refreshToken", response.data.data.refreshToken);
-
           window.location.reload();
         })
         .catch((error) => console.log(error));
@@ -120,6 +119,7 @@ const apis = {
   chatRooms: (payload) => api.get(`/chat/rooms/${payload}`, payload),
   chatDetilRooms: (payload) => api.get(`/chat/room/${payload}`),
   chatCreate: (payload) => api.post(`/chat/room/${payload}`),
+  dealComplete: (payload) => api.put(`/posts/${payload}/deal`, payload),
 
   //알림
   readNotification: (payload) => api.put(`/notification/${payload}`),

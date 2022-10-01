@@ -34,7 +34,7 @@ export default function AlarmCard({ alarm }) {
         border: "0.5px solid gainsboro",
         padding: "0 5vw",
       }}
-      onClick={() => navigate(`/detail/${alarm.chatid}`)}
+      onClick={() => navigate(`/chatdetail/${alarm.chatRoomId}`)}
     >
       <div style={CardCss}>
         <img

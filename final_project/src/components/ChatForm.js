@@ -9,21 +9,23 @@ export default function ChatForm({ item }) {
           style={{
             textAlign: "right",
             marginTop: "20px",
-            marginLeft: "auto",
+            paddingLeft: "auto",
+            display: "flex",
+            justifyContent: "end",
           }}
         >
-          <Box>
-            <Box
-              sx={{
-                height: "100%",
-                verticalAlign: "middle",
-                fontSize: "13px",
-                color: "gray",
-              }}
-            >
-              {item.createdAt.slice(5, 7)}.{item.createdAt.slice(8, 10)}
-            </Box>
+          <Box
+            sx={{
+              height: "100%",
+              verticalAlign: "middle",
+              fontSize: "13px",
+              color: "gray",
+              paddingTop: "1rem",
+            }}
+          >
+            {item.createdAt.slice(5, 7)}.{item.createdAt.slice(8, 10)}
           </Box>
+
           <Box
             component="span"
             style={{
@@ -58,6 +60,7 @@ export default function ChatForm({ item }) {
                 verticalAlign: "middle",
                 fontSize: "13px",
                 color: "gray",
+                paddingTop: "1rem",
               }}
             >
               {item.createdAt.slice(5, 7)}.{item.createdAt.slice(8, 10)}

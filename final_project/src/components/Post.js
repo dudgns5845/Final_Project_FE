@@ -30,7 +30,19 @@ export default function Post({ post, injRef }) {
           />
         </div>
         <div style={TextCss}>
-          <h5>{post.title}</h5>
+          <h4
+            style={{
+              position: "relative",
+              display: "block",
+              width: "100%",
+              overflow: "hidden",
+              // whiteSpace 왜 적용 안되요? element에서 직접 적용하면 줄바꿈 안되게 잘 되는데...
+              whiteSpace: "nowarp",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {post.title}
+          </h4>
           <p style={{ fontSize: "1px" }}>
             {post.category} &nbsp; {post.createdAt}
           </p>
@@ -71,6 +83,7 @@ const CardCss = {
 const TextCss = {
   paddingLeft: "5vw",
   width: "100%",
+  display: "block",
 };
 const ImgCss = {
   width: "5rem",

@@ -52,6 +52,24 @@ export default function ChatPost({ post }) {
           </label>
           <p style={{ marginTop: "0.5rem" }}>{post.lastMessage}</p>
         </div>
+        {/* 오른쪽에 이미지 만들기 위해 새로 작성*/}
+        <div>
+          <div style={{ width: "5rem", height: "3.5rem" }}>
+            <img
+              style={{
+                width: "3rem",
+                height: "3rem",
+                objectFit: "cover",
+                borderRadius: "100%",
+                border: "1px solid gray",
+                position: "absolute",
+                right: "-1rem",
+              }}
+              src={post.postImage !== null ? post.postImage : "logo.jpg"}
+              alt=""
+            />
+          </div>
+        </div>
       </div>
     </CardActionArea>
   );
