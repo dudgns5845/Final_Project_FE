@@ -122,6 +122,7 @@ export default function Detail() {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
   }, [currentSlide]);
+  console.log(slideRef);
 
   // 채팅방 생성
   const CreateChat = () => {
@@ -165,6 +166,25 @@ export default function Detail() {
           </IconButton>
           <ArrowBackIosIcon style={ButtonLeft} onClick={PreveSlide} />
           <ArrowForwardIosIcon style={ButtonRight} onClick={NextSlide} />
+          {/* {slideRef.current.map((x, i) => (
+            <div key={i} style={
+              i === current ? 
+              {background: 'gray',
+              borderRadius: '100%',
+              height: '10px',
+              width: '10px',
+              marginLeft: '20px',}
+            
+              :
+              
+                {background: 'lightgray',
+                borderRadius: '100%',
+                height: '10px',
+                width: '10px',
+                marginLeft: '20px',
+                }}
+                />
+))} */}
         </div>
         <Card>
           <CardHeader
@@ -180,7 +200,7 @@ export default function Detail() {
             action={
               <>
                 {/* 자신의 게시글에서만 보여야함 */}
-                {myId == postData.userId && (
+                {myId === postData.userId && (
                   <>
                     <IconButton
                       aria-label="settings"
@@ -228,7 +248,7 @@ export default function Detail() {
       </Box>
 
       {/* 자신의 게시글은 사라지게 해야함 */}
-      {myId != postData.userId && (
+      {myId !== postData.userId && (
         <Box
           sx={{
             height: "7vh",
