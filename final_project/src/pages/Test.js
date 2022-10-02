@@ -201,9 +201,7 @@ const Chat = () => {
         />
 
         <Box sx={{ marign: "auto" }}>
-          <Typography component="div" variant="h7">
-            {postData?.postTitle}
-          </Typography>
+          <div style={TextCss}>{postData?.postTitle}</div>
           <Typography variant="body" color="text.secondary" component="div">
             {postData?.nickname}
           </Typography>
@@ -304,14 +302,11 @@ const Chat = () => {
   );
 };
 
-const IconCss = {
-  position: "fixed",
-  width: "2.4em",
-  height: "2.4em",
-  top: "80vh",
-  right: "8vw",
-  backgroundColor: "#CED0CF",
-  border: "1px solid #CED0CF",
+const TextCss = {
+  whiteSpace: "nowrap",
+  width: "50vw",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
 };
 
 export default Chat;
