@@ -275,7 +275,7 @@ export default function Detail() {
       </Box>
 
       {/* 자신의 게시글은 사라지게 해야함 */}
-      {myId != postData.userId && (
+      {myId != postData.userId && postData.dealState === "ONGOING" ? (
         <Box
           sx={{
             height: "7vh",
@@ -296,7 +296,7 @@ export default function Detail() {
             1:1 채팅
           </Button>
         </Box>
-      )}
+      ) : null}
     </>
   );
 }
