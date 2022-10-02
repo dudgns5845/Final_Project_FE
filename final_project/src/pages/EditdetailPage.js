@@ -75,11 +75,16 @@ export default function EditDetailPage() {
         }
 
         setContentState(response.data.data.content);
-
+        const defaultImg =
+          "https://inno-final-s3.s3.ap-northeast-2.amazonaws.com/default.png";
         const imageArray = [response.data.data.imageUrl].map((i) => i);
+        const imageFilter = [
+          ...imageArray.filter((item) => item != defaultImg),
+        ];
+
         console.log(imageArray.length);
-        setImgState(imageArray[0]);
-        setImgFile(imageArray[0]);
+        setImgState(imageFilter);
+        setImgFile(imageFilter);
         setPostData({ ...postData, postid: param.postid });
         console.log(postData);
       })
@@ -128,27 +133,39 @@ export default function EditDetailPage() {
   };
 
   const ClickHandler = () => {
-    const dto = {
-      title: titleState,
-      content: contentState,
-      category: tmpcategory,
-      stringImageFileList: imgFile,
-    };
-
-    console.log(dto.category);
-
-    postData.data.append(
-      "requestDto",
-      new Blob([JSON.stringify(dto)], {
-        type: "application/json",
-      })
-    );
     if (imgFile === undefined) {
       postData.append("imageFileList", "");
+      const dto = {
+        title: titleState,
+        content: contentState,
+        category: tmpcategory,
+        stringImageFileList: imgFile,
+      };
+
+      postData.data.append(
+        "requestDto",
+        new Blob([JSON.stringify(dto)], {
+          type: "application/json",
+        })
+      );
     } else {
       for (let img of imgFile) {
         postData.data.append("imageFileList", img);
       }
+      const dto = {
+        title: titleState,
+        content: contentState,
+        category: tmpcategory,
+        stringImageFileList: imgFile,
+      };
+
+      postData.data.append(
+        "requestDto",
+        new Blob([JSON.stringify(dto)], {
+          type: "application/json",
+        })
+      );
+      console.log(imgFile);
     }
 
     //통신
@@ -156,7 +173,7 @@ export default function EditDetailPage() {
       .editDetail(postData)
       .then((response) => {
         console.log(response);
-        // navigate(`/detail/${param.postid}`);
+        navigate(`/detail/${param.postid}`);
       })
 
       .catch((error) => {
