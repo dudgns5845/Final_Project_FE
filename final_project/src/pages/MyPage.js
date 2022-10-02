@@ -34,28 +34,6 @@ export default function MyPage() {
   };
 
   const checkNickname = { nickname: tmpNick };
-  const onDoublingNickHandler = (e) => {
-    e.preventDefault();
-    if (tmpNick.length === 0) {
-      return alert("닉네임을 입력해주세요");
-    } else {
-      apis
-        .nicknameCheck(checkNickname)
-        .then((response) => {
-          console.log(response);
-          if (response.data.success) {
-            setIsNickName(true);
-
-            alert("사용 가능한 닉네임입니다");
-          } else {
-            alert("이미 사용중인 닉네임입니다");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
 
   useEffect(() => {
     apis
@@ -84,27 +62,37 @@ export default function MyPage() {
       const nicknames = {
         nickname: tmpNick,
       };
+      //이미지 append
       if (imgfile.current.files[0] === undefined) {
         postData.append("imageFile", "");
       } else {
         postData.append("imageFile", imgfile.current.files[0]);
       }
-      postData.append(
-        "requestDto",
-        new Blob([JSON.stringify(nicknames)], {
-          type: "application/json",
-        })
-      );
-      console.log(postData);
-      console.log(tmpNick);
-      console.log(imgfile.current.files[0]);
+      //닉네임 append(닉네임 변경했을 때 )
+      if (nicknames.nickname != myNick) {
+        apis.nicknameCheck(checkNickname).then((response) => {
+          console.log(response);
+          if (response.data.success) {
+            postData.append(
+              "requestDto",
+              new Blob([JSON.stringify(nicknames)], {
+                type: "application/json",
+              })
+            );
+          } else {
+            return alert("이미 사용중인 닉네임입니다");
+          }
+        });
+      }
+
       apis
         .editProfile(postData)
         .then((response) => {
           console.log(response);
-          // navigate(`/detail/${response.data.data.id}`);
+          alert("변경되었습니다.");
           setMyNick(tmpNick);
           setMyImage(tmpImage);
+          //   setIsNickName(true);
         })
         .catch((error) => {
           console.log(error);
@@ -112,14 +100,8 @@ export default function MyPage() {
         .then(() => {
           setEditProfile(false);
         });
-    } else {
-      return;
     }
   };
-  //  const SettingFunction =(e)=>{
-  //     if(e.target.value)
-  //  }
-
   const LogOutAction = () => {
     apis
       .logOutUser()
@@ -233,47 +215,10 @@ export default function MyPage() {
             onChange={ChangeNick}
             name="nick"
             placeholder={tmpNick}
+            maxLength="6"
           />
-
-          {isNickname ? (
-            <Button
-              style={{
-                fontSize: "15px",
-                backgroundColor: "#FFBA46",
-                marginRight: "10px",
-                marginLeft: "5px",
-                borderRadius: "5px",
-                height: "30px",
-                marginTop: "4.5vh",
-              }}
-              disabled
-              variant="outlined"
-              onClick={(e) => {
-                onDoublingNickHandler(e);
-              }}
-            >
-              중복 확인
-            </Button>
-          ) : (
-            <Button
-              style={{
-                fontSize: "15px",
-                backgroundColor: "#FFBA46",
-                marginRight: "10px",
-                marginLeft: "5px",
-                borderRadius: "5px",
-                height: "30px",
-                marginTop: "4.5vh",
-              }}
-              variant="outlined"
-              onClick={(e) => {
-                onDoublingNickHandler(e);
-              }}
-            >
-              중복 확인
-            </Button>
-          )}
         </div>
+
         <div style={{ textAlign: "center", alignItems: "center" }}>
           <Button
             style={{
