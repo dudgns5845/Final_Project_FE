@@ -67,24 +67,25 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
-      apis
-        .loginRefresh()
-        .then((response) => {
-          // refreshToken 삭제
-          deleteCookie("refreshToken");
-          console.log(response);
-          // 새로운 Token 저장
-          setCookie(
-            "accessToken",
-            response.data.data.accessToken,
-            response.data.data.accessTokenExpiresIn
-          );
-          setCookie("refreshToken", response.data.data.refreshToken);
-          window.location.reload();
-        })
-        .catch((error) => console.log(error));
-    }
+    console.log(error);
+    // if (error.response.status === 401) {
+    //   apis
+    //     .loginRefresh()
+    //     .then((response) => {
+    //       // refreshToken 삭제
+    //       deleteCookie("refreshToken");
+    //       console.log(response);
+    //       // 새로운 Token 저장
+    //       setCookie(
+    //         "accessToken",
+    //         response.data.data.accessToken,
+    //         response.data.data.accessTokenExpiresIn
+    //       );
+    //       setCookie("refreshToken", response.data.data.refreshToken);
+    //       window.location.reload();
+    //     })
+    //     .catch((error) => console.log(error));
+    // }
   }
 );
 
