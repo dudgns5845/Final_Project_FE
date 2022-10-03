@@ -24,10 +24,6 @@ export default function Footer({ firstBox }) {
   return (
     <BottomNavigation
       showLabels
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
       sx={{
         position: "fixed",
         bottom: 0,

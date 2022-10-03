@@ -5,11 +5,12 @@ import AppBar from "@mui/material/AppBar";
 export default function Header({ children }) {
   return (
     <AppBar position="static" sx={AppCss}>
-      <Toolbar>{children}</Toolbar>
+      <Toolbar sx={{ justifyContent: "space-between" }}>{children}</Toolbar>
     </AppBar>
   );
 }
 const AppCss = {
+  display: "flex",
   backgroundColor: "white",
   justifyContent: "space-between",
   borderBottom: "0.5px solid gainsboro",
