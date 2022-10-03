@@ -40,8 +40,8 @@ export default function Post({ post, injRef }) {
           <div
             style={{
               position: "relative",
-              fontSize: "13px",
-              fontWeight: "bold",
+              fontSize: "16px",
+              fontWeight: "700",
               color: "gray",
               display: "block",
               width: "60vw",

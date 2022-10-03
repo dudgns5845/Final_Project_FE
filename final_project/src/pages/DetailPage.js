@@ -118,6 +118,7 @@ export default function Detail() {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
   }, [currentSlide]);
+  console.log(slideRef);
 
   // 채팅방 생성
   const CreateChat = () => {
@@ -232,7 +233,7 @@ export default function Detail() {
                   </div>
                 )}
                 {/* 자신의 게시글에서만 보여야함 */}
-                {myId == postData.userId && (
+                {myId === postData.userId && (
                   <>
                     <IconButton
                       aria-label="settings"
