@@ -250,7 +250,7 @@ const Image = styled.img`
   border-radius: 50%;
 `;
 const NickName = styled.div`
-  width: 4rem;
+  width: 10rem;
   height: 1.5rem;
   font-size: 1em;
   font-weight: bold;

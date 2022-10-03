@@ -52,7 +52,7 @@ export default function Post({ post, injRef }) {
           >
             {post.title}
           </div>
-          <p style={{ fontSize: "1px", color: "gray" }}>
+          <p style={{ fontSize: "8px", color: "gray" }}>
             {post.category} &nbsp; {post.createdAt}
           </p>
           <div style={{ display: "flex", float: "right" }}>

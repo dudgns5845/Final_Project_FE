@@ -155,7 +155,7 @@ const IconCss = {
   position: "fixed",
   width: "2.4em",
   height: "2.4em",
-  top: "80vh",
+  bottom: "15vh",
   right: "8vw",
   backgroundColor: "#BCBCBF",
 };
