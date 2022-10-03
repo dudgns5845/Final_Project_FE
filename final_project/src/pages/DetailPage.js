@@ -300,7 +300,7 @@ export default function Detail() {
           }}
         >
           <IconButton aria-label="add to favorites" onClick={Bookmarking}>
-            {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
+            {isBookMark ? <BookmarkIcon /> : <TurnedInNotRoundedIcon />}
           </IconButton>
 
           <Button style={ButtonCss} fullWidth onClick={CreateChat}>
