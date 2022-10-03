@@ -122,7 +122,7 @@ export default function Detail() {
   // 채팅방 생성
   const CreateChat = () => {
     apis
-      .chatCreate(param.postid)
+      .chatCreate(param.id)
       .then((response) => {
         console.log(response);
         navigate(`/chatdetail/${response.data.data.roomId}`);
