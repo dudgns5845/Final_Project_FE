@@ -8,7 +8,6 @@ import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { deleteCookie } from "../shared/Cookie";
 import Footer from "../components/Footer";
-import ScreenSize from "../shared/ScreenSize";
 import { Box } from "@mui/material";
 
 export default function MyPage() {
