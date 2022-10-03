@@ -39,47 +39,33 @@ export default function MainPage({ history }) {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   console.log("매번 실행되는지");
-  //   console.log("listening", listening);
-
-  //   let eventSource = undefined;
-
-  //   if (!listening) {
-  //     //   eventSource = new EventSource("http://13.125.71.197/subscribe/2", {withCredentials: true}); //구독
-  //     eventSource = new EventSource(
-  //       `http://13.125.71.197/subscribe/${userId}`,
-  //       { withCredentials: true }
-  //     ); //구독
-  //     msetEventSource(eventSource);
-  //     console.log("eventSource", eventSource);
-
-  //     eventSource.onopen = (event) => {
-  //       console.log("connection opened");
-  //     };
-
-  //     eventSource.onmessage = (event) => {
-  //       console.log("result", event.data);
-  //       setAlarmChange(<NotificationAddRoundedIcon />);
-  //       setValue(event.data);
-  //     };
-
-  //     eventSource.onerror = (event) => {
-  //       console.log(event.target.readyState);
-  //       if (event.target.readyState === EventSource.CLOSED) {
-  //         console.log("eventsource closed (" + event.target.readyState + ")");
-  //       }
-  //       eventSource.close();
-  //     };
-
-  //     setListening(true);
-  //   }
-
-  //   return () => {
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `https://bondyuu.shop:8080/subscribe/${userId}`,
+      {
+        withCredentials: true,
+      }
+    ); //구독
+    eventSource.onopen = () => {
+      console.log("connection opened");
+    };
+    eventSource.onmessage = (event) => {
+      console.log("result", event.data);
+      setAlarmChange(<NotificationAddRoundedIcon />);
+      setValue(event.data);
+    };
+    eventSource.onerror = (event) => {
+      console.log(event.target.readyState);
+      if (event.target.readyState === EventSource.CLOSED) {
+        console.log("eventsource closed (" + event.target.readyState + ")");
+      }
+      eventSource.close();
+    };
+  }, []);
+  //   useEffect(() => {
   //     eventSource.close();
   //     console.log("eventsource closed");
-  //   };
-  // }, []);
+  //   }, [navigate]);
 
   useEffect(() => {
     if (inView && !loading) {
