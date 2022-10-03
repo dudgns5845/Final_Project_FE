@@ -34,28 +34,6 @@ export default function MyPage() {
   };
 
   const checkNickname = { nickname: tmpNick };
-  const onDoublingNickHandler = (e) => {
-    e.preventDefault();
-    if (tmpNick.length === 0) {
-      return alert("닉네임을 입력해주세요");
-    } else {
-      apis
-        .nicknameCheck(checkNickname)
-        .then((response) => {
-          console.log(response);
-          if (response.data.success) {
-            setIsNickName(true);
-
-            alert("사용 가능한 닉네임입니다");
-          } else {
-            alert("이미 사용중인 닉네임입니다");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
 
   useEffect(() => {
     apis
@@ -84,27 +62,37 @@ export default function MyPage() {
       const nicknames = {
         nickname: tmpNick,
       };
+      //이미지 append
       if (imgfile.current.files[0] === undefined) {
         postData.append("imageFile", "");
       } else {
         postData.append("imageFile", imgfile.current.files[0]);
       }
-      postData.append(
-        "requestDto",
-        new Blob([JSON.stringify(nicknames)], {
-          type: "application/json",
-        })
-      );
-      console.log(postData);
-      console.log(tmpNick);
-      console.log(imgfile.current.files[0]);
+      //닉네임 append(닉네임 변경했을 때 )
+      if (nicknames.nickname != myNick) {
+        apis.nicknameCheck(checkNickname).then((response) => {
+          console.log(response);
+          if (response.data.success) {
+            postData.append(
+              "requestDto",
+              new Blob([JSON.stringify(nicknames)], {
+                type: "application/json",
+              })
+            );
+          } else {
+            return alert("이미 사용중인 닉네임입니다");
+          }
+        });
+      }
+
       apis
         .editProfile(postData)
         .then((response) => {
           console.log(response);
-          // navigate(`/detail/${response.data.data.id}`);
+          alert("변경되었습니다.");
           setMyNick(tmpNick);
           setMyImage(tmpImage);
+          //   setIsNickName(true);
         })
         .catch((error) => {
           console.log(error);
@@ -112,14 +100,8 @@ export default function MyPage() {
         .then(() => {
           setEditProfile(false);
         });
-    } else {
-      return;
     }
   };
-  //  const SettingFunction =(e)=>{
-  //     if(e.target.value)
-  //  }
-
   const LogOutAction = () => {
     apis
       .logOutUser()
@@ -137,82 +119,80 @@ export default function MyPage() {
 
   return (
     <>
-      <ScreenSize>
-        <Header>
-          <h4>프로필</h4>
-        </Header>
-        {/* 유저 프로필 */}
-        <Div>
-          <Image src={myImage} />
-          <NickName>{myNick}</NickName>
-        </Div>
-        <div
-          style={{
+      <Header>
+        <div>프로필</div>
+      </Header>
+      {/* 유저 프로필 */}
+      <Div>
+        <Image src={myImage} />
+        <NickName>{myNick}</NickName>
+      </Div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          paddingTop: "3vh",
+          height: "10vh",
+        }}
+      >
+        <Edit onClick={Open}>프로필 수정</Edit>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: "50vh",
+        }}
+      >
+        <Box
+          sx={{
             display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            paddingTop: "3vh",
-            height: "10vh",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 20px",
+            height: "15vh",
+            borderTop: "0.5px solid  #dcdcdc",
           }}
+          onClick={() => navigate("/submypage:mywrite")}
         >
-          <Edit onClick={Open}>프로필 수정</Edit>
-        </div>
-        <div
-          style={{
+          <Setting>내가 작성한 게시글</Setting>
+          <ArrowForwardIosRoundedIcon />
+        </Box>
+        <Box
+          sx={{
             display: "flex",
-            flexDirection: "column",
-            height: "50vh",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 20px",
+            height: "15vh",
+            borderTop: "0.5px solid  #dcdcdc",
           }}
+          onClick={() => navigate("/submypage:mybookmark")}
         >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 20px",
-              height: "15vh",
-              borderTop: "0.5px solid  #dcdcdc",
-            }}
-            onClick={() => navigate("/submypage:mywrite")}
-          >
-            <Setting>내가 작성한 게시글</Setting>
-            <ArrowForwardIosRoundedIcon />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 20px",
-              height: "15vh",
-              borderTop: "0.5px solid  #dcdcdc",
-            }}
-            onClick={() => navigate("/submypage:mybookmark")}
-          >
-            <Setting>내가 찜한 게시글</Setting>
-            <ArrowForwardIosRoundedIcon />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 20px",
-              height: "15vh",
-              borderTop: "0.5px solid  #dcdcdc",
-            }}
-            onClick={LogOutAction}
-          >
-            <Setting>로그아웃</Setting>
-          </Box>
-        </div>
-      </ScreenSize>
+          <Setting>내가 찜한 게시글</Setting>
+          <ArrowForwardIosRoundedIcon />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 20px",
+            height: "15vh",
+            borderTop: "0.5px solid  #dcdcdc",
+          }}
+          onClick={LogOutAction}
+        >
+          <Setting>로그아웃</Setting>
+        </Box>
+      </div>
 
       <Modal visible={editProfile}>
         <Header>
           <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <ArrowBackIcon onClick={close} />
-            <h4>프로필 수정</h4>
+            <div>프로필 수정</div>
           </Box>
         </Header>
         <Box style={{ display: "flex", justifyContent: "center" }}>
@@ -233,52 +213,15 @@ export default function MyPage() {
             onChange={ChangeNick}
             name="nick"
             placeholder={tmpNick}
+            maxLength="6"
           />
-
-          {isNickname ? (
-            <Button
-              style={{
-                fontSize: "15px",
-                backgroundColor: "#FFBA46",
-                marginRight: "10px",
-                marginLeft: "5px",
-                borderRadius: "5px",
-                height: "30px",
-                marginTop: "4.5vh",
-              }}
-              disabled
-              variant="outlined"
-              onClick={(e) => {
-                onDoublingNickHandler(e);
-              }}
-            >
-              중복 확인
-            </Button>
-          ) : (
-            <Button
-              style={{
-                fontSize: "15px",
-                backgroundColor: "#FFBA46",
-                marginRight: "10px",
-                marginLeft: "5px",
-                borderRadius: "5px",
-                height: "30px",
-                marginTop: "4.5vh",
-              }}
-              variant="outlined"
-              onClick={(e) => {
-                onDoublingNickHandler(e);
-              }}
-            >
-              중복 확인
-            </Button>
-          )}
         </div>
+
         <div style={{ textAlign: "center", alignItems: "center" }}>
           <Button
             style={{
               fontSize: "20px",
-              backgroundColor: "#FFBA46",
+              backgroundColor: "gainsboro",
               marginRight: "20PX",
               borderRadius: "5px",
             }}
@@ -305,7 +248,7 @@ const Image = styled.img`
   border-radius: 50%;
 `;
 const NickName = styled.div`
-  width: 4rem;
+  width: 10rem;
   height: 1.5rem;
   font-size: 1em;
   font-weight: bold;

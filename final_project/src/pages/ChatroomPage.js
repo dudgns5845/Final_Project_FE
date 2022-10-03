@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ChatPost from "../components/ChatPost";
@@ -25,19 +26,14 @@ export default function ChatRoomPage() {
   return (
     <>
       <Header>
-        <h4>채팅</h4>
+        <div>채팅 </div>
       </Header>
-      <Container>
-        {chatList.map((post, idx) => {
+      <Box sx={{ height: "82vh", overflow: "auto" }}>
+        {chatList.reverse().map((post, idx) => {
           return <ChatPost post={post} key={idx} />;
         })}
-      </Container>
+      </Box>
       <Footer />
     </>
   );
 }
-
-const Container = styled.div`
-  width: 90vw;
-  height: 90vh;
-`;

@@ -34,7 +34,7 @@ export default function Footer({ firstBox }) {
         left: 0,
         right: 0,
         height: "10vh",
-        backgroundColor: "white",
+
         borderTop: "0.5px solid gainsboro",
       }}
     >

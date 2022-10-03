@@ -67,6 +67,7 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log(error);
     // if (error.response.status === 401) {
     //   apis
     //     .loginRefresh()
@@ -119,11 +120,12 @@ const apis = {
   chatRooms: (payload) => api.get(`/chat/rooms/${payload}`, payload),
   chatDetilRooms: (payload) => api.get(`/chat/room/${payload}`),
   chatCreate: (payload) => api.post(`/chat/room/${payload}`),
+  dealComplete: (payload) => api.put(`/posts/${payload}/deal`, payload),
 
   //알림
   readNotification: (payload) => api.put(`/notification/${payload}`),
   checkAlarm: () => api.get("/notifications"),
-  alarmAllRead: (payload) => api.put("/notification/read", payload),
+  alarmAllRead: () => api.put("/notification/read"),
 };
 
 export default apis;

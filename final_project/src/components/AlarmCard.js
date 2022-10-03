@@ -1,29 +1,20 @@
-import React from "react";
-import { CardActionArea, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
-import { IconButton } from "@mui/material";
+
 import apis from "../apis/Apis";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 
-export default function AlarmCard({ alarm }) {
+export default function AlarmCard({ alarm, isCheck }) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(alarm.isRead ? false : true);
-  const [alarmStyle, setAlarmStyle] = useState({
-    backgroundColor: alarm.isRead ? "white" : "orange",
-  });
-
+  useEffect(() => {}, [isCheck]);
   //읽음 처리 및 채팅방 이동
   const clickNotiftcation = () => {
     apis.readNotification(alarm.notificationId).then((response) => {
       console.log(response);
-      setAlarmStyle({ backgroundColor: "white" });
-      setOpen(false);
+      navigate(`/chatdetail/${alarm.chatRoomId}`);
     });
   };
-
+  console.log(isCheck);
   return (
     <Box
       sx={{
@@ -32,9 +23,10 @@ export default function AlarmCard({ alarm }) {
         display: "flex",
         alignItems: "center",
         border: "0.5px solid gainsboro",
-        padding: "0 5vw",
+        borderRadius: "10px",
+        backgroundColor: isCheck ? "#BCBCBC" : "white",
       }}
-      onClick={() => navigate(`/detail/${alarm.chatid}`)}
+      onClick={clickNotiftcation}
     >
       <div style={CardCss}>
         <img
@@ -48,8 +40,7 @@ export default function AlarmCard({ alarm }) {
         />
       </div>
       <div style={TextCss}>
-        <h5>{alarm.content}</h5>
-        <p>d</p>
+        <p>{alarm.content}</p>
       </div>
     </Box>
   );
@@ -62,9 +53,11 @@ const CardCss = {
   objectFit: "cover",
   width: "3.5rem",
   height: "3.5rem",
+  marginLeft: "10vw",
 };
 
 const TextCss = {
   paddingLeft: "4vw",
+  fontWeight: "bold",
   width: "80vw",
 };

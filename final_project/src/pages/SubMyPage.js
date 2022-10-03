@@ -3,6 +3,7 @@ import Post from "../components/Post";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Box } from "@mui/material";
 import apis from "../apis/Apis";
 
 export default function SubMyPage() {
@@ -47,20 +48,22 @@ export default function SubMyPage() {
           }}
         />
       </Header>
-      {changePage === "mywrite" && (
-        <div>
-          {postList.map((post, idx) => {
-            return <Post post={post} key={idx}></Post>;
-          })}
-        </div>
-      )}
-      {changePage === "mybookmark" && (
-        <div>
-          {bookMarkList.map((post, idx) => {
-            return <Post post={post} key={idx}></Post>;
-          })}
-        </div>
-      )}
+      <Box sx={{ height: "90vh", overflow: "auto" }}>
+        {changePage === "mywrite" && (
+          <div>
+            {postList.map((post, idx) => {
+              return <Post post={post} key={idx}></Post>;
+            })}
+          </div>
+        )}
+        {changePage === "mybookmark" && (
+          <div>
+            {bookMarkList.map((post, idx) => {
+              return <Post post={post} key={idx}></Post>;
+            })}
+          </div>
+        )}
+      </Box>
     </>
   );
 }

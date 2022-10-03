@@ -234,8 +234,9 @@ export default function PostPage() {
           id="title"
           onChange={TitleChange}
           value={userPost.title}
-          placeholder="제목을 입력해주세요."
+          placeholder="제목을 입력해주세요.(30글자 제한)"
           required
+          maxLength="30"
         />
       </div>
       <div
@@ -305,9 +306,10 @@ const ContentStyle = styled.textarea`
   border-right: 0px;
   border-left: 0px;
   width: 100%;
-  text-indent: 8px;
-  font-size: 14px;
-  padding-top: 18px;
+  height: 60vh;
+  line-height: 25px;
+  font-size: 15px;
+  padding: 10px 0 0 10px;
   &:focus {
     outline: 1px solid gray;
   }

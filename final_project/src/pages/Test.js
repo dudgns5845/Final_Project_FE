@@ -1,13 +1,16 @@
 import { useRef, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import apis from "../apis/Apis";
+import Header from "../components/Header";
 import ChatForm from "../components/ChatForm";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { getCookie } from "../shared/Cookie";
-import { Box, Button, Typography } from "@mui/material";
-import Header from "../components/Header";
+import { Box, Button, Typography, IconButton } from "@mui/material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Chat = () => {
@@ -27,6 +30,32 @@ const Chat = () => {
   const t = useRef();
   const [username, setUserName] = useState("");
   const param = useParams();
+
+  // MUI Menu
+  const [anchorEl, setAnchorEl] = useState(false);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  // 메뉴버튼 ClickEvent
+  const DealComplete = () => {
+    apis
+      .dealComplete(postData.postId)
+      .then((response) => {
+        console.log(response);
+        if (
+          window.confirm(
+            "거래완료로 변경하시겠습니까?\n완료 후에는 거래중으로 변경할 수 없습니다."
+          )
+        ) {
+          navigate(`/detail/${postData.postId}`);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
   //이전 메시지 목록 불러오기
   useEffect(() => {
@@ -116,11 +145,34 @@ const Chat = () => {
         <ArrowBackIcon
           style={{ fontSize: "25px" }}
           onClick={() => {
-            navigate("/");
+            navigate(-1);
           }}
         ></ArrowBackIcon>
         <Box>{postData?.nickname}</Box>
-        <div style={{ width: "25px" }}></div>
+        <IconButton
+          aria-label="settings"
+          id="basic-button"
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          {postData?.dealState === "거래중" ? (
+            <MenuItem onClick={DealComplete}>거래완료</MenuItem>
+          ) : null}
+          <MenuItem>채팅삭제</MenuItem>
+        </Menu>
       </Header>
 
       <Box
@@ -146,14 +198,22 @@ const Chat = () => {
         />
 
         <Box sx={{ marign: "auto" }}>
-          <Typography component="div" variant="h7">
-            {postData?.postTitle}
-          </Typography>
+          <div style={TextCss}>{postData?.postTitle}</div>
           <Typography variant="body" color="text.secondary" component="div">
             {postData?.nickname}
           </Typography>
         </Box>
-        <button>거래완료</button>
+        {postData?.dealState === "거래중" ? (
+          <div
+            style={{ position: "absolute", right: "1.5rem", color: "green" }}
+          >
+            거래중
+          </div>
+        ) : (
+          <div style={{ position: "absolute", right: "1.5rem", color: "gray" }}>
+            거래완료
+          </div>
+        )}
       </Box>
       {/* 메세지 내용 */}
       <Box
@@ -162,6 +222,7 @@ const Chat = () => {
           overflow: "auto",
           padding: "20px",
           verticalAlign: "baseline",
+          // display: "flex",
         }}
       >
         {chatList.map((item, index) => {
@@ -238,14 +299,11 @@ const Chat = () => {
   );
 };
 
-const IconCss = {
-  position: "fixed",
-  width: "2.4em",
-  height: "2.4em",
-  top: "80vh",
-  right: "8vw",
-  backgroundColor: "#CED0CF",
-  border: "1px solid #CED0CF",
+const TextCss = {
+  width: "50vw",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
 };
 
 export default Chat;

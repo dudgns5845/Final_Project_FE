@@ -68,7 +68,7 @@ export default function Start() {
   const localTheme = createTheme({
     palette: {
       warning: {
-        main: "#FFBA46",
+        main: "#BCBCBF",
         contrastText: "#fff",
       },
     },

@@ -394,7 +394,7 @@ export default function Signin() {
   const localTheme = createTheme({
     palette: {
       warning: {
-        main: "#FFBA46",
+        main: "#dcdcdc",
         contrastText: "#fff",
       },
     },
