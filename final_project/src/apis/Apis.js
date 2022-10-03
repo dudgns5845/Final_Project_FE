@@ -120,7 +120,7 @@ const apis = {
 
   chatRooms: (payload) => api.get(`/chat/rooms/${payload}`, payload),
   chatDetilRooms: (payload) => api.get(`/chat/room/${payload}`),
-  chatCreate: (payload) => api.post(`/chat/room/${payload}`),
+  chatCreate: (payload) => api.post(`/chat/room/${payload}`, payload),
   dealComplete: (payload) => api.put(`/posts/${payload}/deal`, payload),
 
   //알림

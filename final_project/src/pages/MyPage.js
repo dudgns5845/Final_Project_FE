@@ -8,12 +8,13 @@ import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { deleteCookie } from "../shared/Cookie";
 import Footer from "../components/Footer";
+import ScreenSize from "../shared/ScreenSize";
 import { Box } from "@mui/material";
 
 export default function MyPage() {
   const navigate = useNavigate();
   const [editProfile, setEditProfile] = useState(false);
-  const [myNick, setMyNick] = useState();
+  const [myNick, setMyNick] = useState("");
   const imgfile = useRef();
   const [isNickname, setIsNickName] = useState(false);
   const [tmpNick, setTmpNick] = useState(myNick);
@@ -27,6 +28,7 @@ export default function MyPage() {
   };
   const ChangeNick = (e) => {
     setTmpNick(e.target.value);
+    console.log(tmpNick);
   };
   const close = () => {
     setEditProfile(false);
@@ -38,6 +40,7 @@ export default function MyPage() {
     apis
       .getProfile()
       .then((response) => {
+        console.log(response);
         setTmpNick(response.data.data.nickname);
         setTmpImage(response.data.data.profileUrl);
         setMyNick(response.data.data.nickname);
@@ -57,9 +60,7 @@ export default function MyPage() {
   const ClickHandler = (e) => {
     if (e.target.name === "edit") {
       const postData = new FormData();
-      const nicknames = {
-        nickname: tmpNick,
-      };
+
       //이미지 append
       if (imgfile.current.files[0] === undefined) {
         postData.append("imageFile", "");
@@ -67,35 +68,51 @@ export default function MyPage() {
         postData.append("imageFile", imgfile.current.files[0]);
       }
       //닉네임 append(닉네임 변경했을 때 )
-      if (nicknames.nickname != myNick) {
+      if (myNick != tmpNick) {
         apis.nicknameCheck(checkNickname).then((response) => {
-          if (response.data.success) {
+          if (response.data.success == true) {
             postData.append(
               "requestDto",
-              new Blob([JSON.stringify(nicknames)], {
+              new Blob([JSON.stringify({ nickname: tmpNick })], {
                 type: "application/json",
               })
             );
-          } else {
+            apis
+              .editProfile(postData)
+              .then((response) => {
+                console.log(response);
+                alert("변경되었습니다.");
+                setMyNick(tmpNick);
+                setMyImage(tmpImage);
+                //   setIsNickName(true);
+              })
+              .catch((error) => {
+                console.log(error);
+              })
+              .then(() => {
+                setEditProfile(false);
+              });
+          } else if (response.data.success == false) {
             return alert("이미 사용중인 닉네임입니다");
           }
         });
+      } else {
+        apis
+          .editProfile(postData)
+          .then((response) => {
+            console.log(response);
+            alert("변경되었습니다.");
+            setMyNick(tmpNick);
+            setMyImage(tmpImage);
+            //   setIsNickName(true);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .then(() => {
+            setEditProfile(false);
+          });
       }
-
-      apis
-        .editProfile(postData)
-        .then((response) => {
-          alert("변경되었습니다.");
-          setMyNick(tmpNick);
-          setMyImage(tmpImage);
-          //   setIsNickName(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .then(() => {
-          setEditProfile(false);
-        });
     }
   };
   const LogOutAction = () => {
@@ -207,7 +224,6 @@ export default function MyPage() {
           <InputSt
             type="text"
             onChange={ChangeNick}
-            name="nick"
             placeholder={tmpNick}
             maxLength="6"
           />
