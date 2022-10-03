@@ -60,7 +60,7 @@ export default function Post({ post, injRef }) {
               sx={{
                 display: "flex",
 
-                fontSize: "1px",
+                fontSize: "8px",
                 alignItems: "center",
                 color: "gray",
               }}

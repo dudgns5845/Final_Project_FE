@@ -6,6 +6,7 @@ import Post from "../components/Post";
 import { Box, IconButton } from "@mui/material";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 
+import { Navigate } from "react-router-dom";
 import NotificationAddRoundedIcon from "@mui/icons-material/NotificationAddRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
@@ -19,7 +20,7 @@ import { getCookie } from "../shared/Cookie";
 
 import { useInView } from "react-intersection-observer";
 
-export default function MainPage() {
+export default function MainPage({ history }) {
   const [listening, setListening] = useState(false);
   const [alarmIconChange, setAlarmChange] = useState(
     <NotificationsNoneOutlinedIcon />
@@ -37,7 +38,13 @@ export default function MainPage() {
   const firstBox = useRef(null);
 
   const navigate = useNavigate();
-
+  const a = () => {
+    if (navigate(-1) === navigate("/postpage")) {
+      navigate("/");
+    } else {
+      navigate(-1);
+    }
+  };
   // useEffect(() => {
   //   console.log("매번 실행되는지");
   //   console.log("listening", listening);
@@ -79,6 +86,7 @@ export default function MainPage() {
   //     console.log("eventsource closed");
   //   };
   // }, []);
+
   useEffect(() => {
     if (inView && !loading) {
       // 다음페이지 인덱스 증가
@@ -138,9 +146,7 @@ export default function MainPage() {
         <div style={{ height: "100px" }} ref={ref}></div>
       </Box>
       <IconButton
-        onClick={() => {
-          navigate("/postpage");
-        }}
+        onClick={<Navigate to="/postpage" replace={true} />}
         style={IconCss}
       >
         <CreateRoundedIcon style={ArrowCss} />

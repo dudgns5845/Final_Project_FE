@@ -189,7 +189,7 @@ const Chat = () => {
         }}
       >
         <img
-          style={{ borderRadius: "100%", width: "15vw", height: "15vw" }}
+          style={{ borderRadius: "10px", width: "3rem", height: "3rem" }}
           src={postData == null ? "default-image.jpg" : postData.postImage}
           alt=""
           onClick={() => {
