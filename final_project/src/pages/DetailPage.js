@@ -121,7 +121,7 @@ export default function Detail() {
   // 채팅방 생성
   const CreateChat = () => {
     apis
-      .chatCreate(param.id)
+      .chatCreate(param.posetid)
       .then((response) => {
         console.log(response);
         navigate(`/chatdetail/${response.data.data.roomId}`);
@@ -172,19 +172,19 @@ export default function Detail() {
                 style={
                   i === currentSlide
                     ? {
-                        background: "white",
-                        borderRadius: "100%",
-                        height: "10px",
-                        width: "10px",
-                        marginLeft: "20px",
-                      }
+                      background: "white",
+                      borderRadius: "100%",
+                      height: "10px",
+                      width: "10px",
+                      marginLeft: "20px",
+                    }
                     : {
-                        background: "gray",
-                        borderRadius: "100%",
-                        height: "10px",
-                        width: "10px",
-                        marginLeft: "20px",
-                      }
+                      background: "gray",
+                      borderRadius: "100%",
+                      height: "10px",
+                      width: "10px",
+                      marginLeft: "20px",
+                    }
                 }
               />
             ))}
