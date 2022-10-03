@@ -38,13 +38,7 @@ export default function MainPage({ history }) {
   const firstBox = useRef(null);
 
   const navigate = useNavigate();
-  const a = () => {
-    if (navigate(-1) === navigate("/postpage")) {
-      navigate("/");
-    } else {
-      navigate(-1);
-    }
-  };
+
   // useEffect(() => {
   //   console.log("매번 실행되는지");
   //   console.log("listening", listening);
@@ -97,7 +91,6 @@ export default function MainPage({ history }) {
         .getAllPostList(page)
         .then((response) => {
           setPostList([...postList, ...response.data.data.content]);
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);

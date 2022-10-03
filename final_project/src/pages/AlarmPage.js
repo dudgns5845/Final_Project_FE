@@ -16,11 +16,8 @@ export default function AlarmPage() {
       .checkAlarm()
       .then((response) => {
         setAlarmList(response.data.data);
-        console.log(response);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   }, []);
 
   const allRead = () => {
@@ -28,11 +25,8 @@ export default function AlarmPage() {
       .alarmAllRead()
       .then((res) => {
         setIsCheck(false);
-        console.log(res);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (

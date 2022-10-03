@@ -17,7 +17,6 @@ export default function ChatRoomPage() {
     apis
       .chatRooms(getCookie("id"))
       .then((response) => {
-        console.log(response);
         setChatList(response.data.data);
       })
       .catch((error) => console.log(error));
