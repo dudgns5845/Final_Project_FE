@@ -39,29 +39,29 @@ export default function MainPage({ history }) {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const eventSource = new EventSource(
-      `https://bondyuu.shop:8080/subscribe/${userId}`,
-      {
-        withCredentials: true,
-      }
-    ); //구독
-    eventSource.onopen = () => {
-      console.log("connection opened");
-    };
-    eventSource.onmessage = (event) => {
-      console.log("result", event.data);
-      setAlarmChange(<NotificationAddRoundedIcon />);
-      setValue(event.data);
-    };
-    eventSource.onerror = (event) => {
-      console.log(event.target.readyState);
-      if (event.target.readyState === EventSource.CLOSED) {
-        console.log("eventsource closed (" + event.target.readyState + ")");
-      }
-      eventSource.close();
-    };
-  }, []);
+  //   useEffect(() => {
+  //     const eventSource = new EventSource(
+  //       `https://bondyuu.shop:8080/subscribe/${userId}`,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     ); //구독
+  //     eventSource.onopen = () => {
+  //       console.log("connection opened");
+  //     };
+  //     eventSource.onmessage = (event) => {
+  //       console.log("result", event.data);
+  //       setAlarmChange(<NotificationAddRoundedIcon />);
+  //       setValue(event.data);
+  //     };
+  //     eventSource.onerror = (event) => {
+  //       console.log(event.target.readyState);
+  //       if (event.target.readyState === EventSource.CLOSED) {
+  //         console.log("eventsource closed (" + event.target.readyState + ")");
+  //       }
+  //       eventSource.close();
+  //     };
+  //   }, []);
   //   useEffect(() => {
   //     eventSource.close();
   //     console.log("eventsource closed");
