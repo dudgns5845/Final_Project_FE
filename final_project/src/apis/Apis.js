@@ -4,7 +4,7 @@ import { getCookie, deleteCookie, setCookie } from "../shared/Cookie";
 
 // 1. Axios instance생성
 
-const deafultURL = "http://13.125.71.197";
+const deafultURL = "https://13.125.71.197";
 
 const api = axios.create({
   baseURL: deafultURL,
