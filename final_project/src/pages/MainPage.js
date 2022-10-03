@@ -146,7 +146,9 @@ export default function MainPage({ history }) {
         <div style={{ height: "100px" }} ref={ref}></div>
       </Box>
       <IconButton
-        onClick={<Navigate to="/postpage" replace={true} />}
+        onClick={() => {
+          navigate("/postpage");
+        }}
         style={IconCss}
       >
         <CreateRoundedIcon style={ArrowCss} />

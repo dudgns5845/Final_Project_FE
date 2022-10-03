@@ -112,7 +112,8 @@ export default function PostPage() {
       .writePost(postData)
       .then((response) => {
         console.log(response);
-        navigate(`/detail/${response.data.data.id}`);
+        navigate(`/detail/${response.data.data.id}`, { replace: true });
+        // navigate(`/detail/${response.data.data.id}`);
       })
 
       .catch((error) => {

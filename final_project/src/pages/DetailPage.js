@@ -23,7 +23,7 @@ import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../shared/Cookie";
-
+import { Navigate } from "react-router-dom";
 export default function Detail() {
   const navigate = useNavigate();
   const param = useParams();
@@ -132,10 +132,7 @@ export default function Detail() {
   };
   const onerrorImage = (e) => {
     e.target.src = "/default-image.jpg";
-
-    console.log("포스트 호출");
   };
-
   return (
     <>
       <Box sx={{ height: "90vh", overflow: "auto" }}>
