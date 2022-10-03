@@ -119,82 +119,80 @@ export default function MyPage() {
 
   return (
     <>
-      <ScreenSize>
-        <Header>
-          <h4>프로필</h4>
-        </Header>
-        {/* 유저 프로필 */}
-        <Div>
-          <Image src={myImage} />
-          <NickName>{myNick}</NickName>
-        </Div>
-        <div
-          style={{
+      <Header>
+        <div>프로필</div>
+      </Header>
+      {/* 유저 프로필 */}
+      <Div>
+        <Image src={myImage} />
+        <NickName>{myNick}</NickName>
+      </Div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          paddingTop: "3vh",
+          height: "10vh",
+        }}
+      >
+        <Edit onClick={Open}>프로필 수정</Edit>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: "50vh",
+        }}
+      >
+        <Box
+          sx={{
             display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            paddingTop: "3vh",
-            height: "10vh",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 20px",
+            height: "15vh",
+            borderTop: "0.5px solid  #dcdcdc",
           }}
+          onClick={() => navigate("/submypage:mywrite")}
         >
-          <Edit onClick={Open}>프로필 수정</Edit>
-        </div>
-        <div
-          style={{
+          <Setting>내가 작성한 게시글</Setting>
+          <ArrowForwardIosRoundedIcon />
+        </Box>
+        <Box
+          sx={{
             display: "flex",
-            flexDirection: "column",
-            height: "50vh",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 20px",
+            height: "15vh",
+            borderTop: "0.5px solid  #dcdcdc",
           }}
+          onClick={() => navigate("/submypage:mybookmark")}
         >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 20px",
-              height: "15vh",
-              borderTop: "0.5px solid  #dcdcdc",
-            }}
-            onClick={() => navigate("/submypage:mywrite")}
-          >
-            <Setting>내가 작성한 게시글</Setting>
-            <ArrowForwardIosRoundedIcon />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 20px",
-              height: "15vh",
-              borderTop: "0.5px solid  #dcdcdc",
-            }}
-            onClick={() => navigate("/submypage:mybookmark")}
-          >
-            <Setting>내가 찜한 게시글</Setting>
-            <ArrowForwardIosRoundedIcon />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 20px",
-              height: "15vh",
-              borderTop: "0.5px solid  #dcdcdc",
-            }}
-            onClick={LogOutAction}
-          >
-            <Setting>로그아웃</Setting>
-          </Box>
-        </div>
-      </ScreenSize>
+          <Setting>내가 찜한 게시글</Setting>
+          <ArrowForwardIosRoundedIcon />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 20px",
+            height: "15vh",
+            borderTop: "0.5px solid  #dcdcdc",
+          }}
+          onClick={LogOutAction}
+        >
+          <Setting>로그아웃</Setting>
+        </Box>
+      </div>
 
       <Modal visible={editProfile}>
         <Header>
           <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <ArrowBackIcon onClick={close} />
-            <h4>프로필 수정</h4>
+            <div>프로필 수정</div>
           </Box>
         </Header>
         <Box style={{ display: "flex", justifyContent: "center" }}>

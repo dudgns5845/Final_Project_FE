@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 
 import apis from "../apis/Apis";
 
-export default function AlarmCard({ alarm }) {
+export default function AlarmCard({ alarm, isCheck }) {
   const navigate = useNavigate();
-
+  useEffect(() => {}, [isCheck]);
   //읽음 처리 및 채팅방 이동
   const clickNotiftcation = () => {
     apis.readNotification(alarm.notificationId).then((response) => {
@@ -14,7 +14,7 @@ export default function AlarmCard({ alarm }) {
       navigate(`/chatdetail/${alarm.chatRoomId}`);
     });
   };
-
+  console.log(isCheck);
   return (
     <Box
       sx={{
@@ -24,7 +24,7 @@ export default function AlarmCard({ alarm }) {
         alignItems: "center",
         border: "0.5px solid gainsboro",
         borderRadius: "10px",
-        backgroundColor: alarm.isRead ? "white" : "#BCBCBC",
+        backgroundColor: isCheck ? "#BCBCBC" : "white",
       }}
       onClick={clickNotiftcation}
     >

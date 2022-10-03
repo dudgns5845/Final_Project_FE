@@ -9,6 +9,7 @@ import { Container } from "@mui/material";
 export default function AlarmPage() {
   const navigate = useNavigate();
   const [alarmList, setAlarmList] = useState([]);
+  const [isCheck, setIsCheck] = useState(true);
 
   useEffect(() => {
     apis
@@ -26,6 +27,7 @@ export default function AlarmPage() {
     apis
       .alarmAllRead()
       .then((res) => {
+        setIsCheck(false);
         console.log(res);
       })
       .catch((err) => {
@@ -48,7 +50,9 @@ export default function AlarmPage() {
         </button>
       </Header>
       {alarmList.map((alarm, idx) => {
-        return <AlarmCard alarm={alarm} key={idx}></AlarmCard>;
+        return (
+          <AlarmCard alarm={alarm} key={idx} isCheck={isCheck}></AlarmCard>
+        );
       })}
     </>
   );
