@@ -125,7 +125,7 @@ const apis = {
   //알림
   readNotification: (payload) => api.put(`/notification/${payload}`),
   checkAlarm: () => api.get("/notifications"),
-  alarmAllRead: (payload) => api.put("/notification/read", payload),
+  alarmAllRead: () => api.put("/notification/read"),
 };
 
 export default apis;
