@@ -22,6 +22,17 @@ export default function AlarmPage() {
       });
   }, []);
 
+  const allRead = () => {
+    apis
+      .alarmAllRead()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Header>
@@ -32,7 +43,9 @@ export default function AlarmPage() {
           }}
         />
         <Container>알림</Container>
-        <button>모두 읽음</button>
+        <button style={ButtonCss} onClick={allRead}>
+          모두 읽음
+        </button>
       </Header>
       {alarmList.map((alarm, idx) => {
         return <AlarmCard alarm={alarm} key={idx}></AlarmCard>;
@@ -40,3 +53,11 @@ export default function AlarmPage() {
     </>
   );
 }
+const ButtonCss = {
+  color: "gray",
+  backgroundColor: "gainsboro",
+  borderRadius: "10px",
+  border: "1px solid gainsboro",
+  width: "30vw",
+  height: "5vh",
+};

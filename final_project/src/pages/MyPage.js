@@ -223,7 +223,7 @@ export default function MyPage() {
           <Button
             style={{
               fontSize: "20px",
-              backgroundColor: "#FFBA46",
+              backgroundColor: "gainsboro",
               marginRight: "20PX",
               borderRadius: "5px",
             }}

@@ -17,8 +17,8 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded";
 import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -155,7 +155,7 @@ export default function Detail() {
             style={IconCss}
             size="large"
             onClick={() => {
-              navigate("/");
+              navigate(-1);
             }}
           >
             <ChevronLeftRoundedIcon fontSize="large" />
@@ -176,14 +176,14 @@ export default function Detail() {
                 style={
                   i === currentSlide
                     ? {
-                        background: "gray",
+                        background: "white",
                         borderRadius: "100%",
                         height: "10px",
                         width: "10px",
                         marginLeft: "20px",
                       }
                     : {
-                        background: "lightgray",
+                        background: "gray",
                         borderRadius: "100%",
                         height: "10px",
                         width: "10px",
@@ -194,7 +194,12 @@ export default function Detail() {
             ))}
           </div>
         </div>
-        <Card sx={{ borderRadius: "0", boxShadow: "0" }}>
+        <Card
+          sx={{
+            borderRadius: "0",
+            boxShadow: "0",
+          }}
+        >
           <CardHeader
             avatar={
               <Avatar
@@ -271,6 +276,17 @@ export default function Detail() {
               {postData.content}
             </Typography>
           </CardContent>
+          <Box
+            sx={{
+              display: "flex",
+              fontSize: "1px",
+              alignItems: "center",
+              textIndent: "15px",
+              color: "gray",
+            }}
+          >
+            관심: {postData.postPickCount} · 조회: {postData.postVisitCount}
+          </Box>
         </Card>
       </Box>
 
@@ -280,19 +296,16 @@ export default function Detail() {
           sx={{
             height: "7vh",
             marginTop: "10px",
-            padding: "5px 10px",
+            padding: "5px",
             display: "flex",
+            gap: "5vw",
           }}
         >
           <IconButton aria-label="add to favorites" onClick={Bookmarking}>
             {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
           </IconButton>
-          <Button
-            style={ButtonCss}
-            fullWidth
-            startIcon={<QuestionAnswerRoundedIcon />}
-            onClick={CreateChat}
-          >
+
+          <Button style={ButtonCss} fullWidth onClick={CreateChat}>
             1:1 채팅
           </Button>
         </Box>
@@ -303,7 +316,7 @@ export default function Detail() {
 
 const IconCss = {
   position: "absolute",
-  color: "black",
+  color: "white",
   top: "5px",
 };
 
@@ -319,7 +332,6 @@ const Slide = {
   width: "100%",
   height: "100%",
   display: "flex",
-  backgroundColor: "gray",
 };
 
 const ButtonLeft = {
@@ -328,7 +340,7 @@ const ButtonLeft = {
   alignItems: "center",
   cursor: "pointer",
   fontSize: "2rem",
-  color: "#dcdcdc",
+  color: "#fffefe",
   padding: "0 10px",
   left: "5px",
   top: "28%",
@@ -337,9 +349,8 @@ const ButtonLeft = {
 const imgCss = {
   minWidth: "100%",
   minHeight: "100%",
-  backgroundColor: "gray",
-
-  objectFit: "cover",
+  backgroundColor: "#dcdcdc",
+  objectFit: "fill",
   display: "flex",
 };
 
@@ -350,13 +361,14 @@ const ButtonRight = {
   alignItems: "center",
   cursor: "pointer",
   fontSize: "2rem",
-  color: "#dcdcdc",
+  color: "#fffefe",
   padding: "0 10px",
   top: "28%",
 };
 const ButtonCss = {
+  display: "flex",
   color: "white",
   backgroundColor: "gray",
-  width: "80vw",
-  marginRight: "5vw",
+  height: "6vh",
+  alignItems: "center",
 };

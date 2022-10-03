@@ -157,12 +157,11 @@ const IconCss = {
   height: "2.4em",
   top: "80vh",
   right: "8vw",
-  backgroundColor: "#CED0CF",
-  border: "1px solid #CED0CF",
+  backgroundColor: "#BCBCBF",
 };
 
 const ArrowCss = {
-  color: "#A25C01",
+  color: "#fff",
   width: "1.12em",
   height: "1.2em",
 };

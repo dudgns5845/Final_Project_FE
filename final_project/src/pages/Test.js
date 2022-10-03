@@ -51,7 +51,7 @@ const Chat = () => {
             "거래완료로 변경하시겠습니까?\n완료 후에는 거래중으로 변경할 수 없습니다."
           )
         ) {
-          navigate("/mychat");
+          navigate(`/detail/${postData.postId}`);
         }
       })
       .catch((error) => console.log(error));
@@ -145,7 +145,7 @@ const Chat = () => {
         <ArrowBackIcon
           style={{ fontSize: "25px" }}
           onClick={() => {
-            navigate("/mychat");
+            navigate(-1);
           }}
         ></ArrowBackIcon>
         <Box>{postData?.nickname}</Box>
@@ -168,12 +168,9 @@ const Chat = () => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem
-            onClick={DealComplete}
-            disabled={postData?.dealState === "거래완료" ? true : false}
-          >
-            거래완료
-          </MenuItem>
+          {postData?.dealState === "거래중" ? (
+            <MenuItem onClick={DealComplete}>거래완료</MenuItem>
+          ) : null}
           <MenuItem>채팅삭제</MenuItem>
         </Menu>
       </Header>
@@ -303,8 +300,8 @@ const Chat = () => {
 };
 
 const TextCss = {
-  whiteSpace: "nowrap",
   width: "50vw",
+  whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
 };

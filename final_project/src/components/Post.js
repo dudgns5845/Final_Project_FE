@@ -21,7 +21,14 @@ export default function Post({ post, injRef }) {
       onClick={() => navigate(`/detail/${post.id}`)}
     >
       <div style={CardCss}>
-        <div style={{ border: "0.5px solid gainsboro", borderRadius: "5px" }}>
+        <div
+          style={{
+            border: "0.5px solid gainsboro",
+            borderRadius: "5px",
+            width: "5rem",
+            height: "5rem",
+          }}
+        >
           <img
             style={ImgCss}
             onError={onerrorImage}
@@ -30,38 +37,36 @@ export default function Post({ post, injRef }) {
           />
         </div>
         <div style={TextCss}>
-          <h4
+          <div
             style={{
               position: "relative",
+              fontSize: "13px",
+              fontWeight: "bold",
+              color: "gray",
               display: "block",
-              width: "100%",
+              width: "60vw",
               overflow: "hidden",
-              // whiteSpace 왜 적용 안되요? element에서 직접 적용하면 줄바꿈 안되게 잘 되는데...
-              whiteSpace: "nowarp",
+              whiteSpace: " normal ",
               textOverflow: "ellipsis",
             }}
           >
             {post.title}
-          </h4>
-          <p style={{ fontSize: "1px" }}>
+          </div>
+          <p style={{ fontSize: "1px", color: "gray" }}>
             {post.category} &nbsp; {post.createdAt}
           </p>
-          <div style={{ display: "flex", gap: "4px" }}>
+          <div style={{ display: "flex", float: "right" }}>
             <Box
               sx={{
                 display: "flex",
+
                 fontSize: "1px",
                 alignItems: "center",
+                color: "gray",
               }}
             >
               <BookmarkIcon sx={{ fontSize: "small" }} />
               {post.postPickCount}
-            </Box>
-            <Box
-              sx={{ display: "flex", fontSize: "1px", alignItems: "center" }}
-            >
-              <VisibilityOutlinedIcon sx={{ fontSize: "small" }} />
-              {post.postVisitCount}
             </Box>
           </div>
         </div>
@@ -76,7 +81,6 @@ const CardCss = {
   height: "2vh",
   padding: "8vh 0 8vh 0",
   alignItems: "center",
-  objectFit: "cover",
 
   borderBottom: "0.5px solid gainsboro",
 };
@@ -86,6 +90,9 @@ const TextCss = {
   display: "block",
 };
 const ImgCss = {
+  objectFit: "contain",
+  objectPosition: "50% 50%",
   width: "5rem",
   height: "5rem",
+  borderRadius: "5px",
 };

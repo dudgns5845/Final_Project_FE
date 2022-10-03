@@ -128,7 +128,7 @@ export default function Login({ ChangeCookie }) {
   const localTheme = createTheme({
     palette: {
       warning: {
-        main: "#FFBA46",
+        main: "#BCBCBF",
         contrastText: "#fff",
       },
     },
