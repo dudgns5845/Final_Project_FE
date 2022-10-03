@@ -4,6 +4,7 @@ import { getCookie, deleteCookie, setCookie } from "../shared/Cookie";
 
 // 1. Axios instance생성
 
+
 const deafultURL = "https://bondyuu.shop:8080";
 
 const api = axios.create({
