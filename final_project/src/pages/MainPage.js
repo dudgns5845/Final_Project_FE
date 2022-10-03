@@ -38,38 +38,22 @@ export default function MainPage({ history }) {
   const firstBox = useRef(null);
 
   const navigate = useNavigate();
-  const a = () => {
-    if (navigate(-1) === navigate("/postpage")) {
-      navigate("/");
-    } else {
-      navigate(-1);
-    }
-  };
-  // useEffect(() => {
-  //   console.log("매번 실행되는지");
-  //   console.log("listening", listening);
 
-  //   let eventSource = undefined;
-
-  //   if (!listening) {
-  //     //   eventSource = new EventSource("http://13.125.71.197/subscribe/2", {withCredentials: true}); //구독
-  //     eventSource = new EventSource(
-  //       `http://13.125.71.197/subscribe/${userId}`,
-  //       { withCredentials: true }
+  //   useEffect(() => {
+  //     const eventSource = new EventSource(
+  //       `https://bondyuu.shop:8080/subscribe/${userId}`,
+  //       {
+  //         withCredentials: true,
+  //       }
   //     ); //구독
-  //     msetEventSource(eventSource);
-  //     console.log("eventSource", eventSource);
-
-  //     eventSource.onopen = (event) => {
+  //     eventSource.onopen = () => {
   //       console.log("connection opened");
   //     };
-
   //     eventSource.onmessage = (event) => {
   //       console.log("result", event.data);
   //       setAlarmChange(<NotificationAddRoundedIcon />);
   //       setValue(event.data);
   //     };
-
   //     eventSource.onerror = (event) => {
   //       console.log(event.target.readyState);
   //       if (event.target.readyState === EventSource.CLOSED) {
@@ -77,15 +61,11 @@ export default function MainPage({ history }) {
   //       }
   //       eventSource.close();
   //     };
-
-  //     setListening(true);
-  //   }
-
-  //   return () => {
+  //   }, []);
+  //   useEffect(() => {
   //     eventSource.close();
   //     console.log("eventsource closed");
-  //   };
-  // }, []);
+  //   }, [navigate]);
 
   useEffect(() => {
     if (inView && !loading) {
@@ -97,7 +77,6 @@ export default function MainPage({ history }) {
         .getAllPostList(page)
         .then((response) => {
           setPostList([...postList, ...response.data.data.content]);
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -146,7 +125,9 @@ export default function MainPage({ history }) {
         <div style={{ height: "100px" }} ref={ref}></div>
       </Box>
       <IconButton
-        onClick={<Navigate to="/postpage" replace={true} />}
+        onClick={() => {
+          navigate("/postpage");
+        }}
         style={IconCss}
       >
         <CreateRoundedIcon style={ArrowCss} />

@@ -8,7 +8,6 @@ import Modal from "../components/Modal";
 import apis from "../apis/Apis";
 import { deleteCookie } from "../shared/Cookie";
 import Footer from "../components/Footer";
-import ScreenSize from "../shared/ScreenSize";
 import { Box } from "@mui/material";
 
 export default function MyPage() {
@@ -39,7 +38,6 @@ export default function MyPage() {
     apis
       .getProfile()
       .then((response) => {
-        console.log(response);
         setTmpNick(response.data.data.nickname);
         setTmpImage(response.data.data.profileUrl);
         setMyNick(response.data.data.nickname);
@@ -71,7 +69,6 @@ export default function MyPage() {
       //닉네임 append(닉네임 변경했을 때 )
       if (nicknames.nickname != myNick) {
         apis.nicknameCheck(checkNickname).then((response) => {
-          console.log(response);
           if (response.data.success) {
             postData.append(
               "requestDto",
@@ -88,7 +85,6 @@ export default function MyPage() {
       apis
         .editProfile(postData)
         .then((response) => {
-          console.log(response);
           alert("변경되었습니다.");
           setMyNick(tmpNick);
           setMyImage(tmpImage);

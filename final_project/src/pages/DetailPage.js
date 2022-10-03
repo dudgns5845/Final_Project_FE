@@ -18,12 +18,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import apis from "../apis/Apis";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../shared/Cookie";
-
 export default function Detail() {
   const navigate = useNavigate();
   const param = useParams();
@@ -132,10 +130,7 @@ export default function Detail() {
   };
   const onerrorImage = (e) => {
     e.target.src = "/default-image.jpg";
-
-    console.log("포스트 호출");
   };
-
   return (
     <>
       <Box sx={{ height: "90vh", overflow: "auto" }}>
@@ -303,7 +298,7 @@ export default function Detail() {
           }}
         >
           <IconButton aria-label="add to favorites" onClick={Bookmarking}>
-            {isBookMark ? <TurnedInNotRoundedIcon /> : <BookmarkIcon />}
+            {isBookMark ? <BookmarkIcon /> : <TurnedInNotRoundedIcon />}
           </IconButton>
 
           <Button style={ButtonCss} fullWidth onClick={CreateChat}>

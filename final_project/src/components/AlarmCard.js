@@ -40,7 +40,7 @@ export default function AlarmCard({ alarm, isCheck }) {
         />
       </div>
       <div style={TextCss}>
-        <p>{alarm.content}</p>
+        {alarm?.content === "알림" && <p>채팅방이 만들어졌습니다.</p>}
       </div>
     </Box>
   );

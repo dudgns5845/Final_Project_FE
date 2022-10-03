@@ -91,7 +91,7 @@ const Chat = () => {
   const stomp = useRef();
 
   useEffect(() => {
-    const socketJs = new SockJS("http://13.125.71.197/ws-stomp");
+    const socketJs = new SockJS("https://bondyuu.shop:8080/ws-stomp");
     stomp.current = Stomp.over(socketJs);
 
     stomp.current.connect(headers, () => {
