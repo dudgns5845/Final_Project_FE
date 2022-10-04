@@ -43,6 +43,13 @@ export default function EditDetailPage() {
     setImgState(imgUploadList);
   };
 
+  // 엔터 눌렀을 때
+  const onEnter = (e) => {
+    if (e.key === "Enter") {
+      ClickHandler();
+    }
+  };
+
   // 게시물에 있던 내용 입력
   // console.log(param.postid);
   useEffect(() => {
@@ -283,6 +290,7 @@ export default function EditDetailPage() {
             label="글 제목"
             id="title"
             onChange={TitleChange}
+            onKeyUp={onEnter}
             value={titleState}
             placeholder="글 제목을 입력해주세요."
           />
@@ -312,6 +320,7 @@ export default function EditDetailPage() {
           rows={18}
           placeholder="내용을 입력해주세요."
           onChange={ContentChange}
+          onKeyUp={onEnter}
           value={contentState}
           required
         />

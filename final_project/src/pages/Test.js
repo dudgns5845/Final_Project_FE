@@ -27,6 +27,13 @@ const Chat = () => {
     Authorization: `Bearer ${getCookie("accessToken")}`,
   };
 
+  // 엔터 눌렀을 때
+  const onEnter = (e) => {
+    if (e.key === "Enter") {
+      handleEnter();
+    }
+  };
+
   const t = useRef();
   const [username, setUserName] = useState("");
   const param = useParams();
@@ -270,6 +277,7 @@ const Chat = () => {
         ) : (
           <input
             placeholder="메세지를 입력하세요"
+            onKeyUp={onEnter}
             type="text"
             ref={t}
             style={{

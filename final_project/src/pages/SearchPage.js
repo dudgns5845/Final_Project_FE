@@ -27,6 +27,13 @@ export default function SearchPage() {
     setSearch({ ...search, category: e.target.value });
   };
 
+  // 엔터 눌렀을 때
+  const onEnter = (e) => {
+    if (e.key === "Enter") {
+      Click();
+    }
+  };
+
   console.log(search);
   const Click = () => {
     apis
@@ -55,6 +62,7 @@ export default function SearchPage() {
           placeholder="검색어를 입력해주세요"
           variant="outlined"
           onChange={onSearch}
+          onKeyUp={onEnter}
         />
         <SearchIcon onClick={Click} fontSize="large" />
       </Header>
