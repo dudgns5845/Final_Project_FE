@@ -64,8 +64,13 @@ export default function Signin() {
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [isNickname, setIsNickName] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
-  //회원 가입 여부
+
+  // 회원 가입 여부
   const [isAuth, setIsAuth] = useState(false);
+
+  // 클릭 횟수
+  const [mailCount, setMailCount] = useState(0);
+  const [nickCount, setNickCount] = useState(0);
 
   // MUI
   const state = {
@@ -211,8 +216,11 @@ export default function Signin() {
 
   const onDoublingHandler = (e) => {
     e.preventDefault();
+    setMailCount(mailCount + 1);
     if (!isUserId) {
-      return setErrorMessage("이메일을 확인해주세요");
+      setErrorMessage("이메일을 확인해주세요");
+      setsnackOpen(true);
+      setMailCount(0);
     } else {
       apis
         .emailCheck(idCheck)
@@ -222,15 +230,19 @@ export default function Signin() {
           if (response.data.success === false) {
             setErrorMessage(response.data.errorCode.message);
             setUserIdMessege(response.data.errorCode.message);
+            setsnackOpen(true);
             setIsUserId(false);
+            setMailCount(0);
             return;
           }
           //중복된 이메일로 가입안했다면
           else {
             // 인증 메일 발송
             setErrorMessage("인증번호를 입력해주세요");
+            setsnackOpen(true);
             setIsEmail(true);
             console.log(isEmail);
+
             apis
               .emailSend(idSend)
               .then((response) => {
@@ -239,24 +251,26 @@ export default function Signin() {
               .catch((error) => {
                 console.log(error);
               });
+
+            setMailCount(0);
           }
         })
         .catch((error) => {
           console.log(error);
+          setMailCount(0);
         });
     }
   };
 
   const buttonsEmail = (
     <>
-      {isEmail ? (
+      {isEmail || mailCount >= 1 ? (
         <Button
           style={{ marginLeft: "4%", fontSize: "x-small" }}
           disabled
           variant="outlined"
           color="warning"
           onClick={(e) => {
-            setsnackOpen(true);
             onDoublingHandler(e);
           }}
         >
@@ -467,9 +481,9 @@ export default function Signin() {
               {buttonsAuthNumber}
             </>
           )}
-
           {userId.length > 1 && isUserId ? (
             <>
+              <br />
               {isAuth ? (
                 <span style={{ color: "green" }}>
                   이메일 인증이 완료되었습니다
