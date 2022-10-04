@@ -168,7 +168,8 @@ const Chat = () => {
             "aria-labelledby": "basic-button",
           }}
         >
-          {postData?.dealState === "거래중" ? (
+          {postData?.dealState === "거래중" &&
+          postData?.userId == getCookie("id") ? (
             <MenuItem onClick={DealComplete}>거래완료</MenuItem>
           ) : null}
           <MenuItem>채팅삭제</MenuItem>

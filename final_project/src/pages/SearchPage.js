@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import styled from "styled-components";
+import SearchIcon from "@mui/icons-material/Search";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 export default function SearchPage() {
@@ -55,17 +56,7 @@ export default function SearchPage() {
           variant="outlined"
           onChange={onSearch}
         />
-        <Button
-          style={{
-            fontSize: "5px",
-            backgroundColor: "#FFBA46",
-            borderRadius: "5px",
-          }}
-          variant="contained"
-          onClick={Click}
-        >
-          검색하기
-        </Button>
+        <SearchIcon onClick={Click} fontSize="large" />
       </Header>
 
       {/* 검색 영역 */}
