@@ -34,6 +34,14 @@ export default function MyPage() {
     setEditProfile(false);
   };
 
+  // 엔터 눌렀을 때
+  const onEnter = (e) => {
+    console.log("1");
+    if (e.key === "Enter") {
+      ClickHandler();
+    }
+  };
+
   const checkNickname = { nickname: tmpNick };
 
   useEffect(() => {
@@ -225,6 +233,7 @@ export default function MyPage() {
             type="text"
             onChange={ChangeNick}
             placeholder={tmpNick}
+            onKeyUp={onEnter}
             maxLength="6"
           />
         </div>
