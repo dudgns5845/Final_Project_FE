@@ -116,7 +116,7 @@ export default function Detail() {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
   }, [currentSlide]);
-  console.log(slideRef);
+
 
   // 채팅방 생성
   const CreateChat = () => {
