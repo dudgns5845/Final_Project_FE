@@ -24,6 +24,8 @@ export default function Login({ ChangeCookie }) {
   // 유효성 검사
   const [isUserId, setIsUserId] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
+  const [logining, setLoginig] = useState(false);
+  const [count, setCount] = useState(0);
 
   // MUI
   const state = {
@@ -39,7 +41,15 @@ export default function Login({ ChangeCookie }) {
     setsnackOpen(false);
   };
 
+  // 엔터 눌렀을 때
+  const onEnter = (e) => {
+    if (e.key === "Enter") {
+      onSubmitHandler();
+    }
+  };
+
   const onSubmitHandler = (e) => {
+    setCount(count + 1);
     if (!isUserId) {
       setErrorMessage("이메일을 확인해주세요");
       setsnackOpen(true);
@@ -53,6 +63,10 @@ export default function Login({ ChangeCookie }) {
         email: userId,
         password: password,
       };
+      if (count >= 1) {
+        setErrorMessage("요청을 보냈어요\n잠시만 기다려주세요");
+        setsnackOpen(true);
+      }
 
       apis
         .loginUser(UserData)
@@ -93,8 +107,16 @@ export default function Login({ ChangeCookie }) {
         })
         .catch((error) => {
           console.log(error);
-          setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
-          setsnackOpen(true);
+          setCount(0);
+          if (error.message === "Request failed with status code 500") {
+            setErrorMessage(
+              "서버와 통신에 실패하였습니다\n잠시후 다시 시도해주세요"
+            );
+            setsnackOpen(true);
+          } else {
+            setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
+            setsnackOpen(true);
+          }
         });
     }
   };
@@ -151,6 +173,7 @@ export default function Login({ ChangeCookie }) {
             color="warning"
             inputProps={ariaLabel}
             onChange={onChangeUserId}
+            onKeyUp={onEnter}
           />
           <p>비밀번호</p>
           <Input
@@ -159,6 +182,7 @@ export default function Login({ ChangeCookie }) {
             placeholder="비밀번호를 입력하세요"
             color="warning"
             onChange={onChangePassword}
+            onKeyUp={onEnter}
           />
 
           <div style={{ marginTop: "1vh" }}>
