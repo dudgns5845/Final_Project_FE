@@ -24,6 +24,13 @@ export default function PostPage() {
   const [open, setOpen] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
+  // 엔터 눌렀을 때
+  const onEnter = (e) => {
+    if (e.key === "Enter") {
+      ClickHandler();
+    }
+  };
+
   const AddImage = (e) => {
     const imgSelectList = e.target.files;
     const imgUploadList = [...imgState];
@@ -134,7 +141,6 @@ export default function PostPage() {
           style={{
             display: "flex",
             flexDirection: "column",
-
             margin: "5vh",
           }}
         >
@@ -234,6 +240,7 @@ export default function PostPage() {
           label="글 제목"
           id="title"
           onChange={TitleChange}
+          onKeyUp={onEnter}
           value={userPost.title}
           placeholder="제목을 입력해주세요.(30글자 제한)"
           required
@@ -265,6 +272,7 @@ export default function PostPage() {
         rows={18}
         placeholder="내용을 입력해주세요."
         onChange={ContentChange}
+        onKeyUp={onEnter}
         value={userPost.content}
         required
       />
