@@ -5,6 +5,26 @@ import Button from "@mui/material/Button";
 import styled from "styled-components";
 import { getCookie } from "../shared/Cookie";
 
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
 export default function Start() {
   const navigate = useNavigate();
 
@@ -21,6 +41,7 @@ export default function Start() {
   ]);
 
   const [current, setCurrent] = useState(0);
+  const [click, setClick] = useState(false);
   const [style, setStyle] = useState({
     marginLeft: `-${current}00%`,
   });
@@ -36,12 +57,25 @@ export default function Start() {
 
     setCurrent(nextIndex);
   };
-  const imageTimer = setTimeout(ImageSlideTimer, 3000);
+  useInterval(
+    () => {
+      setCurrent((current) => current + 1);
+      if (current >= imgSize.current - 1) {
+        setCurrent(0);
+      }
+    },
+    click ? null : 2000
+  );
+  useEffect(() => {
+    setTimeout(() => {
+      click && setClick(false);
+    }, 2000);
+  }, [click]);
   // setTImeout
 
   // 이미지 버튼으로 넘김
   const moveSlide = (i) => {
-    clearTimeout(imageTimer);
+    setClick(true);
     let nextIndex = current + i;
 
     if (nextIndex < 0) nextIndex = imgSize.current - 1;
