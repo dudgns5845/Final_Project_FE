@@ -20,14 +20,11 @@ import { getCookie } from "../shared/Cookie";
 
 import { useInView } from "react-intersection-observer";
 
-export default function MainPage({ history }) {
-  const [listening, setListening] = useState(false);
+export default function MainPage() {
   const [alarmIconChange, setAlarmChange] = useState(
     <NotificationsNoneOutlinedIcon />
   );
 
-  const [value, setValue] = useState(null);
-  const [meventSource, msetEventSource] = useState(undefined);
   const [userId, setUserId] = useState(getCookie("id"));
 
   const [ref, inView] = useInView();
@@ -45,34 +42,33 @@ export default function MainPage({ history }) {
   //     }
   //   ); //구독
 
-  //   useEffect(() => {
-  //     const eventSource = new EventSource(
-  //       `https://bondyuu.shop:8080/subscribe/${userId}`,
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     ); //구독
-  //     eventSource.onopen = () => {
-  //       console.log("connection opened");
-  //     };
-  //     eventSource.onmessage = (event) => {
-  //       console.log("result", event.data);
-  //       setAlarmChange(<NotificationAddRoundedIcon />);
-  //       setValue(event.data);
-  //     };
-  //     eventSource.onerror = (event) => {
-  //       console.log(event.target.readyState);
-  //       if (event.target.readyState === EventSource.CLOSED) {
-  //         console.log("eventsource closed (" + event.target.readyState + ")");
-  //       }
-  //       eventSource.close();
-  //     };
-  //   }, []);
-  //   useEffect(() => {
-  //     eventSource.close();
-  //     console.log("eventsource closed");
-  //   }, [navigate]);
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `https://bondyuu.shop:8080/subscribe/${userId}`,
+      {
+        withCredentials: true,
+      }
+    ); //구독
+    eventSource.onopen = () => {
+      console.log("connection opened");
+    };
+    eventSource.onmessage = (event) => {
+      console.log("result", event.data);
+      setAlarmChange(<NotificationAddRoundedIcon />);
+    };
+    eventSource.onerror = (event) => {
+      console.log(event.target.readyState);
+      if (event.target.readyState === EventSource.CLOSED) {
+        console.log("eventsource closed (" + event.target.readyState + ")");
+      }
+      eventSource.close();
+    };
+    return () => {
+      eventSource.close();
 
+      console.log("eventsource closed");
+    };
+  }, []);
   useEffect(() => {
     if (inView && !loading) {
       // 다음페이지 인덱스 증가

@@ -67,7 +67,7 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    return Promise.reject(error);
+    console.log(error);
     // if (error.response.status === 401) {
     //   apis
     //     .loginRefresh()
