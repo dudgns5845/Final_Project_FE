@@ -30,13 +30,13 @@ export default function Start() {
 
   const images = useRef([
     {
-      src: "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg",
+      src: "default-image.jpg",
     },
     {
-      src: "https://w.ryanyang.kr/images/d/d9/%EC%9C%A0%ED%98%B9%ED%95%98%EB%8A%94_%EB%9D%BC%EC%9D%B4%EC%96%B8.png",
+      src: "Untitled_1.png",
     },
     {
-      src: "https://www.nicepng.com/png/full/317-3179513_21-.png",
+      src: "Untitled_2.png",
     },
   ]);
 
@@ -64,7 +64,7 @@ export default function Start() {
         setCurrent(0);
       }
     },
-    click ? null : 2000
+    click ? null : 3000
   );
   useEffect(() => {
     setTimeout(() => {

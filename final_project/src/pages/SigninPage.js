@@ -298,28 +298,36 @@ export default function Signin() {
   };
   const onAuthNumberHandler = (e) => {
     e.preventDefault();
+    setNickCount(nickCount + 1);
     if (authNumber.length === 0) {
-      return setErrorMessage("인증번호를 입력해주세요");
+      setErrorMessage("인증번호를 입력해주세요");
+      snackOpen(true);
+      setNickCount(0);
     } else {
       apis
         .certification(certification)
         .then((response) => {
           console.log(response.data.success);
           if (!response.data.success) {
-            return setErrorMessage("인증번호를 확인해주세요");
+            setErrorMessage("인증번호를 확인해주세요");
+            snackOpen(true);
+            setNickCount(0);
           }
           setErrorMessage("인증이 완료되었습니다");
+          snackOpen(true);
+          setNickCount(0);
           setIsAuth(true);
         })
         .catch((error) => {
           console.log(error);
+          setNickCount(0);
         });
     }
   };
 
   const buttonsAuthNumber = (
     <>
-      {isAuth ? (
+      {isAuth || nickCount >= 1 ? (
         <Button
           disabled
           color="warning"
@@ -456,7 +464,6 @@ export default function Signin() {
             />
           )}
           {buttonsEmail}
-          <br />
           {isEmail && (
             <>
               {isAuth ? (
