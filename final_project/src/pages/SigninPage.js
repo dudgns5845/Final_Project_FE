@@ -314,7 +314,6 @@ export default function Signin() {
             setNickCount(0);
           }
           setErrorMessage("인증이 완료되었습니다");
-          snackOpen(true);
           setNickCount(0);
           setIsAuth(true);
         })
