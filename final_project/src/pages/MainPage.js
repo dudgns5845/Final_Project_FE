@@ -35,12 +35,6 @@ export default function MainPage() {
   const firstBox = useRef(null);
 
   const navigate = useNavigate();
-  //   const eventSource = new EventSource(
-  //     `https://bondyuu.shop:8080/subscribe/${userId}`,
-  //     {
-  //       withCredentials: true,
-  //     }
-  //   ); //구독
 
   useEffect(() => {
     const eventSource = new EventSource(
