@@ -489,17 +489,25 @@ export default function Signin() {
           )}
           {userId.length > 1 && isUserId ? (
             <>
-              <br />
               {isAuth ? (
-                <span style={{ color: "green" }}>
-                  이메일 인증이 완료되었습니다
-                </span>
+                <>
+                  <br />
+                  <span style={{ color: "green" }}>
+                    이메일 인증이 완료되었습니다
+                  </span>
+                </>
               ) : (
-                <span style={{ color: "green" }}>{userIdMessege}</span>
+                <>
+                  <br />
+                  <span style={{ color: "green" }}>{userIdMessege}</span>
+                </>
               )}
             </>
           ) : (
-            <span style={{ color: "red" }}>{userIdMessege}</span>
+            <>
+              <br />
+              <span style={{ color: "red" }}>{userIdMessege}</span>
+            </>
           )}
 
           <p>비밀번호</p>
