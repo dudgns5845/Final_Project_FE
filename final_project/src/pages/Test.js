@@ -52,7 +52,6 @@ const Chat = () => {
     apis
       .dealComplete(postData.postId)
       .then((response) => {
-        console.log(response);
         if (
           window.confirm(
             "거래완료로 변경하시겠습니까?\n완료 후에는 거래중으로 변경할 수 없습니다."
@@ -61,7 +60,7 @@ const Chat = () => {
           navigate(`/detail/${postData.postId}`);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   };
 
   //이전 메시지 목록 불러오기
@@ -83,10 +82,8 @@ const Chat = () => {
             },
           ]);
         });
-
-        console.log(response);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   }, []);
 
   useEffect(() => {

@@ -74,9 +74,7 @@ export default function MainPage() {
         .then((response) => {
           setPostList([...postList, ...response.data.data.content]);
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
       setLoading(false);
     }
   }, [inView, loading]);

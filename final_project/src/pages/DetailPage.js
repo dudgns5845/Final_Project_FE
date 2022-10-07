@@ -51,29 +51,22 @@ export default function Detail() {
     apis
       .addBookMark(param.postid)
       .then((response) => {
-        console.log(response);
         if (response.data.success === true) {
           setIsBookMark(!isBookMark);
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
   useEffect(() => {
     apis
       .postDetail(param.postid)
       .then((response) => {
-        console.log(response);
         setPostData(response.data.data);
         setImageList((preList) => [...response.data.data.imageUrl]);
         setIsBookMark(response.data.data.postPicked);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   }, [param]);
-  // console.log(param);
 
   // 게시물 수정
   const PutHandler = () => {
@@ -85,12 +78,11 @@ export default function Detail() {
     apis
       .deleteDetail(param.postid)
       .then((response) => {
-        console.log(response);
         if (window.confirm("게시물을 삭제하시겠습니까?")) {
           navigate("/");
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   };
 
   // 캐로셀
@@ -117,16 +109,14 @@ export default function Detail() {
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
   }, [currentSlide]);
 
-
   // 채팅방 생성
   const CreateChat = () => {
     apis
       .chatCreate(param.postid)
       .then((response) => {
-        console.log(response);
         navigate(`/chatdetail/${response.data.data.roomId}`);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   };
   const onerrorImage = (e) => {
     e.target.src = "/default-image.jpg";
@@ -172,19 +162,19 @@ export default function Detail() {
                 style={
                   i === currentSlide
                     ? {
-                      background: "white",
-                      borderRadius: "100%",
-                      height: "10px",
-                      width: "10px",
-                      marginLeft: "20px",
-                    }
+                        background: "white",
+                        borderRadius: "100%",
+                        height: "10px",
+                        width: "10px",
+                        marginLeft: "20px",
+                      }
                     : {
-                      background: "gray",
-                      borderRadius: "100%",
-                      height: "10px",
-                      width: "10px",
-                      marginLeft: "20px",
-                    }
+                        background: "gray",
+                        borderRadius: "100%",
+                        height: "10px",
+                        width: "10px",
+                        marginLeft: "20px",
+                      }
                 }
               />
             ))}

@@ -48,7 +48,6 @@ export default function PostPage() {
         imgUploadList = imgUploadList.slice(0, 5);
       }
     }
-    console.log(imgUploadList);
     setImgState(imgUploadList);
   };
   const TitleChange = (e) => {
@@ -113,19 +112,16 @@ export default function PostPage() {
         postData.append("imageFileList", img);
       }
     }
-    console.log(imgFile);
+
     //통신
     apis
       .writePost(postData)
       .then((response) => {
-        console.log(response);
         navigate(`/detail/${response.data.data.id}`, { replace: true });
         // navigate(`/detail/${response.data.data.id}`);
       })
 
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   //업로드 사진 삭제 기능

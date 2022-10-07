@@ -28,7 +28,6 @@ export default function MyPage() {
   };
   const ChangeNick = (e) => {
     setTmpNick(e.target.value);
-    console.log(tmpNick);
   };
   const close = () => {
     setEditProfile(false);
@@ -48,15 +47,12 @@ export default function MyPage() {
     apis
       .getProfile()
       .then((response) => {
-        console.log(response);
         setTmpNick(response.data.data.nickname);
         setTmpImage(response.data.data.profileUrl);
         setMyNick(response.data.data.nickname);
         setMyImage(response.data.data.profileUrl);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   }, []);
 
   const AddImage = (e) => {
@@ -88,15 +84,11 @@ export default function MyPage() {
             apis
               .editProfile(postData)
               .then((response) => {
-                console.log(response);
                 alert("변경되었습니다.");
                 setMyNick(tmpNick);
                 setMyImage(tmpImage);
-                //   setIsNickName(true);
               })
-              .catch((error) => {
-                console.log(error);
-              })
+              .catch((error) => {})
               .then(() => {
                 setEditProfile(false);
               });
@@ -108,15 +100,11 @@ export default function MyPage() {
         apis
           .editProfile(postData)
           .then((response) => {
-            console.log(response);
             alert("변경되었습니다.");
             setMyNick(tmpNick);
             setMyImage(tmpImage);
-            //   setIsNickName(true);
           })
-          .catch((error) => {
-            console.log(error);
-          })
+          .catch((error) => {})
           .then(() => {
             setEditProfile(false);
           });
@@ -133,9 +121,7 @@ export default function MyPage() {
         deleteCookie("nickname");
         window.location.reload();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   return (

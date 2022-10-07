@@ -28,8 +28,6 @@ export default function EditDetailPage() {
     const imgSelectList = e.target.files;
     const imgUploadList = [...imgState];
 
-    console.log(new Array(...imgSelectList));
-
     for (let i = 0; i < imgSelectList.length; i++) {
       //전송을 위한 이미지 데이터 추가
       setImgFile(new Array(...imgSelectList));
@@ -56,7 +54,6 @@ export default function EditDetailPage() {
     apis
       .postDetail(param.postid)
       .then((response) => {
-        console.log(response);
         setTitleState(response.data.data.title);
 
         setTmpCategory(response.data.data.category);
@@ -89,24 +86,20 @@ export default function EditDetailPage() {
           ...imageArray.filter((item) => item != defaultImg),
         ];
 
-        console.log(imageArray.length);
         setImgState(imageFilter);
         setImgFile(imageFilter);
         setPostData({ ...postData, postid: param.postid });
-        console.log(postData);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   }, []);
 
   const TitleChange = (e) => {
     const titleState = e.target.value;
     setTitleState(titleState);
-    console.log(titleState);
   };
   const ContentChange = (e) => {
     const contentState = e.target.value;
     setContentState(contentState);
-    console.log(contentState);
   };
   const OpenModal = () => {
     setOpen(true);
@@ -172,22 +165,19 @@ export default function EditDetailPage() {
           type: "application/json",
         })
       );
-      console.log(imgFile);
     }
 
-    //통신
+    // 통신
     apis
       .editDetail(postData)
       .then((response) => {
-        console.log(response);
         navigate(`/detail/${param.postid}`);
       })
 
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
-  //업로드 사진 삭제 기능
+
+  // 업로드 사진 삭제 기능
   const handleDeleteImage = (id) => {
     setImgState(imgState.filter((_, index) => index !== id));
     setImgFile(imgFile.filter((_, index) => index !== id));

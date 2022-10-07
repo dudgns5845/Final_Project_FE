@@ -40,12 +40,9 @@ export default function SearchPage() {
       .searchList(search)
       .then((response) => {
         setSearchList(response.data.data.content);
-        console.log(response);
       })
 
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   return (

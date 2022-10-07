@@ -71,7 +71,6 @@ export default function Login({ ChangeCookie }) {
       apis
         .loginUser(UserData)
         .then((response) => {
-          console.log(response);
           if (!response.data.success) {
             setErrorMessage("이메일 또는 비밀번호를 확인해주세요");
             setsnackOpen(true);
@@ -106,7 +105,6 @@ export default function Login({ ChangeCookie }) {
           }
         })
         .catch((error) => {
-          console.log(error);
           setCount(0);
           if (error.message === "Request failed with status code 500") {
             setErrorMessage(

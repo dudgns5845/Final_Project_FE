@@ -19,7 +19,7 @@ export default function ChatRoomPage() {
       .then((response) => {
         setChatList(response.data.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   }, []);
 
   return (

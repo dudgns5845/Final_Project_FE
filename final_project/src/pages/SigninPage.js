@@ -131,7 +131,6 @@ export default function Signin() {
       apis
         .registerUser(UserData)
         .then((response) => {
-          console.log(response);
           setErrorMessage("회원가입 성공");
           setsnackOpen(true);
           setTimeout(() => {
@@ -139,7 +138,6 @@ export default function Signin() {
           }, 1300);
         })
         .catch((error) => {
-          console.log(error);
           setErrorMessage("다시 시도해주세요");
           setsnackOpen(true);
           return;
@@ -225,7 +223,6 @@ export default function Signin() {
       apis
         .emailCheck(idCheck)
         .then((response) => {
-          console.log(response);
           //중복된 이메일로 가입했는지 체크
           if (response.data.success === false) {
             setErrorMessage(response.data.errorCode.message);
@@ -241,22 +238,16 @@ export default function Signin() {
             setErrorMessage("인증번호를 입력해주세요");
             setsnackOpen(true);
             setIsEmail(true);
-            console.log(isEmail);
 
             apis
               .emailSend(idSend)
-              .then((response) => {
-                console.log(response);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+              .then((response) => {})
+              .catch((error) => {});
 
             setMailCount(0);
           }
         })
         .catch((error) => {
-          console.log(error);
           setMailCount(0);
         });
     }
@@ -307,7 +298,6 @@ export default function Signin() {
       apis
         .certification(certification)
         .then((response) => {
-          console.log(response.data.success);
           if (!response.data.success) {
             setErrorMessage("인증번호를 확인해주세요");
             snackOpen(true);
@@ -318,7 +308,6 @@ export default function Signin() {
           setIsAuth(true);
         })
         .catch((error) => {
-          console.log(error);
           setNickCount(0);
         });
     }
@@ -326,7 +315,7 @@ export default function Signin() {
 
   const buttonsAuthNumber = (
     <>
-      {isAuth || nickCount >= 1 ? (
+      {isAuth ? (
         <Button
           disabled
           color="warning"
@@ -365,7 +354,6 @@ export default function Signin() {
       apis
         .nicknameCheck(checkNickname)
         .then((response) => {
-          console.log(response);
           if (response.data.success) {
             setIsNickName(true);
             setsnackOpen(true);
@@ -375,9 +363,7 @@ export default function Signin() {
             setErrorMessage("이미 사용중인 닉네임입니다");
           }
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     }
   };
 

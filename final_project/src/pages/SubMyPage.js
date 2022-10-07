@@ -23,18 +23,14 @@ export default function SubMyPage() {
         .then((response) => {
           setPostList(response.data.data.content);
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     } else if (changePage === "mybookmark") {
       apis
         .myBookMarkList()
         .then((response) => {
           setBookMarkList(response.data.data);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
   }, []);
 
