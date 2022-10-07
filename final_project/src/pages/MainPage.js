@@ -36,33 +36,33 @@ export default function MainPage() {
 
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     const eventSource = new EventSource(
-  //       `https://bondyuu.shop:8080/subscribe/${userId}`,
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     ); //구독
-  //     eventSource.onopen = () => {
-  //       console.log("connection opened");
-  //     };
-  //     eventSource.onmessage = (event) => {
-  //       console.log("result", event.data);
-  //       setAlarmChange(<NotificationAddRoundedIcon />);
-  //     };
-  //     eventSource.onerror = (event) => {
-  //       console.log(event.target.readyState);
-  //       if (event.target.readyState === EventSource.CLOSED) {
-  //         console.log("eventsource closed (" + event.target.readyState + ")");
-  //       }
-  //       eventSource.close();
-  //     };
-  //     return () => {
-  //       eventSource.close();
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `https://bondyuu.shop:8080/subscribe/${userId}`,
+      {
+        withCredentials: true,
+      }
+    ); //구독
+    eventSource.onopen = () => {
+      console.log("connection opened");
+    };
+    eventSource.onmessage = (event) => {
+      console.log("result", event.data);
+      setAlarmChange(<NotificationAddRoundedIcon />);
+    };
+    eventSource.onerror = (event) => {
+      console.log(event.target.readyState);
+      if (event.target.readyState === EventSource.CLOSED) {
+        console.log("eventsource closed (" + event.target.readyState + ")");
+      }
+      eventSource.close();
+    };
+    return () => {
+      eventSource.close();
 
-  //       console.log("eventsource closed");
-  //     };
-  //   }, []);
+      console.log("eventsource closed");
+    };
+  }, []);
   useEffect(() => {
     if (inView && !loading) {
       // 다음페이지 인덱스 증가
