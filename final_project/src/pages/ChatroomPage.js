@@ -27,7 +27,7 @@ export default function ChatRoomPage() {
       <Header>
         <div>채팅 </div>
       </Header>
-      <Box sx={{ width: "100vw", height: "82vh", overflow: "auto" }}>
+      <Box sx={{ width: "100vw", height: "80vh", overflow: "auto" }}>
         {chatList.reverse().map((post, idx) => {
           return <ChatPost post={post} key={idx} />;
         })}

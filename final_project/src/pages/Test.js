@@ -57,7 +57,7 @@ const Chat = () => {
             "거래완료로 변경하시겠습니까?\n완료 후에는 거래중으로 변경할 수 없습니다."
           )
         ) {
-          navigate(`/detail/${postData.postId}`);
+          navigate(`/detail/${postData.postId}`, { replace: true });
         }
       })
       .catch((error) => {});

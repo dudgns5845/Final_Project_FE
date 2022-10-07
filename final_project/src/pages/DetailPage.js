@@ -265,7 +265,7 @@ export default function Detail() {
           <Box
             sx={{
               display: "flex",
-              fontSize: "1px",
+              fontSize: "5px",
               alignItems: "center",
               textIndent: "15px",
               color: "gray",
