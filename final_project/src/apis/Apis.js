@@ -73,7 +73,7 @@ api.interceptors.response.use(
         .loginRefresh()
         .then((response) => {
           // refreshToken 삭제
-          deleteCookie("refreshToken");
+
           console.log(response);
           // 새로운 Token 저장
           setCookie(
@@ -81,6 +81,7 @@ api.interceptors.response.use(
             response.data.data.accessToken,
             response.data.data.accessTokenExpiresIn
           );
+          deleteCookie("refreshToken");
           setCookie("refreshToken", response.data.data.refreshToken);
           window.location.reload();
         })
